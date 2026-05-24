@@ -7,7 +7,7 @@ const strategies = [
   {
     id: 'full',
     name: 'FULL POINT',
-    description: '50 points on 1 horse',
+    description: '50 puntos en 1 caballo',
     maxPicks: 1,
     allocation: [50],
     icon: Target,
@@ -20,7 +20,7 @@ const strategies = [
   {
     id: 'dual',
     name: 'DUAL POINT',
-    description: '25 points on 2 horses',
+    description: '25 puntos en 2 caballos',
     maxPicks: 2,
     allocation: [25, 25],
     icon: Layers,
@@ -33,7 +33,7 @@ const strategies = [
   {
     id: 'smart',
     name: 'SMART PICK',
-    description: '30 / 15 / 5 on 3 horses',
+    description: '30 / 15 / 5 en 3 caballos',
     maxPicks: 3,
     allocation: [30, 15, 5],
     icon: Zap,
@@ -52,10 +52,10 @@ export default function PickSelector({ activeStrategy, onStrategyChange, picksCo
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-bold uppercase tracking-widest text-white/60">
-          Pick Strategy
+          Estrategia de Seleccion
         </h3>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-white/40">Points remaining:</span>
+          <span className="text-xs text-white/40">Puntos restantes:</span>
           <motion.span
             key={totalPoints}
             initial={{ scale: 1.3, color: '#a855f7' }}

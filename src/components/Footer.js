@@ -18,15 +18,15 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-zinc-500 leading-relaxed">
-              The ultimate free-to-play horse racing competition platform.
+              La plataforma definitiva de competencia de carreras de caballos, gratis para jugar.
             </p>
           </div>
 
           {/* Platform */}
           <div>
-            <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">Platform</h4>
+            <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">Plataforma</h4>
             <ul className="space-y-2.5">
-              {["Tournaments", "Leaderboard", "How to Play", "Rules"].map((item) => (
+              {["Torneos", "Clasificacion", "Como Jugar", "Reglas"].map((item) => (
                 <li key={item}>
                   <Link href="#" className="text-sm text-zinc-500 hover:text-purple-light transition-colors">
                     {item}
@@ -38,9 +38,9 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">Company</h4>
+            <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">Soporte</h4>
             <ul className="space-y-2.5">
-              {["About", "Blog", "Careers", "Contact"].map((item) => (
+              {["Acerca de", "Blog", "Ayuda", "Contacto"].map((item) => (
                 <li key={item}>
                   <Link href="#" className="text-sm text-zinc-500 hover:text-purple-light transition-colors">
                     {item}
@@ -54,7 +54,7 @@ export default function Footer() {
           <div>
             <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">Legal</h4>
             <ul className="space-y-2.5">
-              {["Terms of Service", "Privacy Policy", "Responsible Gaming", "Fair Play"].map((item) => (
+              {["Terminos de Servicio", "Politica de Privacidad", "Juego Responsable", "Juego Limpio"].map((item) => (
                 <li key={item}>
                   <Link href="#" className="text-sm text-zinc-500 hover:text-purple-light transition-colors">
                     {item}
@@ -68,12 +68,12 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-zinc-600">
-            &copy; {new Date().getFullYear()} 50POINTS. All rights reserved. This is a free-to-play platform. No real money wagering.
+            &copy; {new Date().getFullYear()} 50POINTS. Todos los derechos reservados. Esta es una plataforma gratuita. Sin apuestas con dinero real.
           </p>
           <div className="flex items-center gap-4">
-            <span className="text-xs text-zinc-600">18+ Only</span>
+            <span className="text-xs text-zinc-600">Solo +18</span>
             <span className="text-xs text-zinc-700">|</span>
-            <span className="text-xs text-zinc-600">Play Responsibly</span>
+            <span className="text-xs text-zinc-600">Juega Responsablemente</span>
           </div>
         </div>
       </div>

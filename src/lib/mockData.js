@@ -102,53 +102,53 @@ export const topPlayers = [
 ];
 
 export const stats = [
-  { label: "Players", value: "12,450+", icon: "users" },
-  { label: "Live Tracks", value: "3", icon: "radio" },
-  { label: "Entry Fee", value: "$0", icon: "zap" },
-  { label: "Races", value: "24/7", icon: "clock" },
+  { label: "Jugadores", value: "12,450+", icon: "users" },
+  { label: "Pistas en Vivo", value: "3", icon: "radio" },
+  { label: "Entrada", value: "$0", icon: "zap" },
+  { label: "Carreras", value: "24/7", icon: "clock" },
 ];
 
 export const strategies = [
   {
     name: "Full Point",
-    description: "Go all-in. Place all 50 points on a single horse for maximum risk and reward.",
-    points: "50pts on 1 horse",
-    risk: "High Risk",
-    multiplier: "1x Odds Multiplier",
+    description: "Todo en un solo caballo para maximo premio. 50 puntos en un solo caballo, maximo riesgo y recompensa.",
+    points: "50pts en 1 caballo",
+    risk: "Alto Riesgo",
+    multiplier: "1x Multiplicador de Cuotas",
   },
   {
     name: "Dual Point",
-    description: "Split your points between two horses. Balance risk with a safety net.",
-    points: "25 + 25 split",
-    risk: "Medium Risk",
-    multiplier: "0.8x Odds Multiplier",
+    description: "Divide entre dos caballos para juego equilibrado. Equilibra el riesgo con una red de seguridad.",
+    points: "25 + 25 dividido",
+    risk: "Riesgo Medio",
+    multiplier: "0.8x Multiplicador de Cuotas",
   },
   {
     name: "Smart Pick",
-    description: "Spread across three horses. Maximize your chances of earning points each race.",
-    points: "30 / 15 / 5 split",
-    risk: "Low Risk",
-    multiplier: "0.6x Odds Multiplier",
+    description: "Distribuye en tres para puntuacion consistente. Maximiza tus chances de ganar puntos en cada carrera.",
+    points: "30 / 15 / 5 dividido",
+    risk: "Bajo Riesgo",
+    multiplier: "0.6x Multiplicador de Cuotas",
   },
 ];
 
 export const howItWorks = [
   {
     step: 1,
-    title: "Choose Your Strategy",
-    description: "Pick how to distribute your 50 points: Full Point (all-in), Dual Point (split two), or Smart Pick (spread three).",
+    title: "Elige tu Estrategia",
+    description: "Elige como distribuir tus 50 puntos: Full Point (todo en uno), Dual Point (divide en dos), o Smart Pick (distribuye en tres).",
     icon: "target",
   },
   {
     step: 2,
-    title: "Pick Your Horses",
-    description: "Browse upcoming race cards, analyze the odds, study form guides, and make your selections before the race begins.",
+    title: "Elige tus Caballos",
+    description: "Explora las carreras, analiza las cuotas, estudia los formularios y haz tus selecciones antes de que comience la carrera.",
     icon: "trophy",
   },
   {
     step: 3,
-    title: "Climb the Leaderboard",
-    description: "Your points are multiplied by the horse's odds when they win. Accumulate points across races to climb the rankings.",
+    title: "Sube en la Clasificacion",
+    description: "Tus puntos se multiplican por las cuotas del caballo cuando gana. Acumula puntos en todas las carreras para subir en el ranking.",
     icon: "trending-up",
   },
 ];

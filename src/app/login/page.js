@@ -25,7 +25,7 @@ export default function LoginPage() {
           className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-purple-light transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Home
+          Volver al Inicio
         </Link>
 
         {/* Login Card */}
@@ -46,22 +46,22 @@ export default function LoginPage() {
               >
                 <Trophy className="w-8 h-8 text-white" />
               </motion.div>
-              <h1 className="text-2xl font-bold mb-1">Welcome Back</h1>
-              <p className="text-sm text-zinc-500">Sign in to your 50POINTS account</p>
+              <h1 className="text-2xl font-bold mb-1">Bienvenido de vuelta</h1>
+              <p className="text-sm text-zinc-500">Inicia sesion en tu cuenta 50POINTS</p>
             </div>
 
             {/* Form */}
             <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
               {/* Email */}
               <div>
-                <label className="block text-sm font-medium text-zinc-400 mb-2">Email</label>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Correo electronico</label>
                 <div className="relative">
                   <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600" />
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
+                    placeholder="tu@ejemplo.com"
                     className="w-full pl-11 pr-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-purple/40 focus:ring-1 focus:ring-purple/20 transition-all"
                   />
                 </div>
@@ -69,14 +69,14 @@ export default function LoginPage() {
 
               {/* Password */}
               <div>
-                <label className="block text-sm font-medium text-zinc-400 mb-2">Password</label>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">Contrasena</label>
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600" />
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
+                    placeholder="Ingresa tu contrasena"
                     className="w-full pl-11 pr-11 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-purple/40 focus:ring-1 focus:ring-purple/20 transition-all"
                   />
                   <button
@@ -92,7 +92,7 @@ export default function LoginPage() {
               {/* Forgot Password */}
               <div className="flex justify-end">
                 <Link href="#" className="text-xs text-purple-light hover:text-purple transition-colors">
-                  Forgot password?
+                  Olvidaste tu contrasena?
                 </Link>
               </div>
 
@@ -101,14 +101,14 @@ export default function LoginPage() {
                 type="submit"
                 className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple to-purple-light text-white font-semibold text-sm btn-glow transition-all hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] active:scale-[0.98]"
               >
-                Login
+                Iniciar Sesion
               </button>
             </form>
 
             {/* Divider */}
             <div className="flex items-center gap-4 my-6">
               <div className="flex-1 h-px bg-white/[0.06]" />
-              <span className="text-xs text-zinc-600 uppercase">or</span>
+              <span className="text-xs text-zinc-600 uppercase">o</span>
               <div className="flex-1 h-px bg-white/[0.06]" />
             </div>
 
@@ -123,14 +123,14 @@ export default function LoginPage() {
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
-              Continue with Google
+              Continuar con Google
             </button>
 
             {/* Register link */}
             <p className="text-center text-sm text-zinc-500 mt-6">
-              Don&apos;t have an account?{" "}
+              No tienes cuenta?{" "}
               <Link href="/register" className="text-purple-light hover:text-purple font-medium transition-colors">
-                Register
+                Registrarse
               </Link>
             </p>
           </div>

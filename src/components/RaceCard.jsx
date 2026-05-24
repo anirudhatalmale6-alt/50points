@@ -73,7 +73,7 @@ export default function RaceCard({
         >
           <div className="flex items-center gap-3 md:gap-4 flex-1 min-w-0">
             <div className="bg-gradient-to-br from-purple to-purple-light text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm flex-shrink-0">
-              R{race.number}
+              C{race.number}
             </div>
             <div className="text-left min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
@@ -84,13 +84,13 @@ export default function RaceCard({
                   {race.status === 'live' && (
                     <span className="inline-block w-1.5 h-1.5 bg-red-400 rounded-full mr-1 animate-pulse-live" />
                   )}
-                  {race.status}
+                  {race.status === 'live' ? 'EN VIVO' : race.status === 'upcoming' ? 'PROXIMO' : 'COMPLETADO'}
                 </span>
               </div>
               <div className="flex items-center gap-3 mt-0.5 text-white/40 text-xs">
-                <span>{race.distance}m</span>
+                <span>{race.distance} furlones</span>
                 <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${surfaceColors[race.surface]}`}>
-                  {race.surface}
+                  Pista
                 </span>
                 <span className="hidden sm:inline">{race.class}</span>
               </div>
@@ -129,30 +129,30 @@ export default function RaceCard({
             <div className="flex items-center gap-4 px-4 md:px-5 py-3 border-t border-b border-white/5 bg-white/[0.01] text-xs text-white/40 flex-wrap">
               <div className="flex items-center gap-1">
                 <MapPin size={11} />
-                <span>{race.distance}m {race.surface}</span>
+                <span>{race.distance} furlones - Pista</span>
               </div>
               <div className="flex items-center gap-1">
                 <Trophy size={11} className="text-gold" />
-                <span className="text-gold/80">${race.purse?.toLocaleString()}</span>
+                <span className="text-gold/80">Bolsa ${race.purse?.toLocaleString()}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Clock size={11} />
                 <span>{race.postTime}</span>
               </div>
               <span className="text-white/20">{race.class}</span>
-              <span className="ml-auto text-white/30">{race.horses.length} runners</span>
+              <span className="ml-auto text-white/30">{race.horses.length} participantes</span>
             </div>
 
             {/* Desktop table header */}
             <div className="hidden md:grid grid-cols-[40px_32px_1fr_1fr_1fr_60px_70px_100px] gap-3 px-5 py-2 text-[10px] text-white/30 uppercase tracking-wider font-medium border-b border-white/5">
               <span>#</span>
-              <span>Silk</span>
-              <span>Horse</span>
-              <span>Jockey</span>
-              <span>Trainer</span>
-              <span className="text-right">Wgt</span>
-              <span className="text-right">Odds</span>
-              <span className="text-center">Pick</span>
+              <span>Seda</span>
+              <span>Caballo</span>
+              <span>Jinete</span>
+              <span>Entrenador</span>
+              <span className="text-right">Peso</span>
+              <span className="text-right">Cuota</span>
+              <span className="text-center">Elegir</span>
             </div>
 
             {/* Horse list */}
@@ -216,10 +216,10 @@ export default function RaceCard({
                           {selected ? (
                             <span className="flex items-center gap-1 justify-center">
                               <Check size={12} />
-                              Picked
+                              Elegido
                             </span>
                           ) : (
-                            'Pick'
+                            'Elegir'
                           )}
                         </motion.button>
                       </div>

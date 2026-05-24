@@ -8,9 +8,9 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: "/tournaments", label: "Tournaments" },
-    { href: "/leaderboard", label: "Leaderboard" },
-    { href: "/how-to-play", label: "How to Play" },
+    { href: "/tournaments", label: "Torneos" },
+    { href: "/leaderboard", label: "Clasificacion" },
+    { href: "/how-to-play", label: "Como Jugar" },
   ];
 
   return (
@@ -45,10 +45,10 @@ export default function Header() {
             {/* Desktop Auth Buttons */}
             <div className="hidden md:flex items-center gap-3">
               <button className="px-4 py-2 text-sm font-medium text-zinc-300 hover:text-white transition-colors">
-                Log In
+                Iniciar Sesion
               </button>
               <button className="px-5 py-2 text-sm font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-lg btn-glow">
-                Register
+                Registrarse
               </button>
             </div>
 
@@ -79,10 +79,10 @@ export default function Header() {
               ))}
               <div className="pt-3 mt-3 border-t border-white/5 flex gap-3">
                 <button className="flex-1 px-4 py-2.5 text-sm font-medium text-zinc-300 border border-white/10 rounded-lg hover:bg-white/5 transition-all">
-                  Log In
+                  Iniciar Sesion
                 </button>
                 <button className="flex-1 px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-lg">
-                  Register
+                  Registrarse
                 </button>
               </div>
             </div>
@@ -94,10 +94,10 @@ export default function Header() {
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 glass-strong border-t border-white/5">
         <div className="flex items-center justify-around h-16 px-2">
           {[
-            { icon: Home, label: "Home", href: "/" },
-            { icon: Trophy, label: "Races", href: "/tournaments" },
-            { icon: BarChart3, label: "Leaderboard", href: "/leaderboard" },
-            { icon: User, label: "Profile", href: "/profile" },
+            { icon: Home, label: "Inicio", href: "/" },
+            { icon: Trophy, label: "Carreras", href: "/tournaments" },
+            { icon: BarChart3, label: "Ranking", href: "/leaderboard" },
+            { icon: User, label: "Perfil", href: "/profile" },
           ].map((item) => (
             <Link
               key={item.href}

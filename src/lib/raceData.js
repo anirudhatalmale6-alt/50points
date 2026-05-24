@@ -174,7 +174,7 @@ export const tournaments = [
     entryFee: 50,
     racesCompleted: 3,
     totalRaces: 8,
-    description: 'The premier South Florida racing event featuring top thoroughbreds competing across 8 thrilling races.',
+    description: 'El evento de carreras mas importante del sur de Florida con los mejores pura sangre compitiendo en 8 emocionantes carreras.',
     races: generateRaces(0),
   },
   {
@@ -190,7 +190,7 @@ export const tournaments = [
     entryFee: 75,
     racesCompleted: 0,
     totalRaces: 8,
-    description: 'Experience world-class racing at the Great Race Place with stunning San Gabriel Mountain views.',
+    description: 'Vive las carreras de clase mundial en el gran hipodromo con impresionantes vistas a las montanas de San Gabriel.',
     races: generateRaces(1),
   },
   {
@@ -206,7 +206,7 @@ export const tournaments = [
     entryFee: 100,
     racesCompleted: 0,
     totalRaces: 8,
-    description: 'Run for the Roses prep series at the historic home of the Kentucky Derby.',
+    description: 'Serie preparatoria para las Rosas en el historico hogar del Kentucky Derby.',
     races: generateRaces(2),
   },
 ];

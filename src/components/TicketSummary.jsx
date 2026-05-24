@@ -32,16 +32,16 @@ export default function TicketSummary({
             <div className="flex items-center gap-2 mb-1">
               <Ticket size={16} className="text-purple-light" />
               <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-                Your Ticket
+                Tu Ticket
               </h3>
             </div>
-            <p className="text-xs text-white/40">Race {raceNumber}</p>
+            <p className="text-xs text-white/40">Carrera {raceNumber}</p>
           </div>
 
           {/* Strategy badge */}
           <div className="px-4 py-3 border-b border-white/5">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] text-white/40 uppercase tracking-wider">Strategy</span>
+              <span className="text-[10px] text-white/40 uppercase tracking-wider">Estrategia</span>
               <span className={`text-xs font-bold px-2 py-0.5 rounded bg-gradient-to-r ${strategy?.gradient} text-white`}>
                 {strategy?.name}
               </span>
@@ -53,7 +53,7 @@ export default function TicketSummary({
             {selectedHorseData.length === 0 ? (
               <div className="flex items-center gap-2 text-white/30 text-xs py-4 justify-center">
                 <AlertCircle size={14} />
-                <span>No picks yet</span>
+                <span>Sin selecciones</span>
               </div>
             ) : (
               <div className="space-y-2">
@@ -72,7 +72,7 @@ export default function TicketSummary({
                       </div>
                       <div className="min-w-0">
                         <p className="text-xs font-semibold text-white truncate">{horse.name}</p>
-                        <p className="text-[10px] text-white/40">{horse.odds.toFixed(2)} odds</p>
+                        <p className="text-[10px] text-white/40">{horse.odds.toFixed(2)} cuota</p>
                       </div>
                     </div>
                     <span className={`text-xs font-bold px-2 py-0.5 rounded
@@ -87,7 +87,7 @@ export default function TicketSummary({
 
             {/* Points remaining */}
             <div className="mt-4 flex items-center justify-between text-xs">
-              <span className="text-white/40">Points remaining</span>
+              <span className="text-white/40">Puntos restantes</span>
               <motion.span
                 key={totalPoints}
                 initial={{ scale: 1.3 }}
@@ -124,7 +124,7 @@ export default function TicketSummary({
                 }
               `}
             >
-              {isComplete ? 'Confirm Picks' : `Select ${strategy?.maxPicks - selectedHorses.length} more`}
+              {isComplete ? 'Confirmar Selecciones' : `Selecciona ${strategy?.maxPicks - selectedHorses.length} caballo(s) mas`}
             </motion.button>
           </div>
         </div>
@@ -169,13 +169,13 @@ function MobileTicketBar({
           >
             <div className="p-4 space-y-2 max-h-[40vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-white/40">Race {raceNumber} - {strategy?.name}</span>
+                <span className="text-xs text-white/40">Carrera {raceNumber} - {strategy?.name}</span>
                 <span className={`text-xs font-bold ${totalPoints === 0 ? 'text-green-400' : 'text-gold'}`}>
-                  {totalPoints}/50 pts remaining
+                  {totalPoints}/50 pts restantes
                 </span>
               </div>
               {selectedHorseData.length === 0 ? (
-                <p className="text-white/30 text-xs text-center py-3">Pick your horses below</p>
+                <p className="text-white/30 text-xs text-center py-3">Elige tus caballos abajo</p>
               ) : (
                 selectedHorseData.map((horse, idx) => (
                   <div key={horse.id} className="flex items-center justify-between bg-white/[0.03] rounded-lg p-2 border border-white/5">
@@ -206,7 +206,7 @@ function MobileTicketBar({
             <div className="flex items-center gap-1">
               <Ticket size={14} className="text-purple-light" />
               <span className="text-xs font-bold text-white">
-                {selectedCount}/{strategy?.maxPicks} picks
+                {selectedCount}/{strategy?.maxPicks} selecciones
               </span>
             </div>
             <div className="flex gap-0.5">
@@ -233,7 +233,7 @@ function MobileTicketBar({
               }
             `}
           >
-            Confirm
+            Confirmar
           </motion.button>
         </div>
       </div>

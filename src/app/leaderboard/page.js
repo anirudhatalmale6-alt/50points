@@ -44,8 +44,8 @@ const leaderboardPlayers = [
   { rank: 25, username: "TripleThreat", initials: "3T", color: "#a78bfa", points: 2820, winRate: 31, streak: 1, trend: "up", change: 0 },
 ];
 
-const timeFilters = ["Daily", "Weekly", "Monthly", "All Time"];
-const tournamentFilters = ["All Tournaments", "Gulfstream Park", "Churchill Downs", "Santa Anita Park"];
+const timeFilters = ["Diario", "Semanal", "Mensual", "Historico"];
+const tournamentFilters = ["Todos los Torneos", "Gulfstream Park", "Churchill Downs", "Santa Anita Park"];
 
 const ROWS_PER_PAGE = 10;
 
@@ -64,8 +64,8 @@ function RankBadge({ rank }) {
 }
 
 export default function LeaderboardPage() {
-  const [activeFilter, setActiveFilter] = useState("All Time");
-  const [tournamentFilter, setTournamentFilter] = useState("All Tournaments");
+  const [activeFilter, setActiveFilter] = useState("Historico");
+  const [tournamentFilter, setTournamentFilter] = useState("Todos los Torneos");
   const [showDropdown, setShowDropdown] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -91,7 +91,7 @@ export default function LeaderboardPage() {
           className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-purple-light transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Home
+          Volver al Inicio
         </Link>
 
         {/* Page Title */}
@@ -105,8 +105,8 @@ export default function LeaderboardPage() {
             <Trophy className="w-7 h-7 text-yellow-400" />
           </div>
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">LEADERBOARD</h1>
-            <p className="text-sm text-zinc-500 mt-1">See who leads the pack</p>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">CLASIFICACION</h1>
+            <p className="text-sm text-zinc-500 mt-1">Mira quien lidera</p>
           </div>
         </motion.div>
 
@@ -220,12 +220,12 @@ export default function LeaderboardPage() {
         >
           {/* Table Header */}
           <div className="hidden sm:grid grid-cols-12 gap-4 px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider border-b border-white/5 bg-white/[0.02]">
-            <div className="col-span-1">Rank</div>
-            <div className="col-span-4">Player</div>
-            <div className="col-span-2 text-right">Points</div>
-            <div className="col-span-2 text-right">Win Rate</div>
-            <div className="col-span-2 text-right">Streak</div>
-            <div className="col-span-1 text-right">Trend</div>
+            <div className="col-span-1">Rango</div>
+            <div className="col-span-4">Jugador</div>
+            <div className="col-span-2 text-right">Puntos</div>
+            <div className="col-span-2 text-right">% Victoria</div>
+            <div className="col-span-2 text-right">Racha</div>
+            <div className="col-span-1 text-right">Tendencia</div>
           </div>
 
           {/* Table Rows */}
@@ -302,7 +302,7 @@ export default function LeaderboardPage() {
           {/* Pagination */}
           <div className="flex items-center justify-between px-6 py-4 bg-white/[0.02] border-t border-white/5">
             <p className="text-xs text-zinc-500">
-              Showing {(currentPage - 1) * ROWS_PER_PAGE + 1}-{Math.min(currentPage * ROWS_PER_PAGE, leaderboardPlayers.length)} of {leaderboardPlayers.length} players
+              Mostrando {(currentPage - 1) * ROWS_PER_PAGE + 1}-{Math.min(currentPage * ROWS_PER_PAGE, leaderboardPlayers.length)} de {leaderboardPlayers.length} jugadores
             </p>
             <div className="flex items-center gap-2">
               <button
@@ -385,19 +385,19 @@ function PodiumCard({ player, position }) {
       <p className="text-2xl font-black text-gradient-purple mb-2">
         {player.points.toLocaleString()}
       </p>
-      <p className="text-xs text-zinc-500 mb-3">Total Points</p>
+      <p className="text-xs text-zinc-500 mb-3">Puntos Totales</p>
 
       {/* Trend */}
       <div className="flex items-center justify-center gap-1">
         {player.trend === "up" ? (
           <div className="flex items-center gap-1 text-emerald-400 text-xs font-medium px-2 py-1 rounded-full bg-emerald-400/10">
             <TrendingUp className="w-3 h-3" />
-            Rising
+            Subiendo
           </div>
         ) : (
           <div className="flex items-center gap-1 text-red-400 text-xs font-medium px-2 py-1 rounded-full bg-red-400/10">
             <TrendingDown className="w-3 h-3" />
-            Falling
+            Bajando
           </div>
         )}
       </div>

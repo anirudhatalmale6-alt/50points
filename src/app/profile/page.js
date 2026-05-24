@@ -92,12 +92,12 @@ const recentTickets = [
 ];
 
 const achievements = [
-  { id: 1, name: "First Win", description: "Win your first race pick", icon: Star, unlocked: true, color: "#f59e0b" },
-  { id: 2, name: "5-Race Streak", description: "Win 5 races in a row", icon: Flame, unlocked: true, color: "#a855f7" },
-  { id: 3, name: "Top 10 Daily", description: "Reach daily top 10", icon: TrendingUp, unlocked: true, color: "#06b6d4" },
-  { id: 4, name: "Tournament Champion", description: "Win a full tournament", icon: Crown, unlocked: false, color: "#f59e0b" },
-  { id: 5, name: "1000 Points Club", description: "Earn 1000+ points in one day", icon: Zap, unlocked: false, color: "#a855f7" },
-  { id: 6, name: "Perfect Pick", description: "All horses place in Smart Pick", icon: Shield, unlocked: false, color: "#06b6d4" },
+  { id: 1, name: "Primera Victoria", description: "Gana tu primera seleccion", icon: Star, unlocked: true, color: "#f59e0b" },
+  { id: 2, name: "Racha de 5 Carreras", description: "Gana 5 carreras seguidas", icon: Flame, unlocked: true, color: "#a855f7" },
+  { id: 3, name: "Top 10 Diario", description: "Alcanza el top 10 diario", icon: TrendingUp, unlocked: true, color: "#06b6d4" },
+  { id: 4, name: "Campeon de Torneo", description: "Gana un torneo completo", icon: Crown, unlocked: false, color: "#f59e0b" },
+  { id: 5, name: "Club 1000 Puntos", description: "Gana 1000+ puntos en un dia", icon: Zap, unlocked: false, color: "#a855f7" },
+  { id: 6, name: "Seleccion Perfecta", description: "Todos los caballos clasifican en Smart Pick", icon: Shield, unlocked: false, color: "#06b6d4" },
 ];
 
 const maxPoints = Math.max(...performanceData.map((d) => d.points));
@@ -134,7 +134,7 @@ export default function ProfilePage() {
           className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-purple-light transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Home
+          Volver al Inicio
         </Link>
 
         {/* Profile Header */}
@@ -167,7 +167,7 @@ export default function ProfilePage() {
             <div className="flex flex-col sm:flex-row items-center gap-4 text-sm text-zinc-500">
               <span className="flex items-center gap-1.5">
                 <Calendar className="w-4 h-4" />
-                Member since {userProfile.memberSince}
+                Miembro desde {userProfile.memberSince}
               </span>
               <span className="flex items-center gap-1.5">
                 <MapPin className="w-4 h-4" />
@@ -179,7 +179,7 @@ export default function ProfilePage() {
           {/* Edit Button */}
           <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 text-sm text-zinc-300 hover:border-purple/30 hover:text-white transition-all bg-white/[0.02]">
             <Edit3 className="w-4 h-4" />
-            Edit Profile
+            Editar Perfil
           </button>
         </motion.div>
 
@@ -194,7 +194,7 @@ export default function ProfilePage() {
           <motion.div variants={fadeUp} className="glass-card rounded-2xl p-5 text-center">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Trophy className="w-5 h-5 text-purple-light" />
-              <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Total Points</span>
+              <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Puntos Totales</span>
             </div>
             <p className="text-3xl font-black text-gradient-purple">
               {userProfile.totalPoints.toLocaleString()}
@@ -205,7 +205,7 @@ export default function ProfilePage() {
           <motion.div variants={fadeUp} className="glass-card rounded-2xl p-5 text-center">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Target className="w-5 h-5 text-cyan" />
-              <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Win Rate</span>
+              <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">% Victoria</span>
             </div>
             <div className="flex items-center justify-center">
               <div className="relative w-20 h-20">
@@ -240,7 +240,7 @@ export default function ProfilePage() {
           <motion.div variants={fadeUp} className="glass-card rounded-2xl p-5 text-center">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Award className="w-5 h-5 text-yellow-400" />
-              <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Tournaments</span>
+              <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Torneos</span>
             </div>
             <p className="text-3xl font-black text-white">
               {userProfile.tournamentsPlayed}
@@ -251,7 +251,7 @@ export default function ProfilePage() {
           <motion.div variants={fadeUp} className="glass-card rounded-2xl p-5 text-center">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Flame className="w-5 h-5 text-orange-400" />
-              <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Streak</span>
+              <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Racha</span>
             </div>
             <div className="flex items-center justify-center gap-2">
               <Flame className="w-7 h-7 text-orange-400" />
@@ -269,7 +269,7 @@ export default function ProfilePage() {
         >
           <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-purple-light" />
-            Performance History
+            Historial de Rendimiento
           </h2>
 
           <div className="flex items-end gap-3 sm:gap-4 h-48">
@@ -305,13 +305,13 @@ export default function ProfilePage() {
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-bold flex items-center gap-2">
               <Calendar className="w-5 h-5 text-cyan" />
-              Recent Tickets
+              Tickets Recientes
             </h2>
             <Link
               href="#"
               className="flex items-center gap-1 text-sm text-purple-light hover:text-purple transition-colors"
             >
-              View All
+              Ver Todo
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
@@ -369,7 +369,7 @@ export default function ProfilePage() {
         >
           <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
             <Award className="w-5 h-5 text-yellow-400" />
-            Achievements
+            Logros
           </h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">

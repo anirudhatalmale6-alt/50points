@@ -95,9 +95,9 @@ export default function TournamentPage() {
       <div className="min-h-screen bg-brand-dark flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4 animate-pulse">🏇</div>
-          <p className="text-white/40">Tournament not found</p>
+          <p className="text-white/40">Torneo no encontrado</p>
           <a href="/" className="text-purple-light text-sm mt-2 inline-block hover:underline">
-            Back to Home
+            Volver al Inicio
           </a>
         </div>
       </div>
@@ -105,9 +105,9 @@ export default function TournamentPage() {
   }
 
   const statusConfig = {
-    live: { label: 'LIVE NOW', color: 'bg-red-500', glow: 'shadow-[0_0_20px_rgba(239,68,68,0.5)]', textColor: 'text-red-400' },
-    upcoming: { label: 'UPCOMING', color: 'bg-purple', glow: 'shadow-[0_0_20px_rgba(124,58,237,0.3)]', textColor: 'text-purple-light' },
-    completed: { label: 'COMPLETED', color: 'bg-white/20', glow: '', textColor: 'text-white/50' },
+    live: { label: 'EN VIVO', color: 'bg-red-500', glow: 'shadow-[0_0_20px_rgba(239,68,68,0.5)]', textColor: 'text-red-400' },
+    upcoming: { label: 'PROXIMO', color: 'bg-purple', glow: 'shadow-[0_0_20px_rgba(124,58,237,0.3)]', textColor: 'text-purple-light' },
+    completed: { label: 'COMPLETADO', color: 'bg-white/20', glow: '', textColor: 'text-white/50' },
   };
   const status = statusConfig[tournament.status];
 
@@ -123,7 +123,7 @@ export default function TournamentPage() {
           {/* Back nav */}
           <a href="/" className="inline-flex items-center gap-1.5 text-white/40 hover:text-white/70 text-sm mb-6 transition-colors">
             <ChevronLeft size={16} />
-            <span>Back to Tournaments</span>
+            <span>Volver a Torneos</span>
           </a>
 
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
@@ -138,10 +138,23 @@ export default function TournamentPage() {
                 </span>
               </div>
 
+              {/* TORNEO label */}
+              <p className="text-[11px] text-purple-light uppercase tracking-[0.2em] font-bold mb-2">TORNEO</p>
+
               {/* Tournament name */}
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 leading-tight">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent mb-1 leading-tight">
                 {tournament.name}
               </h1>
+
+              {/* POINT RUSH subtitle */}
+              <p className="text-lg sm:text-xl font-bold bg-gradient-to-r from-purple-light to-cyan bg-clip-text text-transparent mb-2">
+                POINT RUSH
+              </p>
+
+              {/* Track name prominent */}
+              <p className="text-sm sm:text-base font-bold text-white/60 uppercase tracking-widest mb-3">
+                {tournament.track}
+              </p>
 
               {/* Meta info */}
               <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
@@ -151,13 +164,22 @@ export default function TournamentPage() {
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Calendar size={14} className="text-purple-light" />
-                  <span>{new Date(tournament.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                  <span>{new Date(tournament.date).toLocaleDateString('es-ES', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</span>
                 </div>
               </div>
 
               <p className="text-white/30 text-sm mt-3 max-w-2xl">
                 {tournament.description}
               </p>
+
+              {/* CTA Button */}
+              <a
+                href={nextRace ? `/tournament/${tournament.id}/race/${nextRace.id}` : '#'}
+                className="mt-5 inline-flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-purple to-purple-light hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] transition-shadow"
+              >
+                HACER MI TICKET AHORA
+                <ArrowRight size={16} />
+              </a>
             </div>
 
             {/* Prize pool card */}
@@ -168,15 +190,15 @@ export default function TournamentPage() {
               className="bg-white/[0.03] backdrop-blur-lg border border-white/10 rounded-xl p-5 lg:min-w-[280px]"
             >
               <div className="text-center mb-4">
-                <p className="text-[10px] text-white/40 uppercase tracking-widest mb-1">Prize Pool</p>
+                <p className="text-[10px] text-white/40 uppercase tracking-widest mb-1">Premio Total</p>
                 <p className="text-3xl font-bold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent">
                   ${tournament.prizePool.toLocaleString()}
                 </p>
-                <p className="text-xs text-white/30 mt-1">${tournament.entryFee} entry</p>
+                <p className="text-xs text-white/30 mt-1">${tournament.entryFee} entrada</p>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-white/40 flex items-center gap-1.5"><Users size={12} />Players</span>
+                  <span className="text-white/40 flex items-center gap-1.5"><Users size={12} />Jugadores</span>
                   <span className="text-white font-medium">{tournament.playersJoined.toLocaleString()} / {tournament.totalPlayers.toLocaleString()}</span>
                 </div>
                 <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
@@ -209,7 +231,7 @@ export default function TournamentPage() {
                   <CheckCircle2 size={14} />
                   <span className="text-lg font-bold">{tournament.racesCompleted}</span>
                 </div>
-                <p className="text-[10px] text-white/40 uppercase tracking-wider">Completed</p>
+                <p className="text-[10px] text-white/40 uppercase tracking-wider">Completadas</p>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -221,7 +243,7 @@ export default function TournamentPage() {
                   <Flame size={14} />
                   <span className="text-lg font-bold">{tournament.races.filter((r) => r.status === 'live').length}</span>
                 </div>
-                <p className="text-[10px] text-white/40 uppercase tracking-wider">Live</p>
+                <p className="text-[10px] text-white/40 uppercase tracking-wider">En Vivo</p>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -233,7 +255,7 @@ export default function TournamentPage() {
                   <Timer size={14} />
                   <span className="text-lg font-bold">{tournament.races.filter((r) => r.status === 'upcoming').length}</span>
                 </div>
-                <p className="text-[10px] text-white/40 uppercase tracking-wider">Upcoming</p>
+                <p className="text-[10px] text-white/40 uppercase tracking-wider">Proximas</p>
               </motion.div>
             </div>
 
@@ -262,9 +284,9 @@ export default function TournamentPage() {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-white flex items-center gap-2">
                 <Zap size={18} className="text-purple-light" />
-                Race Card
+                Programa de Carreras
               </h2>
-              <span className="text-xs text-white/30">{tournament.totalRaces} races</span>
+              <span className="text-xs text-white/30">{tournament.totalRaces} carreras</span>
             </div>
 
             {/* Race accordion */}
@@ -302,7 +324,7 @@ export default function TournamentPage() {
                 <div className="flex items-center gap-2 mb-4">
                   <Clock size={14} className="text-cyan" />
                   <span className="text-xs text-white/40 uppercase tracking-wider font-medium">
-                    Next Race In
+                    Proxima Carrera En
                   </span>
                 </div>
                 <div className="flex items-center justify-center gap-3 mb-4">
@@ -336,7 +358,7 @@ export default function TournamentPage() {
                   className="mt-3 w-full py-2.5 rounded-lg text-center text-xs font-bold text-white bg-gradient-to-r from-purple to-purple-light block hover:shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-shadow"
                 >
                   <div className="flex items-center justify-center gap-1.5">
-                    View Full Race Card
+                    Ver Carrera Completa
                     <ArrowRight size={12} />
                   </div>
                 </a>
@@ -363,14 +385,14 @@ export default function TournamentPage() {
               transition={{ delay: 0.4 }}
               className="bg-white/[0.03] backdrop-blur-lg border border-white/10 rounded-xl p-5"
             >
-              <h3 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-4">Tournament Info</h3>
+              <h3 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-4">Info del Torneo</h3>
               <div className="space-y-3">
-                <InfoRow label="Track" value={tournament.track} />
-                <InfoRow label="Location" value={tournament.location} />
-                <InfoRow label="Date" value={new Date(tournament.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} />
-                <InfoRow label="Races" value={`${tournament.racesCompleted} / ${tournament.totalRaces}`} />
-                <InfoRow label="Entry Fee" value={`$${tournament.entryFee}`} />
-                <InfoRow label="Prize Pool" value={`$${tournament.prizePool.toLocaleString()}`} highlight />
+                <InfoRow label="Pista" value={tournament.track} />
+                <InfoRow label="Ubicacion" value={tournament.location} />
+                <InfoRow label="Fecha" value={new Date(tournament.date).toLocaleDateString('es-ES', { month: 'short', day: 'numeric', year: 'numeric' })} />
+                <InfoRow label="Carreras" value={`${tournament.racesCompleted} / ${tournament.totalRaces}`} />
+                <InfoRow label="Entrada" value={`$${tournament.entryFee}`} />
+                <InfoRow label="Premio Total" value={`$${tournament.prizePool.toLocaleString()}`} highlight />
               </div>
             </motion.div>
 
@@ -381,23 +403,23 @@ export default function TournamentPage() {
               transition={{ delay: 0.5 }}
               className="bg-white/[0.03] backdrop-blur-lg border border-white/10 rounded-xl p-5"
             >
-              <h3 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">How It Works</h3>
+              <h3 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">Como Funciona</h3>
               <div className="space-y-2.5 text-xs text-white/50">
                 <div className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-purple/20 text-purple-light flex items-center justify-center text-[10px] font-bold flex-shrink-0">1</span>
-                  <p>Each race, allocate <span className="text-gold font-semibold">50 points</span> across your picks</p>
+                  <p>En cada carrera, distribuye <span className="text-gold font-semibold">50 puntos</span> entre tus selecciones</p>
                 </div>
                 <div className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-purple/20 text-purple-light flex items-center justify-center text-[10px] font-bold flex-shrink-0">2</span>
-                  <p>Choose a strategy: Full, Dual, or Smart Pick</p>
+                  <p>Elige una estrategia: Full, Dual o Smart Pick</p>
                 </div>
                 <div className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-purple/20 text-purple-light flex items-center justify-center text-[10px] font-bold flex-shrink-0">3</span>
-                  <p>Points x Odds = your score if your pick wins</p>
+                  <p>Puntos x Cuota = tu puntuacion si tu seleccion gana</p>
                 </div>
                 <div className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-purple/20 text-purple-light flex items-center justify-center text-[10px] font-bold flex-shrink-0">4</span>
-                  <p>Highest total score across all races wins!</p>
+                  <p>El mayor puntaje total en todas las carreras gana!</p>
                 </div>
               </div>
             </motion.div>

@@ -147,8 +147,8 @@ export default function TicketConfirmation({
               transition={{ delay: 0.3 }}
               className="text-center px-6 pb-4"
             >
-              <h2 className="text-xl font-bold text-white mb-1">Ticket Confirmed!</h2>
-              <p className="text-sm text-white/40">Your picks have been locked in</p>
+              <h2 className="text-xl font-bold text-white mb-1">PUNTOS REGISTRADOS</h2>
+              <p className="text-sm text-white/40">Tus selecciones han sido confirmadas</p>
             </motion.div>
 
             {/* Summary */}
@@ -161,7 +161,7 @@ export default function TicketConfirmation({
               {/* Race info */}
               <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
                 <div>
-                  <p className="text-xs text-white/40">Race</p>
+                  <p className="text-xs text-white/40">Carrera</p>
                   <p className="text-sm font-semibold text-white">
                     {raceName || `CARRERA ${raceNumber}`}
                   </p>
@@ -197,7 +197,7 @@ export default function TicketConfirmation({
 
               {/* Total */}
               <div className="flex items-center justify-between px-4 py-3 border-t border-white/5 bg-white/[0.02]">
-                <span className="text-xs text-white/40">Total points allocated</span>
+                <span className="text-xs text-white/40">Total puntos asignados</span>
                 <span className="text-sm font-bold text-green-400">50 / 50</span>
               </div>
             </motion.div>
@@ -215,7 +215,7 @@ export default function TicketConfirmation({
               >
                 <div className="flex items-center justify-center gap-1.5">
                   <Trophy size={14} />
-                  Leaderboard
+                  Ver Clasificacion
                 </div>
               </a>
               <button
@@ -223,7 +223,7 @@ export default function TicketConfirmation({
                 className="flex-1 py-2.5 rounded-xl text-center text-sm font-bold bg-gradient-to-r from-purple to-purple-light text-white shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:shadow-[0_0_25px_rgba(124,58,237,0.5)] transition-shadow"
               >
                 <div className="flex items-center justify-center gap-1.5">
-                  Next Race
+                  Siguiente Carrera
                   <ArrowRight size={14} />
                 </div>
               </button>
@@ -232,7 +232,7 @@ export default function TicketConfirmation({
             {/* Auto close timer */}
             <div className="text-center pb-4">
               <span className="text-[10px] text-white/20">
-                Auto-closing in {autoCloseTimer}s
+                Cerrando en {autoCloseTimer}s
               </span>
             </div>
           </motion.div>

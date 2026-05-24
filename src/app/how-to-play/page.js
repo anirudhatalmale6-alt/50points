@@ -20,117 +20,117 @@ import Link from "next/link";
 const steps = [
   {
     number: 1,
-    title: "Join a Tournament",
+    title: "Unete a un Torneo",
     icon: Users,
     color: "#7c3aed",
     description:
-      "Browse live and upcoming tournaments from top racetracks around the world. Each tournament is free to enter and open to all players. Simply select a tournament to get started.",
+      "Explora torneos en vivo y proximos de los mejores hipodromos del mundo. Cada torneo es gratuito y abierto a todos los jugadores. Simplemente selecciona un torneo para comenzar.",
     details: [
-      "Tournaments run daily at major tracks",
-      "Completely free to enter",
-      "Compete against thousands of players",
-      "Multiple races per tournament",
+      "Torneos diarios en los principales hipodromos",
+      "Completamente gratis para participar",
+      "Compite contra miles de jugadores",
+      "Multiples carreras por torneo",
     ],
   },
   {
     number: 2,
-    title: "Choose Your Strategy",
+    title: "Elige tu Estrategia",
     icon: Target,
     color: "#a855f7",
     description:
-      "You get 50 points per race to allocate across your horse picks. Choose from three strategies that match your risk appetite.",
+      "Tienes 50 puntos por carrera para asignar a tus selecciones de caballos. Elige entre tres estrategias que se adapten a tu nivel de riesgo.",
     strategies: [
       {
         name: "Full Point",
-        points: "50 pts on 1 horse",
-        risk: "High Risk",
+        points: "50 pts en 1 caballo",
+        risk: "Alto Riesgo",
         riskColor: "#ef4444",
-        multiplier: "1x Odds",
-        description: "Go all-in on a single horse for maximum reward.",
+        multiplier: "1x Cuota",
+        description: "Apuesta todo a un solo caballo para la maxima recompensa.",
         icon: Flame,
       },
       {
         name: "Dual Point",
-        points: "25 + 25 split",
-        risk: "Medium Risk",
+        points: "25 + 25 dividido",
+        risk: "Riesgo Medio",
         riskColor: "#f59e0b",
-        multiplier: "0.8x Odds",
-        description: "Split between two horses for balanced risk.",
+        multiplier: "0.8x Cuota",
+        description: "Divide entre dos caballos para un riesgo equilibrado.",
         icon: Crosshair,
       },
       {
         name: "Smart Pick",
-        points: "30 / 15 / 5 split",
-        risk: "Low Risk",
+        points: "30 / 15 / 5 dividido",
+        risk: "Bajo Riesgo",
         riskColor: "#10b981",
-        multiplier: "0.6x Odds",
-        description: "Spread across three horses to maximize chances.",
+        multiplier: "0.6x Cuota",
+        description: "Distribuye entre tres caballos para maximizar tus chances.",
         icon: Shield,
       },
     ],
   },
   {
     number: 3,
-    title: "Pick Your Horses",
+    title: "Elige tus Caballos",
     icon: Crosshair,
     color: "#06b6d4",
     description:
-      "Study the race card before each race. You will see each horse's name, jockey, trainer, recent form, and live odds. Use this info to make informed picks before the race begins.",
+      "Estudia la tarjeta de carrera antes de cada competencia. Veras el nombre de cada caballo, jockey, entrenador, forma reciente y cuotas en vivo. Usa esta informacion para hacer selecciones informadas antes de que comience la carrera.",
     details: [
-      "View horse stats, jockey info, and form",
-      "Check live odds updated in real time",
-      "Review past performance data",
-      "Lock in your picks before post time",
+      "Ve estadisticas del caballo, info del jockey y forma",
+      "Consulta cuotas en vivo actualizadas en tiempo real",
+      "Revisa datos de rendimiento pasado",
+      "Confirma tus selecciones antes del inicio",
     ],
   },
   {
     number: 4,
-    title: "Earn Points",
+    title: "Gana Puntos",
     icon: Zap,
     color: "#f59e0b",
     description:
-      "When your horse wins, your allocated points are multiplied by the horse's odds. The higher the odds, the bigger the payout.",
+      "Cuando tu caballo gana, tus puntos asignados se multiplican por la cuota del caballo. Cuanto mayor sea la cuota, mayor sera la recompensa.",
     formula: {
-      label: "Points Earned = Allocated Points x Odds",
-      example: "Example: 50 pts x 4.20 odds = 210 pts earned!",
+      label: "Puntos Ganados = Puntos Asignados x Cuota",
+      example: "Ejemplo: 50 pts x 4.20 cuota = 210 pts ganados!",
     },
   },
   {
     number: 5,
-    title: "Climb the Rankings",
+    title: "Sube en el Ranking",
     icon: TrendingUp,
     color: "#10b981",
     description:
-      "Accumulate points across races and tournaments to climb the leaderboard. Compete in daily, weekly, and monthly rankings to prove your horse racing knowledge.",
+      "Acumula puntos en carreras y torneos para subir en la clasificacion. Compite en rankings diarios, semanales y mensuales para demostrar tu conocimiento en carreras de caballos.",
     details: [
-      "Daily leaderboards reset each day",
-      "Weekly rankings for consistent performers",
-      "Monthly championships for top players",
-      "All-time hall of fame",
+      "Clasificaciones diarias se reinician cada dia",
+      "Rankings semanales para jugadores constantes",
+      "Campeonatos mensuales para los mejores",
+      "Salon de la fama historico",
     ],
   },
 ];
 
 const faqs = [
   {
-    question: "Is it free?",
+    question: "Es gratis?",
     answer:
-      "Yes, 50POINTS is completely free to play. There are no entry fees, no hidden charges, and no in-app purchases required. Just sign up and start competing.",
+      "Si, 50POINTS es completamente gratis para jugar. No hay tarifas de entrada, cargos ocultos ni compras dentro de la app. Solo registrate y comienza a competir.",
   },
   {
-    question: "How are odds determined?",
+    question: "Como se determinan las cuotas?",
     answer:
-      "We use the official track odds as reported by each racetrack. Odds are updated in real time leading up to each race and locked at post time.",
+      "Usamos las cuotas oficiales del hipodromo reportadas por cada pista. Las cuotas se actualizan en tiempo real antes de cada carrera y se bloquean al momento del inicio.",
   },
   {
-    question: "Can I change my picks?",
+    question: "Puedo cambiar mis selecciones?",
     answer:
-      "Yes, you can modify your horse selections and strategy at any time before the race starts. Once the race begins (post time), all picks are locked in.",
+      "Si, puedes modificar tus selecciones de caballos y estrategia en cualquier momento antes de que comience la carrera. Una vez que la carrera inicia, todas las selecciones quedan bloqueadas.",
   },
   {
-    question: "What do I win?",
+    question: "Que puedo ganar?",
     answer:
-      "Right now, you compete for leaderboard rankings, achievements, and bragging rights. We are building toward prizes and rewards in future seasons -- stay tuned!",
+      "Actualmente, compites por posiciones en la clasificacion, logros y derechos de presumir. Estamos trabajando en premios y recompensas para futuras temporadas -- mantente atento!",
   },
 ];
 
@@ -160,7 +160,7 @@ export default function HowToPlayPage() {
           className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-purple-light transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Home
+          Volver al Inicio
         </Link>
 
         {/* Page Title */}
@@ -172,11 +172,11 @@ export default function HowToPlayPage() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple/10 border border-purple/20 text-purple-light text-sm font-medium mb-6">
             <HelpCircle className="w-4 h-4" />
-            Getting Started
+            Primeros Pasos
           </div>
-          <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-4">HOW TO PLAY</h1>
+          <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-4">COMO JUGAR</h1>
           <p className="text-zinc-500 max-w-xl mx-auto">
-            Master the game in five simple steps. Pick horses, earn points, climb the leaderboard.
+            Domina el juego en cinco simples pasos. Elige caballos, gana puntos, sube en la clasificacion.
           </p>
         </motion.div>
 
@@ -202,8 +202,8 @@ export default function HowToPlayPage() {
           className="mb-16"
         >
           <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold mb-2">Frequently Asked Questions</h2>
-            <p className="text-sm text-zinc-500">Everything else you need to know</p>
+            <h2 className="text-2xl font-bold mb-2">Preguntas Frecuentes</h2>
+            <p className="text-sm text-zinc-500">Todo lo que necesitas saber</p>
           </div>
 
           <div className="space-y-4">
@@ -235,15 +235,15 @@ export default function HowToPlayPage() {
           className="text-center rounded-2xl p-10 bg-gradient-to-br from-purple/15 to-cyan/5 border border-purple/20"
         >
           <Trophy className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Ready to compete?</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Listo para competir?</h2>
           <p className="text-zinc-400 mb-6 max-w-md mx-auto">
-            Join thousands of players and prove your horse racing knowledge. Free to play, forever.
+            Unete a miles de jugadores y demuestra tu conocimiento en carreras de caballos. Gratis para jugar, siempre.
           </p>
           <Link
             href="/register"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-purple to-purple-light text-white font-semibold text-sm btn-glow transition-all hover:shadow-[0_0_30px_rgba(124,58,237,0.5)]"
           >
-            Create Free Account
+            Crear Cuenta Gratis
             <ChevronRight className="w-4 h-4" />
           </Link>
         </motion.div>
@@ -273,7 +273,7 @@ function StepCard({ step }) {
           </div>
           <div>
             <p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold mb-0.5">
-              Step {step.number}
+              Paso {step.number}
             </p>
             <h3 className="text-xl font-bold text-white">{step.title}</h3>
           </div>

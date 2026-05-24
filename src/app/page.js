@@ -68,8 +68,8 @@ export default function Home() {
         {/* Grid pattern */}
         <div className="absolute inset-0 bg-grid-pattern opacity-40" />
 
-        {/* Horse silhouette decoration */}
-        <div className="absolute right-[-5%] bottom-[10%] w-[400px] h-[360px] opacity-[0.03] pointer-events-none select-none">
+        {/* Horse silhouette decoration - very subtle background element */}
+        <div className="absolute right-[-10%] bottom-[5%] w-[500px] h-[450px] opacity-[0.02] pointer-events-none select-none blur-sm">
           <HorseSilhouette className="w-full h-full" />
         </div>
 
@@ -79,7 +79,7 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass mb-6 sm:mb-8">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse-live" />
               <span className="text-xs sm:text-sm font-medium text-zinc-300">
-                Live tournaments running now
+                Torneos en vivo ahora
               </span>
             </div>
           </AnimateInView>
@@ -93,24 +93,24 @@ export default function Home() {
 
           <AnimateInView delay={0.3}>
             <p className="text-lg sm:text-2xl lg:text-3xl font-semibold text-white/90 mb-3 sm:mb-4">
-              The Ultimate Horse Racing Competition
+              La Competencia Definitiva de Carreras de Caballos
             </p>
           </AnimateInView>
 
           <AnimateInView delay={0.4}>
             <p className="text-sm sm:text-lg text-zinc-400 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
-              Pick your horses. Earn points. Dominate the leaderboard.
+              Elige tus caballos. Gana puntos. Domina la clasificacion.
             </p>
           </AnimateInView>
 
           <AnimateInView delay={0.5}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 sm:mb-16">
               <button className="w-full sm:w-auto px-8 py-3.5 text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-xl btn-glow animate-glow-pulse">
-                Join Tournament
+                Unirse al Torneo
                 <ChevronRight className="inline-block w-4 h-4 ml-1" />
               </button>
               <button className="w-full sm:w-auto px-8 py-3.5 text-sm sm:text-base font-semibold text-zinc-300 border border-white/10 rounded-xl hover:bg-white/5 hover:border-purple/30 transition-all duration-300">
-                How It Works
+                Como Funciona
               </button>
             </div>
           </AnimateInView>
@@ -119,10 +119,10 @@ export default function Home() {
           <AnimateInView delay={0.6}>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-3xl mx-auto">
               {[
-                { value: "12,450+", label: "Players", icon: "users" },
-                { value: "3", label: "Live Tracks", icon: "radio" },
-                { value: "$0", label: "Entry Fee", icon: "zap" },
-                { value: "24/7", label: "Races", icon: "clock" },
+                { value: "12,450+", label: "Jugadores", icon: "users" },
+                { value: "3", label: "Pistas en Vivo", icon: "radio" },
+                { value: "$0", label: "Entrada", icon: "zap" },
+                { value: "24/7", label: "Carreras", icon: "clock" },
               ].map((stat, i) => (
                 <div
                   key={i}
@@ -150,14 +150,14 @@ export default function Home() {
             <div className="flex items-center gap-3 mb-2">
               <span className="w-2.5 h-2.5 rounded-full bg-cyan animate-pulse-live" />
               <span className="text-xs font-semibold text-cyan uppercase tracking-widest">
-                Live Now
+                EN VIVO
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-3">
-              LIVE TOURNAMENTS
+              TORNEOS EN VIVO
             </h2>
             <p className="text-zinc-500 text-sm sm:text-base mb-10 sm:mb-14 max-w-lg">
-              Jump into a tournament. Pick your horses, earn points, and compete in real time.
+              Unete a un torneo. Elige tus caballos, gana puntos y compite en tiempo real.
             </p>
           </AnimateInView>
 
@@ -184,7 +184,7 @@ export default function Home() {
                         {t.status === "LIVE" && (
                           <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse-live" />
                         )}
-                        {t.status}
+                        {t.status === "LIVE" ? "EN VIVO" : t.status === "UPCOMING" ? "PROXIMO" : t.status}
                       </span>
                     </div>
 
@@ -192,12 +192,12 @@ export default function Home() {
                     <div className="mb-4">
                       <div className="flex items-center justify-between text-xs mb-1.5">
                         <span className="text-zinc-400">
-                          Race {t.currentRace} of {t.totalRaces}
+                          Carrera {t.currentRace} de {t.totalRaces}
                         </span>
                         <span className="text-zinc-500">
                           {t.status === "LIVE"
-                            ? `Next: ${t.nextRace}`
-                            : `Starts: ${t.startTime}`}
+                            ? `Siguiente: ${t.nextRace}`
+                            : `Comienza: ${t.startTime}`}
                         </span>
                       </div>
                       <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
@@ -218,13 +218,13 @@ export default function Home() {
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Users className="w-3.5 h-3.5 text-purple-light" />
-                        <span>{t.players.toLocaleString()} players</span>
+                        <span>{t.players.toLocaleString()} jugadores</span>
                       </div>
                     </div>
 
                     {/* CTA */}
                     <button className="w-full py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-xl btn-glow opacity-90 group-hover:opacity-100 transition-opacity">
-                      Enter Tournament
+                      Entrar al Torneo
                     </button>
                   </div>
                 </div>
@@ -243,13 +243,13 @@ export default function Home() {
           <AnimateInView>
             <div className="text-center mb-12 sm:mb-16">
               <span className="text-xs font-semibold text-purple-light uppercase tracking-widest mb-3 block">
-                Getting Started
+                Primeros Pasos
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
-                HOW IT WORKS
+                COMO FUNCIONA
               </h2>
               <p className="text-zinc-500 text-sm sm:text-base max-w-lg mx-auto">
-                Three simple steps to start competing. No deposit, no commitment, pure strategy.
+                Tres simples pasos para comenzar a competir. Sin deposito, sin compromiso, pura estrategia.
               </p>
             </div>
           </AnimateInView>
@@ -279,7 +279,7 @@ export default function Home() {
                   <div className="relative">
                     <div className="flex items-center gap-2 mb-2">
                       <span className="text-xs font-semibold text-purple-light/60 uppercase tracking-wider">
-                        Step {step.step}
+                        Paso {step.step}
                       </span>
                     </div>
                     <h3 className="text-lg sm:text-xl font-bold text-white mb-2.5 group-hover:text-purple-light transition-colors">
@@ -298,34 +298,34 @@ export default function Home() {
           <AnimateInView delay={0.3}>
             <div className="mt-12 sm:mt-16 glass-card rounded-2xl p-6 sm:p-8">
               <h3 className="text-lg sm:text-xl font-bold text-white mb-6 text-center">
-                Choose Your Betting Strategy
+                Elige tu Estrategia
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {[
                   {
                     name: "Full Point",
                     points: "50pts on 1",
-                    risk: "High Risk",
+                    risk: "Alto Riesgo",
                     riskColor: "text-red-400",
-                    description: "All-in on a single horse for maximum reward",
+                    description: "Todo en un solo caballo para maximo premio",
                     gradient: "from-red-500/10 to-transparent",
                     border: "border-red-500/10 hover:border-red-500/30",
                   },
                   {
                     name: "Dual Point",
                     points: "25 + 25",
-                    risk: "Medium Risk",
+                    risk: "Riesgo Medio",
                     riskColor: "text-amber-400",
-                    description: "Split between two horses for balanced play",
+                    description: "Divide entre dos caballos para juego equilibrado",
                     gradient: "from-amber-500/10 to-transparent",
                     border: "border-amber-500/10 hover:border-amber-500/30",
                   },
                   {
                     name: "Smart Pick",
                     points: "30 / 15 / 5",
-                    risk: "Low Risk",
+                    risk: "Bajo Riesgo",
                     riskColor: "text-green-400",
-                    description: "Spread across three for consistent scoring",
+                    description: "Distribuye en tres para puntuacion consistente",
                     gradient: "from-green-500/10 to-transparent",
                     border: "border-green-500/10 hover:border-green-500/30",
                   },
@@ -359,13 +359,13 @@ export default function Home() {
           <AnimateInView>
             <div className="text-center mb-10 sm:mb-14">
               <span className="text-xs font-semibold text-gold uppercase tracking-widest mb-3 block">
-                Rankings
+                Ranking
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
-                TOP PLAYERS
+                TOP JUGADORES
               </h2>
               <p className="text-zinc-500 text-sm sm:text-base max-w-md mx-auto">
-                {"Today's highest scorers. Can you beat them?"}
+                {"Los mejores del dia. Puedes superarlos?"}
               </p>
             </div>
           </AnimateInView>
@@ -376,11 +376,11 @@ export default function Home() {
               {/* Header */}
               <div className="px-4 sm:px-6 py-3 border-b border-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-4 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider w-full">
-                  <span className="w-10 text-center">Rank</span>
-                  <span className="flex-1">Player</span>
-                  <span className="w-20 text-right hidden sm:block">Win Rate</span>
-                  <span className="w-20 text-right hidden sm:block">Streak</span>
-                  <span className="w-24 text-right">Points</span>
+                  <span className="w-10 text-center">Rango</span>
+                  <span className="flex-1">Jugador</span>
+                  <span className="w-20 text-right hidden sm:block">% Victoria</span>
+                  <span className="w-20 text-right hidden sm:block">Racha</span>
+                  <span className="w-24 text-right">Puntos</span>
                 </div>
               </div>
 
@@ -458,7 +458,7 @@ export default function Home() {
               {/* View All */}
               <div className="px-6 py-4 border-t border-white/5 text-center">
                 <button className="inline-flex items-center gap-2 text-sm font-semibold text-purple-light hover:text-white transition-colors group">
-                  View Full Leaderboard
+                  Ver Clasificacion Completa
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
@@ -484,17 +484,17 @@ export default function Home() {
               <div className="relative">
                 <Award className="w-10 h-10 sm:w-12 sm:h-12 text-purple-light mx-auto mb-5 sm:mb-6" />
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
-                  Ready to compete?
+                  Listo para competir?
                 </h2>
                 <p className="text-sm sm:text-lg text-zinc-400 max-w-lg mx-auto mb-8 leading-relaxed">
-                  Join thousands of horse racing fans in the ultimate points competition. Free to play, always.
+                  Unete a miles de fanaticos de las carreras de caballos en la competencia definitiva de puntos. Gratis siempre.
                 </p>
                 <button className="px-10 py-4 text-base font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-xl btn-glow animate-glow-pulse">
-                  Create Free Account
+                  Crear Cuenta Gratis
                   <ChevronRight className="inline-block w-5 h-5 ml-1" />
                 </button>
                 <p className="text-xs text-zinc-600 mt-5">
-                  No credit card required. Start playing in under 60 seconds.
+                  Sin tarjeta de credito. Comienza a jugar en menos de 60 segundos.
                 </p>
               </div>
             </div>

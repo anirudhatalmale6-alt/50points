@@ -71,9 +71,9 @@ export default function RacePage() {
       <div className="min-h-screen bg-brand-dark flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4">🏇</div>
-          <p className="text-white/40 mb-2">Race not found</p>
+          <p className="text-white/40 mb-2">Carrera no encontrada</p>
           <a href="/" className="text-purple-light text-sm hover:underline">
-            Back to Home
+            Volver al Inicio
           </a>
         </div>
       </div>
@@ -86,10 +86,16 @@ export default function RacePage() {
     Synthetic: 'text-cyan-400 bg-cyan-400/10',
   };
 
+  const surfaceLabels = {
+    Dirt: 'Tierra',
+    Turf: 'Cesped',
+    Synthetic: 'Sintetico',
+  };
+
   const statusColors = {
-    completed: { badge: 'bg-white/10 text-white/50', dot: '' },
-    live: { badge: 'bg-red-500/20 text-red-400', dot: 'bg-red-400 animate-pulse-live' },
-    upcoming: { badge: 'bg-purple/20 text-purple-light', dot: '' },
+    completed: { badge: 'bg-white/10 text-white/50', dot: '', label: 'COMPLETADO' },
+    live: { badge: 'bg-red-500/20 text-red-400', dot: 'bg-red-400 animate-pulse-live', label: 'EN VIVO' },
+    upcoming: { badge: 'bg-purple/20 text-purple-light', dot: '', label: 'PROXIMO' },
   };
 
   return (
@@ -103,7 +109,7 @@ export default function RacePage() {
           >
             <ChevronLeft size={16} />
             <span className="hidden sm:inline">{tournament.name}</span>
-            <span className="sm:hidden">Back</span>
+            <span className="sm:hidden">Volver</span>
           </a>
 
           {/* Race navigation */}
@@ -130,7 +136,7 @@ export default function RacePage() {
           </div>
 
           <div className="text-xs text-white/30 hidden sm:block">
-            {race.horses.length} runners
+            {race.horses.length} participantes
           </div>
         </div>
       </div>
@@ -148,10 +154,10 @@ export default function RacePage() {
                 {statusColors[race.status].dot && (
                   <span className={`w-1.5 h-1.5 rounded-full ${statusColors[race.status].dot}`} />
                 )}
-                {race.status}
+                {statusColors[race.status].label}
               </span>
               <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${surfaceColors[race.surface]}`}>
-                {race.surface}
+                {surfaceLabels[race.surface] || race.surface}
               </span>
             </div>
 
@@ -178,7 +184,7 @@ export default function RacePage() {
               </div>
               <div className="flex items-center gap-1.5">
                 <Users size={13} />
-                <span>{race.horses.length} runners</span>
+                <span>{race.horses.length} participantes</span>
               </div>
             </div>
 
@@ -246,7 +252,7 @@ export default function RacePage() {
               className="hidden lg:block mt-4 bg-white/[0.03] backdrop-blur-lg border border-white/10 rounded-xl p-4"
             >
               <h3 className="text-[10px] text-white/40 uppercase tracking-widest font-medium mb-3">
-                All Races
+                Todas las Carreras
               </h3>
               <div className="grid grid-cols-4 gap-2">
                 {tournament.races.map((r) => {
