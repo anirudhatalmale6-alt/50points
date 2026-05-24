@@ -104,7 +104,7 @@ export const topPlayers = [
 export const stats = [
   { label: "Jugadores", value: "12,450+", icon: "users" },
   { label: "Pistas en Vivo", value: "3", icon: "radio" },
-  { label: "Entrada", value: "$0", icon: "zap" },
+  { label: "Entrada", value: "Gratis", icon: "zap" },
   { label: "Carreras", value: "24/7", icon: "clock" },
 ];
 

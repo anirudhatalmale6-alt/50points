@@ -16,14 +16,28 @@ function JockeySilk({ primary, secondary, size = 24 }) {
   );
 }
 
+const postPositionColors = [
+  { bg: '#E31937', text: '#FFFFFF' },  // 1 - Red
+  { bg: '#FFFFFF', text: '#000000' },  // 2 - White
+  { bg: '#003DA5', text: '#FFFFFF' },  // 3 - Royal Blue
+  { bg: '#FFD100', text: '#000000' },  // 4 - Yellow
+  { bg: '#00843D', text: '#FFFFFF' },  // 5 - Green
+  { bg: '#000000', text: '#FFD100' },  // 6 - Black w/ yellow
+  { bg: '#FF6900', text: '#FFFFFF' },  // 7 - Orange
+  { bg: '#E5007D', text: '#FFFFFF' },  // 8 - Pink
+  { bg: '#00B5E2', text: '#FFFFFF' },  // 9 - Turquoise
+  { bg: '#6F2DA8', text: '#FFFFFF' },  // 10 - Purple
+  { bg: '#A7A8AA', text: '#000000' },  // 11 - Grey
+  { bg: '#78BE20', text: '#000000' },  // 12 - Lime
+];
+
 function PostBadge({ number }) {
-  const colors = [
-    'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500',
-    'bg-purple-500', 'bg-cyan-500', 'bg-orange-500', 'bg-pink-500',
-    'bg-indigo-500', 'bg-teal-500', 'bg-amber-500', 'bg-rose-500',
-  ];
+  const colorSet = postPositionColors[(number - 1) % postPositionColors.length];
   return (
-    <div className={`w-7 h-7 rounded-full ${colors[(number - 1) % colors.length]} flex items-center justify-center text-white text-xs font-bold flex-shrink-0`}>
+    <div
+      className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+      style={{ backgroundColor: colorSet.bg, color: colorSet.text, border: number === 2 ? '1px solid rgba(255,255,255,0.2)' : 'none' }}
+    >
       {number}
     </div>
   );
@@ -97,9 +111,8 @@ export default function RaceCard({
             </div>
           </div>
           <div className="flex items-center gap-3 flex-shrink-0">
-            <div className="hidden md:flex items-center gap-1 text-gold text-xs">
-              <Trophy size={12} />
-              <span>${race.purse?.toLocaleString()}</span>
+            <div className="hidden md:flex items-center gap-1 text-white/40 text-xs">
+              <span>{race.horses.length} participantes</span>
             </div>
             <div className="hidden sm:flex items-center gap-1 text-white/40 text-xs">
               <Clock size={12} />
@@ -132,8 +145,7 @@ export default function RaceCard({
                 <span>{race.distance} furlones - Pista</span>
               </div>
               <div className="flex items-center gap-1">
-                <Trophy size={11} className="text-gold" />
-                <span className="text-gold/80">Bolsa ${race.purse?.toLocaleString()}</span>
+                <span>{race.class}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Clock size={11} />

@@ -182,7 +182,7 @@ export default function TournamentPage() {
               </a>
             </div>
 
-            {/* Prize pool card */}
+            {/* Players card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -190,16 +190,16 @@ export default function TournamentPage() {
               className="bg-white/[0.03] backdrop-blur-lg border border-white/10 rounded-xl p-5 lg:min-w-[280px]"
             >
               <div className="text-center mb-4">
-                <p className="text-[10px] text-white/40 uppercase tracking-widest mb-1">Premio Total</p>
-                <p className="text-3xl font-bold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent">
-                  ${tournament.prizePool.toLocaleString()}
+                <p className="text-[10px] text-white/40 uppercase tracking-widest mb-1">Jugadores Activos</p>
+                <p className="text-3xl font-bold bg-gradient-to-r from-purple-light to-cyan bg-clip-text text-transparent">
+                  {tournament.playersJoined.toLocaleString()}
                 </p>
-                <p className="text-xs text-white/30 mt-1">${tournament.entryFee} entrada</p>
+                <p className="text-xs text-white/30 mt-1">de {tournament.totalPlayers.toLocaleString()} cupos</p>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-white/40 flex items-center gap-1.5"><Users size={12} />Jugadores</span>
-                  <span className="text-white font-medium">{tournament.playersJoined.toLocaleString()} / {tournament.totalPlayers.toLocaleString()}</span>
+                  <span className="text-white/40 flex items-center gap-1.5"><Users size={12} />Participacion</span>
+                  <span className="text-white font-medium">{Math.round((tournament.playersJoined / tournament.totalPlayers) * 100)}%</span>
                 </div>
                 <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
                   <div
@@ -391,8 +391,8 @@ export default function TournamentPage() {
                 <InfoRow label="Ubicacion" value={tournament.location} />
                 <InfoRow label="Fecha" value={new Date(tournament.date).toLocaleDateString('es-ES', { month: 'short', day: 'numeric', year: 'numeric' })} />
                 <InfoRow label="Carreras" value={`${tournament.racesCompleted} / ${tournament.totalRaces}`} />
-                <InfoRow label="Entrada" value={`$${tournament.entryFee}`} />
-                <InfoRow label="Premio Total" value={`$${tournament.prizePool.toLocaleString()}`} highlight />
+                <InfoRow label="Entrada" value="Gratis" />
+                <InfoRow label="Tipo" value="Competencia de Puntos" />
               </div>
             </motion.div>
 

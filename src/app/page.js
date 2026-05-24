@@ -121,7 +121,7 @@ export default function Home() {
               {[
                 { value: "12,450+", label: "Jugadores", icon: "users" },
                 { value: "3", label: "Pistas en Vivo", icon: "radio" },
-                { value: "$0", label: "Entrada", icon: "zap" },
+                { value: "Gratis", label: "Entrada", icon: "zap" },
                 { value: "24/7", label: "Carreras", icon: "clock" },
               ].map((stat, i) => (
                 <div
@@ -212,10 +212,6 @@ export default function Home() {
 
                     {/* Details */}
                     <div className="flex items-center gap-4 text-xs text-zinc-500 mb-5">
-                      <div className="flex items-center gap-1.5">
-                        <Trophy className="w-3.5 h-3.5 text-gold" />
-                        <span>{t.prizeInfo}</span>
-                      </div>
                       <div className="flex items-center gap-1.5">
                         <Users className="w-3.5 h-3.5 text-purple-light" />
                         <span>{t.players.toLocaleString()} jugadores</span>

@@ -175,10 +175,6 @@ export default function RacePage() {
                 <span>{race.distance}m</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Trophy size={13} className="text-gold" />
-                <span>${race.purse?.toLocaleString()}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
                 <Clock size={13} />
                 <span>{race.postTime}</span>
               </div>
