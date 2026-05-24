@@ -68,8 +68,8 @@ export default function Home() {
         {/* Grid pattern */}
         <div className="absolute inset-0 bg-grid-pattern opacity-40" />
 
-        {/* Horse silhouette decoration - very subtle background element */}
-        <div className="absolute right-[-10%] bottom-[5%] w-[500px] h-[450px] opacity-[0.02] pointer-events-none select-none blur-sm">
+        {/* Horse silhouette decoration - hidden on mobile, very subtle on desktop */}
+        <div className="hidden lg:block absolute right-[-10%] bottom-[5%] w-[500px] h-[450px] opacity-[0.015] pointer-events-none select-none blur-sm">
           <HorseSilhouette className="w-full h-full" />
         </div>
 
