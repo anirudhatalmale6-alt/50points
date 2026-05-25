@@ -153,32 +153,43 @@ export default function HowToPlayPage() {
         <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-cyan/8 rounded-full blur-[100px]" />
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        {/* Back link */}
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-purple-light transition-colors mb-8"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Volver al Inicio
-        </Link>
+      {/* Hero Background */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img src="/50points/images/sidebar-promo.jpg" alt="" className="w-full h-full object-cover opacity-20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/60 via-[#0a0a0f]/90 to-[#0a0a0f]" />
+        </div>
 
-        {/* Page Title */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple/10 border border-purple/20 text-purple-light text-sm font-medium mb-6">
-            <HelpCircle className="w-4 h-4" />
-            Primeros Pasos
-          </div>
-          <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-4">COMO JUGAR</h1>
-          <p className="text-zinc-500 max-w-xl mx-auto">
-            Domina el juego en cinco simples pasos. Elige caballos, gana puntos, sube en la clasificacion.
-          </p>
-        </motion.div>
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8">
+          {/* Back link */}
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-purple-light transition-colors mb-8"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Volver al Inicio
+          </Link>
+
+          {/* Page Title */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple/10 border border-purple/20 text-purple-light text-sm font-medium mb-6">
+              <HelpCircle className="w-4 h-4" />
+              Primeros Pasos
+            </div>
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-4">COMO JUGAR</h1>
+            <p className="text-zinc-500 max-w-xl mx-auto">
+              Domina el juego en cinco simples pasos. Elige caballos, gana puntos, sube en la clasificacion.
+            </p>
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pb-8 sm:pb-12">
 
         {/* Steps */}
         <motion.div

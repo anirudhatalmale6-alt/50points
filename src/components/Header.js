@@ -44,12 +44,12 @@ export default function Header() {
 
             {/* Desktop Auth Buttons */}
             <div className="hidden md:flex items-center gap-3">
-              <button className="px-4 py-2 text-sm font-medium text-zinc-300 hover:text-white transition-colors">
+              <Link href="/login" className="px-4 py-2 text-sm font-medium text-zinc-300 hover:text-white transition-colors">
                 Iniciar Sesion
-              </button>
-              <button className="px-5 py-2 text-sm font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-lg btn-glow">
+              </Link>
+              <Link href="/register" className="px-5 py-2 text-sm font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-lg btn-glow">
                 Registrarse
-              </button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -78,12 +78,12 @@ export default function Header() {
                 </Link>
               ))}
               <div className="pt-3 mt-3 border-t border-white/5 flex gap-3">
-                <button className="flex-1 px-4 py-2.5 text-sm font-medium text-zinc-300 border border-white/10 rounded-lg hover:bg-white/5 transition-all">
+                <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="flex-1 px-4 py-2.5 text-sm font-medium text-zinc-300 border border-white/10 rounded-lg hover:bg-white/5 transition-all text-center">
                   Iniciar Sesion
-                </button>
-                <button className="flex-1 px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-lg">
+                </Link>
+                <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="flex-1 px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-lg text-center">
                   Registrarse
-                </button>
+                </Link>
               </div>
             </div>
           </div>

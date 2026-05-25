@@ -18,7 +18,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-zinc-500 leading-relaxed">
-              La plataforma definitiva de competencia de carreras de caballos, gratis para jugar.
+              La plataforma favorita de los amantes de las carreras de caballos, donde los jugadores se convierten en competidores.
             </p>
           </div>
 
@@ -26,24 +26,32 @@ export default function Footer() {
           <div>
             <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">Plataforma</h4>
             <ul className="space-y-2.5">
-              {["Torneos", "Clasificacion", "Como Jugar", "Reglas"].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="text-sm text-zinc-500 hover:text-purple-light transition-colors">
-                    {item}
+              {[
+                { label: "Torneos", href: "/tournaments" },
+                { label: "Clasificacion", href: "/leaderboard" },
+                { label: "Como Jugar", href: "/how-to-play" },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} className="text-sm text-zinc-500 hover:text-purple-light transition-colors">
+                    {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Account */}
           <div>
-            <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">Soporte</h4>
+            <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">Cuenta</h4>
             <ul className="space-y-2.5">
-              {["Acerca de", "Blog", "Ayuda", "Contacto"].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="text-sm text-zinc-500 hover:text-purple-light transition-colors">
-                    {item}
+              {[
+                { label: "Iniciar Sesion", href: "/login" },
+                { label: "Registrarse", href: "/register" },
+                { label: "Perfil", href: "/profile" },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} className="text-sm text-zinc-500 hover:text-purple-light transition-colors">
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -54,11 +62,11 @@ export default function Footer() {
           <div>
             <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">Legal</h4>
             <ul className="space-y-2.5">
-              {["Terminos de Servicio", "Politica de Privacidad", "Juego Responsable", "Juego Limpio"].map((item) => (
+              {["Terminos de Servicio", "Politica de Privacidad", "Juego Responsable"].map((item) => (
                 <li key={item}>
-                  <Link href="#" className="text-sm text-zinc-500 hover:text-purple-light transition-colors">
+                  <span className="text-sm text-zinc-600 cursor-default">
                     {item}
-                  </Link>
+                  </span>
                 </li>
               ))}
             </ul>

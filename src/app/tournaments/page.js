@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Users, MapPin, Calendar, ChevronRight } from "lucide-react";
 import AnimateInView from "@/components/AnimateInView";
 import { tournaments as raceDataTournaments } from "@/lib/raceData";
@@ -8,8 +9,14 @@ export default function TournamentsPage() {
   return (
     <div className="min-h-screen bg-brand-dark">
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-purple/10 via-brand-dark to-brand-dark" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-purple/5 rounded-full blur-[120px]" />
+        <div className="absolute inset-0">
+          <img
+            src="/50points/images/hero-lobby.jpg"
+            alt=""
+            className="w-full h-full object-cover opacity-25"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/60 via-brand-dark/90 to-brand-dark" />
+        </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-6">
           <AnimateInView>
@@ -33,26 +40,23 @@ export default function TournamentsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {raceDataTournaments.map((t, i) => (
             <AnimateInView key={t.id} delay={i * 0.1}>
-              <a
+              <Link
                 href={`/tournament/${t.id}`}
                 className="block glass-card rounded-2xl overflow-hidden group hover:glow-purple transition-all duration-500 gradient-border"
               >
-                <div className="px-5 sm:px-6 pt-5 sm:pt-6 pb-5">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h2 className="text-lg sm:text-xl font-bold text-white group-hover:text-purple-light transition-colors">
-                        {t.name}
-                      </h2>
-                      <div className="flex items-center gap-1.5 mt-1 text-xs text-zinc-500">
-                        <MapPin className="w-3 h-3" />
-                        <span>{t.track}, {t.location}</span>
-                      </div>
-                    </div>
+                <div className="relative h-36 overflow-hidden">
+                  <img
+                    src="/50points/images/news-favoritos.jpg"
+                    alt=""
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-card via-brand-card/60 to-transparent" />
+                  <div className="absolute top-3 right-3">
                     <span
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wide ${
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wide backdrop-blur-sm ${
                         t.status === "live"
-                          ? "bg-green-500/10 text-green-400 border border-green-500/20"
-                          : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                          ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                          : "bg-amber-500/20 text-amber-400 border border-amber-500/30"
                       }`}
                     >
                       {t.status === "live" && (
@@ -60,6 +64,17 @@ export default function TournamentsPage() {
                       )}
                       {t.status === "live" ? "EN VIVO" : "PROXIMO"}
                     </span>
+                  </div>
+                </div>
+                <div className="px-5 sm:px-6 pt-4 pb-5">
+                  <div className="mb-4">
+                    <h2 className="text-lg sm:text-xl font-bold text-white group-hover:text-purple-light transition-colors">
+                      {t.name}
+                    </h2>
+                    <div className="flex items-center gap-1.5 mt-1 text-xs text-zinc-500">
+                      <MapPin className="w-3 h-3" />
+                      <span>{t.track}, {t.location}</span>
+                    </div>
                   </div>
 
                   <div className="mb-4">
@@ -99,7 +114,7 @@ export default function TournamentsPage() {
                     <ChevronRight className="w-4 h-4" />
                   </div>
                 </div>
-              </a>
+              </Link>
             </AnimateInView>
           ))}
         </div>

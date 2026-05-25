@@ -84,31 +84,42 @@ export default function LeaderboardPage() {
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-cyan/10 rounded-full blur-[100px]" />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        {/* Back link */}
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-purple-light transition-colors mb-8"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Volver al Inicio
-        </Link>
+      {/* Hero Background */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img src="/50points/images/ranking-hero.jpg" alt="" className="w-full h-full object-cover opacity-20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/60 via-[#0a0a0f]/90 to-[#0a0a0f]" />
+        </div>
 
-        {/* Page Title */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center gap-3 mb-8"
-        >
-          <div className="p-3 rounded-xl bg-gradient-to-br from-yellow-500/20 to-yellow-600/5 border border-yellow-500/20">
-            <Trophy className="w-7 h-7 text-yellow-400" />
-          </div>
-          <div>
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">CLASIFICACION</h1>
-            <p className="text-sm text-zinc-500 mt-1">Mira quien lidera</p>
-          </div>
-        </motion.div>
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8">
+          {/* Back link */}
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-purple-light transition-colors mb-8"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Volver al Inicio
+          </Link>
+
+          {/* Page Title */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center gap-3 mb-8"
+          >
+            <div className="p-3 rounded-xl bg-gradient-to-br from-yellow-500/20 to-yellow-600/5 border border-yellow-500/20">
+              <Trophy className="w-7 h-7 text-yellow-400" />
+            </div>
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">CLASIFICACION</h1>
+              <p className="text-sm text-zinc-500 mt-1">Mira quien lidera</p>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pb-8 sm:pb-12">
 
         {/* Filters Row */}
         <motion.div

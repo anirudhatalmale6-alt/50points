@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import {
   ChevronLeft, MapPin, Clock, Trophy, Zap, Users,
 } from 'lucide-react';
+import Link from 'next/link';
 import { getTournamentById, getRaceById } from '@/lib/raceData';
 import RaceCard from '@/components/RaceCard';
 import PickSelector, { strategies } from '@/components/PickSelector';
@@ -72,9 +73,9 @@ export default function RaceClient() {
         <div className="text-center">
           <div className="text-6xl mb-4">🏇</div>
           <p className="text-white/40 mb-2">Carrera no encontrada</p>
-          <a href="/" className="text-purple-light text-sm hover:underline">
+          <Link href="/" className="text-purple-light text-sm hover:underline">
             Volver al Inicio
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -103,35 +104,35 @@ export default function RaceClient() {
       {/* Top navigation bar */}
       <div className="sticky top-0 z-40 bg-brand-dark/90 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-          <a
+          <Link
             href={`/tournament/${tournament.id}`}
             className="flex items-center gap-1.5 text-white/40 hover:text-white/70 text-sm transition-colors"
           >
             <ChevronLeft size={16} />
             <span className="hidden sm:inline">{tournament.name}</span>
             <span className="sm:hidden">Volver</span>
-          </a>
+          </Link>
 
           {/* Race navigation */}
           <div className="flex items-center gap-2">
             {prevRace && (
-              <a
+              <Link
                 href={`/tournament/${tournament.id}/race/${prevRace.id}`}
                 className="px-3 py-1.5 text-xs text-white/40 hover:text-white hover:bg-white/5 rounded-lg transition-all"
               >
                 R{prevRace.number}
-              </a>
+              </Link>
             )}
             <span className="px-3 py-1.5 text-xs font-bold text-white bg-purple/20 rounded-lg border border-purple/30">
               R{race.number}
             </span>
             {nextRace && (
-              <a
+              <Link
                 href={`/tournament/${tournament.id}/race/${nextRace.id}`}
                 className="px-3 py-1.5 text-xs text-white/40 hover:text-white hover:bg-white/5 rounded-lg transition-all"
               >
                 R{nextRace.number}
-              </a>
+              </Link>
             )}
           </div>
 
@@ -254,7 +255,7 @@ export default function RaceClient() {
                 {tournament.races.map((r) => {
                   const isCurrent = r.id === race.id;
                   return (
-                    <a
+                    <Link
                       key={r.id}
                       href={`/tournament/${tournament.id}/race/${r.id}`}
                       className={`
@@ -270,7 +271,7 @@ export default function RaceClient() {
                       `}
                     >
                       R{r.number}
-                    </a>
+                    </Link>
                   );
                 })}
               </div>

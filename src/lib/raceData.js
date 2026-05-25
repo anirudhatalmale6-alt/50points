@@ -134,26 +134,28 @@ const raceClasses = [
 
 function generateRaces(tournamentIndex) {
   const races = [];
-  for (let i = 0; i < 8; i++) {
-    const horseCount = 8 + Math.floor(Math.random() * 5); // 8-12 horses
+  const tournamentStart = 3;
+  for (let i = 0; i < 10; i++) {
+    const horseCount = 8 + Math.floor(Math.random() * 5);
     const distance = distances[i % distances.length];
     const surface = i < 5 ? surfaces[i % 2] : pickRandom(surfaces);
-    const purse = [25000, 50000, 75000, 100000, 150000, 200000, 300000, 500000][i];
-    const hour = 12 + Math.floor(i * 0.75);
-    const minute = (i * 30) % 60;
+    const purse = [15000, 20000, 25000, 50000, 75000, 100000, 150000, 200000, 300000, 500000][i];
+    const hour = 12 + Math.floor(i / 2);
+    const minute = (i % 2) * 30;
 
     races.push({
       id: `race-${tournamentIndex}-${i}`,
       number: i + 1,
-      name: i === 7
+      name: i === 9
         ? ['Gulfstream Park Handicap', 'Santa Anita Derby', 'Kentucky Derby Prep'][tournamentIndex]
         : `Race ${i + 1}`,
-      class: raceClasses[i],
+      class: raceClasses[i % raceClasses.length],
       distance,
       surface,
       purse,
       postTime: `${hour}:${minute.toString().padStart(2, '0')} ET`,
-      status: i < 3 ? 'completed' : i === 3 ? 'live' : 'upcoming',
+      status: i < tournamentStart ? 'completed' : i === tournamentStart ? 'live' : 'upcoming',
+      tournamentRace: i >= tournamentStart,
       horses: generateHorsesForRace(horseCount, i, tournamentIndex),
     });
   }
@@ -173,7 +175,7 @@ export const tournaments = [
     prizePool: 50000,
     entryFee: 50,
     racesCompleted: 3,
-    totalRaces: 8,
+    totalRaces: 10,
     description: 'El evento de carreras mas importante del sur de Florida con los mejores pura sangre compitiendo en 8 emocionantes carreras.',
     races: generateRaces(0),
   },
@@ -189,7 +191,7 @@ export const tournaments = [
     prizePool: 75000,
     entryFee: 75,
     racesCompleted: 0,
-    totalRaces: 8,
+    totalRaces: 10,
     description: 'Vive las carreras de clase mundial en el gran hipodromo con impresionantes vistas a las montanas de San Gabriel.',
     races: generateRaces(1),
   },
@@ -205,7 +207,7 @@ export const tournaments = [
     prizePool: 100000,
     entryFee: 100,
     racesCompleted: 0,
-    totalRaces: 8,
+    totalRaces: 10,
     description: 'Serie preparatoria para las Rosas en el historico hogar del Kentucky Derby.',
     races: generateRaces(2),
   },

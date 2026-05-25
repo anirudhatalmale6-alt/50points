@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Target, Trophy, TrendingUp, Users, Radio, Zap, Clock, ChevronRight, Flame, Award, ArrowRight } from "lucide-react";
 import AnimateInView from "@/components/AnimateInView";
 import { tournaments, topPlayers, howItWorks } from "@/lib/mockData";
@@ -59,19 +60,17 @@ export default function Home() {
     <div className="relative overflow-hidden">
       {/* ─── HERO ─── */}
       <section className="relative min-h-[90vh] sm:min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Gradient background layers */}
-        <div className="absolute inset-0 bg-brand-dark" />
-        <div className="absolute inset-0 bg-gradient-radial from-purple/8 via-transparent to-transparent" />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple/30 to-transparent" />
-
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-40" />
-
-        {/* Horse silhouette decoration - hidden on mobile, very subtle on desktop */}
-        <div className="hidden lg:block absolute right-[-10%] bottom-[5%] w-[500px] h-[450px] opacity-[0.015] pointer-events-none select-none blur-sm">
-          <HorseSilhouette className="w-full h-full" />
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <img
+            src="/50points/images/hero-desktop.jpg"
+            alt=""
+            className="w-full h-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/70 to-brand-dark/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/80 via-transparent to-brand-dark/80" />
         </div>
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple/30 to-transparent" />
 
         {/* Content */}
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center">
@@ -105,13 +104,13 @@ export default function Home() {
 
           <AnimateInView delay={0.5}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 sm:mb-16">
-              <button className="w-full sm:w-auto px-8 py-3.5 text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-xl btn-glow animate-glow-pulse">
+              <Link href="/tournaments" className="w-full sm:w-auto px-8 py-3.5 text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-xl btn-glow animate-glow-pulse inline-flex items-center justify-center">
                 Unirse al Torneo
                 <ChevronRight className="inline-block w-4 h-4 ml-1" />
-              </button>
-              <button className="w-full sm:w-auto px-8 py-3.5 text-sm sm:text-base font-semibold text-zinc-300 border border-white/10 rounded-xl hover:bg-white/5 hover:border-purple/30 transition-all duration-300">
+              </Link>
+              <Link href="/how-to-play" className="w-full sm:w-auto px-8 py-3.5 text-sm sm:text-base font-semibold text-zinc-300 border border-white/10 rounded-xl hover:bg-white/5 hover:border-purple/30 transition-all duration-300 inline-flex items-center justify-center">
                 Como Funciona
-              </button>
+              </Link>
             </div>
           </AnimateInView>
 
@@ -142,8 +141,15 @@ export default function Home() {
 
       {/* ─── LIVE TOURNAMENTS ─── */}
       <section className="relative py-16 sm:py-24">
-        {/* Subtle background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-card/30 to-brand-dark" />
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <img
+            src="/50points/images/hero-lobby.jpg"
+            alt=""
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark/85 to-brand-dark" />
+        </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <AnimateInView>
@@ -164,9 +170,18 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {tournaments.map((t, i) => (
               <AnimateInView key={t.id} delay={i * 0.15}>
-                <div className="glass-card rounded-2xl overflow-hidden group hover:glow-purple transition-all duration-500 gradient-border">
-                  {/* Card header */}
-                  <div className="px-5 sm:px-6 pt-5 sm:pt-6 pb-4">
+                <Link href="/tournaments" className="block glass-card rounded-2xl overflow-hidden group hover:glow-purple transition-all duration-500 gradient-border">
+                  {/* Card image */}
+                  <div className="relative h-32 overflow-hidden">
+                    <img
+                      src="/50points/images/live-feed.jpg"
+                      alt=""
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-card via-brand-card/50 to-transparent" />
+                  </div>
+                  {/* Card content */}
+                  <div className="px-5 sm:px-6 pt-4 pb-4">
                     <div className="flex items-start justify-between mb-4">
                       <div>
                         <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-purple-light transition-colors">
@@ -219,11 +234,11 @@ export default function Home() {
                     </div>
 
                     {/* CTA */}
-                    <button className="w-full py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-xl btn-glow opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div className="w-full py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-xl btn-glow opacity-90 group-hover:opacity-100 transition-opacity text-center">
                       Entrar al Torneo
-                    </button>
+                    </div>
                   </div>
-                </div>
+                </Link>
               </AnimateInView>
             ))}
           </div>
@@ -453,10 +468,10 @@ export default function Home() {
 
               {/* View All */}
               <div className="px-6 py-4 border-t border-white/5 text-center">
-                <button className="inline-flex items-center gap-2 text-sm font-semibold text-purple-light hover:text-white transition-colors group">
+                <Link href="/leaderboard" className="inline-flex items-center gap-2 text-sm font-semibold text-purple-light hover:text-white transition-colors group">
                   Ver Clasificacion Completa
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
+                </Link>
               </div>
             </div>
           </AnimateInView>
@@ -471,6 +486,12 @@ export default function Home() {
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6">
           <AnimateInView>
             <div className="relative glass-card rounded-3xl p-8 sm:p-14 text-center overflow-hidden">
+              {/* Background image */}
+              <div className="absolute inset-0">
+                <img src="/50points/images/sidebar-promo.jpg" alt="" className="w-full h-full object-cover opacity-15" />
+                <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/60 via-brand-dark/90 to-brand-dark" />
+              </div>
+
               {/* Gradient border top */}
               <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple via-purple-light to-cyan" />
 
@@ -485,10 +506,10 @@ export default function Home() {
                 <p className="text-sm sm:text-lg text-zinc-400 max-w-lg mx-auto mb-8 leading-relaxed">
                   Unete a miles de fanaticos de las carreras de caballos en la competencia definitiva de puntos. Gratis siempre.
                 </p>
-                <button className="px-10 py-4 text-base font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-xl btn-glow animate-glow-pulse">
+                <Link href="/register" className="inline-flex items-center px-10 py-4 text-base font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-xl btn-glow animate-glow-pulse">
                   Crear Cuenta Gratis
                   <ChevronRight className="inline-block w-5 h-5 ml-1" />
-                </button>
+                </Link>
                 <p className="text-xs text-zinc-600 mt-5">
                   Sin tarjeta de credito. Comienza a jugar en menos de 60 segundos.
                 </p>

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, MapPin, Trophy, ChevronDown, Check } from 'lucide-react';
+import { Clock, MapPin, Trophy, ChevronDown, Check, Lock, Target, Layers, Zap } from 'lucide-react';
 import { strategies } from './PickSelector';
 
 function JockeySilk({ primary, secondary, size = 24 }) {
@@ -43,14 +43,19 @@ function PostBadge({ number }) {
   );
 }
 
+const strategyIcons = { full: Target, dual: Layers, smart: Zap };
+
 export default function RaceCard({
   race,
   activeStrategy,
   selectedHorses,
+  confirmedStrategy,
   onPickHorse,
+  onStrategyChange,
   isExpanded = true,
   onToggleExpand,
   showHeader = true,
+  tournamentRace = true,
 }) {
   const strategy = strategies.find((s) => s.id === activeStrategy);
   const maxPicks = strategy?.maxPicks || 1;
@@ -77,33 +82,65 @@ export default function RaceCard({
     upcoming: 'bg-purple/20 text-purple-light',
   };
 
+  const isCompleted = race.status === 'completed';
+  const isNonTournament = !tournamentRace;
+
+  const strategyStripConfig = confirmedStrategy ? ({
+    full: { borderColor: 'border-l-purple', bgTint: 'bg-purple/[0.07]', numGradient: 'from-purple to-purple-light' },
+    dual: { borderColor: 'border-l-cyan', bgTint: 'bg-cyan/[0.07]', numGradient: 'from-purple to-cyan' },
+    smart: { borderColor: 'border-l-gold', bgTint: 'bg-gold/[0.07]', numGradient: 'from-cyan to-gold' },
+  })[confirmedStrategy] : null;
+
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-lg overflow-hidden">
+    <div className={`rounded-xl overflow-hidden backdrop-blur-lg ${
+      isNonTournament
+        ? 'border border-white/[0.04] bg-white/[0.008] opacity-[0.35]'
+        : strategyStripConfig
+          ? `border border-l-[3px] ${strategyStripConfig.borderColor} border-white/10 ${strategyStripConfig.bgTint}`
+          : 'border border-white/10 bg-white/[0.03]'
+    }`}>
       {/* Race header */}
       {showHeader && (
         <button
-          onClick={onToggleExpand}
-          className="w-full flex items-center justify-between p-4 md:p-5 hover:bg-white/[0.02] transition-colors"
+          onClick={isNonTournament ? undefined : onToggleExpand}
+          className={`w-full flex items-center justify-between p-4 md:p-5 transition-colors ${isNonTournament ? 'cursor-default' : 'hover:bg-white/[0.02]'}`}
         >
           <div className="flex items-center gap-3 md:gap-4 flex-1 min-w-0">
-            <div className="bg-gradient-to-br from-purple to-purple-light text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm flex-shrink-0">
-              C{race.number}
+            <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm flex-shrink-0 ${
+              isNonTournament
+                ? 'bg-white/[0.06] text-white/20'
+                : strategyStripConfig
+                  ? `bg-gradient-to-br ${strategyStripConfig.numGradient} text-white`
+                  : 'bg-gradient-to-br from-cyan to-purple text-white'
+            }`}>
+              {isNonTournament ? <Lock size={16} /> : `C${race.number}`}
             </div>
             <div className="text-left min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-white font-semibold text-sm md:text-base truncate">
+                <span className={`font-semibold text-sm md:text-base truncate ${isNonTournament ? 'text-white/25' : 'text-white'}`}>
                   {race.name !== `Race ${race.number}` ? race.name : `CARRERA ${race.number}`}
                 </span>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${statusColors[race.status]}`}>
-                  {race.status === 'live' && (
-                    <span className="inline-block w-1.5 h-1.5 bg-red-400 rounded-full mr-1 animate-pulse-live" />
-                  )}
-                  {race.status === 'live' ? 'EN VIVO' : race.status === 'upcoming' ? 'PROXIMO' : 'COMPLETADO'}
-                </span>
+                {isNonTournament ? (
+                  <span className="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-white/[0.06] text-white/20">
+                    BLOQUEADA
+                  </span>
+                ) : strategyStripConfig ? (
+                  <span className="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-green-500/20 text-green-400 flex items-center gap-1">
+                    <Check size={10} />
+                    LISTO
+                  </span>
+                ) : (
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${statusColors[race.status]}`}>
+                    {race.status === 'live' && (
+                      <span className="inline-block w-1.5 h-1.5 bg-red-400 rounded-full mr-1 animate-pulse-live" />
+                    )}
+                    {race.status === 'live' ? 'EN VIVO' : race.status === 'upcoming' ? 'PROXIMO' : 'COMPLETADO'}
+                  </span>
+                )}
               </div>
-              <div className="flex items-center gap-3 mt-0.5 text-white/40 text-xs">
+              <div className={`flex items-center gap-3 mt-0.5 text-xs ${isNonTournament ? 'text-white/15' : 'text-white/40'}`}>
                 <span>{race.distance} furlones</span>
-                <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${surfaceColors[race.surface]}`}>
+                <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${isNonTournament ? 'text-white/15 bg-white/[0.03]' : surfaceColors[race.surface]}`}>
                   Pista
                 </span>
                 <span className="hidden sm:inline">{race.class}</span>
@@ -111,19 +148,31 @@ export default function RaceCard({
             </div>
           </div>
           <div className="flex items-center gap-3 flex-shrink-0">
-            <div className="hidden md:flex items-center gap-1 text-white/40 text-xs">
+            {confirmedStrategy && (() => {
+              const cs = strategies.find((s) => s.id === confirmedStrategy);
+              const Icon = strategyIcons[confirmedStrategy];
+              return cs ? (
+                <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold ${cs.bgActive} border ${cs.borderColor} border-opacity-40`}>
+                  <Icon size={12} className="text-white" />
+                  <span className="text-white">{cs.name}</span>
+                </div>
+              ) : null;
+            })()}
+            <div className={`hidden md:flex items-center gap-1 text-xs ${isNonTournament ? 'text-white/15' : 'text-white/40'}`}>
               <span>{race.horses.length} participantes</span>
             </div>
-            <div className="hidden sm:flex items-center gap-1 text-white/40 text-xs">
+            <div className={`hidden sm:flex items-center gap-1 text-xs ${isNonTournament ? 'text-white/15' : 'text-white/40'}`}>
               <Clock size={12} />
               <span>{race.postTime}</span>
             </div>
-            <motion.div
-              animate={{ rotate: isExpanded ? 180 : 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <ChevronDown size={18} className="text-white/30" />
-            </motion.div>
+            {!isNonTournament && (
+              <motion.div
+                animate={{ rotate: isExpanded ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ChevronDown size={18} className="text-white/30" />
+              </motion.div>
+            )}
           </div>
         </button>
       )}
@@ -138,21 +187,67 @@ export default function RaceCard({
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
+            {/* Inline strategy selector */}
+            {onStrategyChange && (
+              <div className="border-t border-white/5 bg-white/[0.02] px-4 md:px-5 py-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Estrategia</span>
+                  <div className="flex-1 h-px bg-white/5" />
+                  <span className="text-[10px] text-white/30">{race.horses.length} participantes</span>
+                </div>
+                <div className="flex gap-2">
+                  {strategies.map((s) => {
+                    const isActive = activeStrategy === s.id;
+                    const Icon = strategyIcons[s.id];
+                    const isFullPoint = s.id === 'full';
+                    return (
+                      <button
+                        key={s.id}
+                        onClick={() => onStrategyChange(s.id)}
+                        className={`
+                          ${isFullPoint ? 'flex-[1.4]' : 'flex-1'} flex items-center gap-2 ${isFullPoint ? 'px-4 py-3.5' : 'px-3 py-2.5'} rounded-lg border text-left transition-all duration-200
+                          ${isActive
+                            ? `${s.bgActive} ${s.borderColor} border-opacity-60 ${isFullPoint ? 'shadow-[0_0_20px_rgba(124,58,237,0.4)]' : 'shadow-sm'}`
+                            : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.05] hover:border-white/15'
+                          }
+                        `}
+                      >
+                        <div className={`${isFullPoint ? 'p-2 rounded-lg' : 'p-1.5 rounded-md'} ${isActive ? `bg-gradient-to-br ${s.gradient} text-white` : 'bg-white/5 text-white/30'}`}>
+                          <Icon size={isFullPoint ? 18 : 14} />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <span className={`${isFullPoint ? 'text-[13px]' : 'text-[11px]'} font-bold tracking-wide ${isActive ? 'text-white' : 'text-white/50'}`}>
+                              {s.name}
+                            </span>
+                            {isActive && <span className="w-1.5 h-1.5 rounded-full bg-green-400" />}
+                          </div>
+                          <div className="flex gap-1 mt-0.5">
+                            {s.allocation.map((pts, idx) => (
+                              <span key={idx} className={`${isFullPoint ? 'text-[10px] px-1.5 py-0.5' : 'text-[9px] px-1 py-px'} font-bold rounded ${isActive ? `${s.tagColors[idx]} text-white` : 'bg-white/5 text-white/25'}`}>
+                                {pts}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* Race meta bar */}
-            <div className="flex items-center gap-4 px-4 md:px-5 py-3 border-t border-b border-white/5 bg-white/[0.01] text-xs text-white/40 flex-wrap">
+            <div className="flex items-center gap-4 px-4 md:px-5 py-2 border-t border-b border-white/5 bg-white/[0.01] text-xs text-white/40 flex-wrap">
               <div className="flex items-center gap-1">
                 <MapPin size={11} />
                 <span>{race.distance} furlones - Pista</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <span>{race.class}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Clock size={11} />
                 <span>{race.postTime}</span>
               </div>
               <span className="text-white/20">{race.class}</span>
-              <span className="ml-auto text-white/30">{race.horses.length} participantes</span>
             </div>
 
             {/* Desktop table header */}

@@ -7,6 +7,7 @@ import {
   MapPin, Calendar, Users, Trophy, Clock, ChevronLeft,
   Flame, Timer, CheckCircle2, ArrowRight, Zap,
 } from 'lucide-react';
+import Link from 'next/link';
 import { getTournamentById } from '@/lib/raceData';
 import RaceCard from '@/components/RaceCard';
 import PickSelector, { strategies } from '@/components/PickSelector';
@@ -20,6 +21,7 @@ export default function TournamentClient() {
   const [expandedRace, setExpandedRace] = useState(null);
   const [activeStrategy, setActiveStrategy] = useState('full');
   const [picks, setPicks] = useState({});
+  const [confirmedStrategies, setConfirmedStrategies] = useState({});
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmedRace, setConfirmedRace] = useState(null);
   const [countdown, setCountdown] = useState({ hours: 0, minutes: 0, seconds: 0 });
@@ -76,17 +78,21 @@ export default function TournamentClient() {
 
   const handleConfirm = useCallback(() => {
     setConfirmedRace(expandedRace);
+    setConfirmedStrategies((prev) => ({ ...prev, [expandedRace]: activeStrategy }));
     setShowConfirmation(true);
-  }, [expandedRace]);
+  }, [expandedRace, activeStrategy]);
 
   const handleCloseConfirmation = useCallback(() => {
     setShowConfirmation(false);
     setConfirmedRace(null);
+    setExpandedRace(null);
   }, []);
 
   const toggleRace = useCallback((raceId) => {
+    const race = tournament?.races.find((r) => r.id === raceId);
+    if (race && !race.tournamentRace) return;
     setExpandedRace((prev) => (prev === raceId ? null : raceId));
-  }, []);
+  }, [tournament]);
 
   if (!tournament) {
     return (
@@ -94,9 +100,9 @@ export default function TournamentClient() {
         <div className="text-center">
           <div className="text-6xl mb-4 animate-pulse">🏇</div>
           <p className="text-white/40">Torneo no encontrado</p>
-          <a href="/" className="text-purple-light text-sm mt-2 inline-block hover:underline">
+          <Link href="/" className="text-purple-light text-sm mt-2 inline-block hover:underline">
             Volver al Inicio
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -112,14 +118,17 @@ export default function TournamentClient() {
   return (
     <div className="min-h-screen bg-brand-dark">
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-purple/10 via-brand-dark to-brand-dark" />
+        <div className="absolute inset-0">
+          <img src="/50points/images/live-feed.jpg" alt="" className="w-full h-full object-cover opacity-25" />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/60 via-brand-dark/90 to-brand-dark" />
+        </div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-purple/5 rounded-full blur-[120px]" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-8">
-          <a href="/" className="inline-flex items-center gap-1.5 text-white/40 hover:text-white/70 text-sm mb-6 transition-colors">
+          <Link href="/" className="inline-flex items-center gap-1.5 text-white/40 hover:text-white/70 text-sm mb-6 transition-colors">
             <ChevronLeft size={16} />
             <span>Volver a Torneos</span>
-          </a>
+          </Link>
 
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <div className="flex-1">
@@ -161,13 +170,22 @@ export default function TournamentClient() {
                 {tournament.description}
               </p>
 
-              <a
-                href={nextRace ? `/tournament/${tournament.id}/race/${nextRace.id}` : '#'}
-                className="mt-5 inline-flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-purple to-purple-light hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] transition-shadow"
-              >
-                HACER MI TICKET AHORA
-                <ArrowRight size={16} />
-              </a>
+              <div className="flex flex-wrap gap-3 mt-5">
+                <Link
+                  href={nextRace ? `/tournament/${tournament.id}/race/${nextRace.id}` : '#'}
+                  className="inline-flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-purple to-purple-light hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] transition-shadow"
+                >
+                  HACER MI TICKET AHORA
+                  <ArrowRight size={16} />
+                </Link>
+                <Link
+                  href={`/tournament/${tournament.id}/ranking`}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] transition-colors"
+                >
+                  <Trophy size={16} className="text-gold" />
+                  VER RANKING
+                </Link>
+              </div>
             </div>
 
             <motion.div
@@ -207,42 +225,32 @@ export default function TournamentClient() {
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-white/[0.03] border border-white/10 rounded-xl p-3 text-center backdrop-blur-lg">
                 <div className="flex items-center justify-center gap-1.5 text-green-400 mb-1">
                   <CheckCircle2 size={14} />
-                  <span className="text-lg font-bold">{tournament.racesCompleted}</span>
+                  <span className="text-lg font-bold">{Object.keys(confirmedStrategies).length}</span>
                 </div>
-                <p className="text-[10px] text-white/40 uppercase tracking-wider">Completadas</p>
+                <p className="text-[10px] text-white/40 uppercase tracking-wider">Confirmadas</p>
               </motion.div>
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="bg-white/[0.03] border border-white/10 rounded-xl p-3 text-center backdrop-blur-lg">
-                <div className="flex items-center justify-center gap-1.5 text-red-400 mb-1">
-                  <Flame size={14} />
-                  <span className="text-lg font-bold">{tournament.races.filter((r) => r.status === 'live').length}</span>
+                <div className="flex items-center justify-center gap-1.5 text-cyan mb-1">
+                  <Trophy size={14} />
+                  <span className="text-lg font-bold">{tournament.races.filter((r) => r.tournamentRace).length}</span>
                 </div>
-                <p className="text-[10px] text-white/40 uppercase tracking-wider">En Vivo</p>
+                <p className="text-[10px] text-white/40 uppercase tracking-wider">En Torneo</p>
               </motion.div>
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white/[0.03] border border-white/10 rounded-xl p-3 text-center backdrop-blur-lg">
                 <div className="flex items-center justify-center gap-1.5 text-purple-light mb-1">
                   <Timer size={14} />
-                  <span className="text-lg font-bold">{tournament.races.filter((r) => r.status === 'upcoming').length}</span>
+                  <span className="text-lg font-bold">{tournament.races.filter((r) => r.tournamentRace).length - Object.keys(confirmedStrategies).length}</span>
                 </div>
-                <p className="text-[10px] text-white/40 uppercase tracking-wider">Proximas</p>
+                <p className="text-[10px] text-white/40 uppercase tracking-wider">Pendientes</p>
               </motion.div>
             </div>
-
-            <AnimatePresence>
-              {expandedRace && (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="mb-4 overflow-hidden">
-                  <div className="bg-white/[0.02] border border-white/10 rounded-xl p-4 backdrop-blur-lg">
-                    <PickSelector activeStrategy={activeStrategy} onStrategyChange={handleStrategyChange} picksCount={currentRacePicks.length} totalPoints={totalPointsRemaining} />
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
 
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-white flex items-center gap-2">
                 <Zap size={18} className="text-purple-light" />
                 Programa de Carreras
               </h2>
-              <span className="text-xs text-white/30">{tournament.totalRaces} carreras</span>
+              <span className="text-xs text-white/30">{tournament.totalRaces} carreras · {tournament.races.filter((r) => r.tournamentRace).length} en torneo</span>
             </div>
 
             <div className="space-y-3">
@@ -252,9 +260,12 @@ export default function TournamentClient() {
                     race={race}
                     activeStrategy={activeStrategy}
                     selectedHorses={picks[race.id] || []}
+                    confirmedStrategy={confirmedStrategies[race.id]}
                     onPickHorse={expandedRace === race.id ? handlePickHorse : () => {}}
+                    onStrategyChange={expandedRace === race.id ? handleStrategyChange : undefined}
                     isExpanded={expandedRace === race.id}
                     onToggleExpand={() => toggleRace(race.id)}
+                    tournamentRace={race.tournamentRace !== false}
                   />
                 </motion.div>
               ))}
@@ -290,7 +301,7 @@ export default function TournamentClient() {
                   </p>
                   <p className="text-[10px] text-white/30 mt-0.5">{nextRace.class} - Post time {nextRace.postTime}</p>
                 </div>
-                <a
+                <Link
                   href={`/tournament/${tournament.id}/race/${nextRace.id}`}
                   className="mt-3 w-full py-2.5 rounded-lg text-center text-xs font-bold text-white bg-gradient-to-r from-purple to-purple-light block hover:shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-shadow"
                 >
@@ -298,7 +309,7 @@ export default function TournamentClient() {
                     Ver Carrera Completa
                     <ArrowRight size={12} />
                   </div>
-                </a>
+                </Link>
               </motion.div>
             )}
 
