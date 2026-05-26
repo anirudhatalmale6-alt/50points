@@ -50,7 +50,7 @@ export default function TicketConfirmation({
   activeStrategy,
   selectedHorses,
   horses,
-  tournamentId,
+  tournamentSlug,
 }) {
   const [autoCloseTimer, setAutoCloseTimer] = useState(5);
   const strategy = strategies.find((s) => s.id === activeStrategy);
@@ -211,7 +211,7 @@ export default function TicketConfirmation({
               className="flex gap-3 px-6 pb-6"
             >
               <Link
-                href={`/tournament/${tournamentId}`}
+                href="/leaderboard"
                 className="flex-1 py-2.5 rounded-xl text-center text-sm font-semibold bg-white/5 text-white/60 hover:bg-white/10 hover:text-white transition-all border border-white/10"
               >
                 <div className="flex items-center justify-center gap-1.5">

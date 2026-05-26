@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Trophy,
@@ -16,34 +16,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
-
-const leaderboardPlayers = [
-  { rank: 1, username: "ThunderHoof", initials: "TH", color: "#f59e0b", points: 14820, winRate: 68, streak: 7, trend: "up", change: 0 },
-  { rank: 2, username: "GallopKing", initials: "GK", color: "#a855f7", points: 13455, winRate: 62, streak: 4, trend: "up", change: 1 },
-  { rank: 3, username: "RailRunner", initials: "RR", color: "#06b6d4", points: 12890, winRate: 59, streak: 3, trend: "down", change: 1 },
-  { rank: 4, username: "OddsWhisperer", initials: "OW", color: "#10b981", points: 11740, winRate: 55, streak: 1, trend: "up", change: 2 },
-  { rank: 5, username: "FurlongMaster", initials: "FM", color: "#ec4899", points: 10320, winRate: 52, streak: 2, trend: "up", change: 1 },
-  { rank: 6, username: "TrackPhantom", initials: "TP", color: "#8b5cf6", points: 9875, winRate: 51, streak: 5, trend: "up", change: 3 },
-  { rank: 7, username: "DerbyQueen", initials: "DQ", color: "#f43f5e", points: 9340, winRate: 49, streak: 0, trend: "down", change: 2 },
-  { rank: 8, username: "PaddockPro", initials: "PP", color: "#14b8a6", points: 8920, winRate: 48, streak: 3, trend: "up", change: 1 },
-  { rank: 9, username: "SilkRider", initials: "SR", color: "#f97316", points: 8445, winRate: 47, streak: 1, trend: "down", change: 1 },
-  { rank: 10, username: "BreezeMaster", initials: "BM", color: "#6366f1", points: 7990, winRate: 46, streak: 2, trend: "up", change: 0 },
-  { rank: 11, username: "StallionAce", initials: "SA", color: "#22d3ee", points: 7650, winRate: 45, streak: 4, trend: "up", change: 2 },
-  { rank: 12, username: "HomeStretch", initials: "HS", color: "#a3e635", points: 7210, winRate: 44, streak: 0, trend: "down", change: 3 },
-  { rank: 13, username: "PostTimePick", initials: "PT", color: "#fb923c", points: 6880, winRate: 43, streak: 1, trend: "up", change: 1 },
-  { rank: 14, username: "TurfTitan", initials: "TT", color: "#c084fc", points: 6540, winRate: 42, streak: 2, trend: "up", change: 0 },
-  { rank: 15, username: "PhotoFinish", initials: "PF", color: "#38bdf8", points: 6210, winRate: 41, streak: 0, trend: "down", change: 1 },
-  { rank: 16, username: "MorningLine", initials: "ML", color: "#4ade80", points: 5870, winRate: 40, streak: 3, trend: "up", change: 4 },
-  { rank: 17, username: "JockeyMind", initials: "JM", color: "#fb7185", points: 5530, winRate: 39, streak: 1, trend: "down", change: 2 },
-  { rank: 18, username: "CloseCall", initials: "CC", color: "#818cf8", points: 5190, winRate: 38, streak: 0, trend: "up", change: 1 },
-  { rank: 19, username: "BettingEdge", initials: "BE", color: "#fbbf24", points: 4850, winRate: 37, streak: 2, trend: "down", change: 1 },
-  { rank: 20, username: "WireToWire", initials: "WW", color: "#2dd4bf", points: 4520, winRate: 36, streak: 1, trend: "up", change: 0 },
-  { rank: 21, username: "LuckyGait", initials: "LG", color: "#e879f9", points: 4180, winRate: 35, streak: 0, trend: "down", change: 3 },
-  { rank: 22, username: "NoseAhead", initials: "NA", color: "#34d399", points: 3840, winRate: 34, streak: 1, trend: "up", change: 1 },
-  { rank: 23, username: "HoofBeats", initials: "HB", color: "#f472b6", points: 3500, winRate: 33, streak: 2, trend: "up", change: 2 },
-  { rank: 24, username: "RaceReader", initials: "RD", color: "#60a5fa", points: 3160, winRate: 32, streak: 0, trend: "down", change: 1 },
-  { rank: 25, username: "TripleThreat", initials: "3T", color: "#a78bfa", points: 2820, winRate: 31, streak: 1, trend: "up", change: 0 },
-];
 
 const ROWS_PER_PAGE = 10;
 
@@ -61,6 +33,55 @@ function RankBadge({ rank }) {
   return <span className="text-sm text-zinc-500 font-mono w-6 text-center">#{rank}</span>;
 }
 
+function SkeletonRow({ index }) {
+  return (
+    <div
+      className={`grid grid-cols-2 sm:grid-cols-12 gap-2 sm:gap-4 px-4 sm:px-6 py-4 items-center border-b border-white/[0.03] ${
+        index % 2 === 0 ? "bg-white/[0.01]" : "bg-transparent"
+      }`}
+    >
+      <div className="col-span-1">
+        <div className="w-6 h-5 rounded bg-white/5 animate-pulse" />
+      </div>
+      <div className="col-span-1 sm:col-span-4 flex items-center gap-3">
+        <div className="w-9 h-9 rounded-full bg-white/5 animate-pulse flex-shrink-0" />
+        <div className="w-24 h-4 rounded bg-white/5 animate-pulse" />
+      </div>
+      <div className="col-span-1 sm:col-span-2 flex justify-end">
+        <div className="w-16 h-4 rounded bg-white/5 animate-pulse" />
+      </div>
+      <div className="col-span-1 sm:col-span-2 flex justify-end">
+        <div className="w-10 h-4 rounded bg-white/5 animate-pulse" />
+      </div>
+      <div className="hidden sm:flex col-span-2 justify-end">
+        <div className="w-8 h-4 rounded bg-white/5 animate-pulse" />
+      </div>
+      <div className="hidden sm:flex col-span-1 justify-end">
+        <div className="w-6 h-4 rounded bg-white/5 animate-pulse" />
+      </div>
+    </div>
+  );
+}
+
+function SkeletonPodiumCard({ isFirst }) {
+  return (
+    <div
+      className={`relative rounded-2xl border border-white/5 p-6 text-center bg-white/[0.02] backdrop-blur-xl ${
+        isFirst ? "sm:py-10" : ""
+      }`}
+    >
+      <div className="text-5xl font-black mb-3 opacity-10 text-zinc-500 animate-pulse">-</div>
+      <div className="flex justify-center mb-3">
+        <div className="w-16 h-16 rounded-full bg-white/5 animate-pulse" />
+      </div>
+      <div className="w-24 h-5 rounded bg-white/5 animate-pulse mx-auto mb-2" />
+      <div className="w-20 h-7 rounded bg-white/5 animate-pulse mx-auto mb-2" />
+      <div className="w-16 h-3 rounded bg-white/5 animate-pulse mx-auto mb-3" />
+      <div className="w-14 h-5 rounded-full bg-white/5 animate-pulse mx-auto" />
+    </div>
+  );
+}
+
 export default function LeaderboardPage() {
   const { t } = useLanguage();
 
@@ -71,25 +92,120 @@ export default function LeaderboardPage() {
     { key: "allTime", label: t("leaderboard.allTime") },
   ];
 
-  const tournamentFilterKeys = ["all", "gulfstream", "churchill", "santaAnita"];
-  const tournamentFilterLabels = {
-    all: t("leaderboard.allTournaments"),
-    gulfstream: "Gulfstream Park",
-    churchill: "Churchill Downs",
-    santaAnita: "Santa Anita Park",
-  };
-
   const [activeFilter, setActiveFilter] = useState("allTime");
   const [tournamentFilter, setTournamentFilter] = useState("all");
   const [showDropdown, setShowDropdown] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const top3 = leaderboardPlayers.slice(0, 3);
-  const totalPages = Math.ceil(leaderboardPlayers.length / ROWS_PER_PAGE);
-  const paginatedPlayers = leaderboardPlayers.slice(
+  const [players, setPlayers] = useState([]);
+  const [totalPlayers, setTotalPlayers] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [tournaments, setTournaments] = useState([]);
+  const [tournamentName, setTournamentName] = useState("");
+
+  // Fetch available tournaments for dropdown
+  useEffect(() => {
+    async function fetchTournaments() {
+      try {
+        const res = await fetch("/50points/api/tournaments");
+        if (res.ok) {
+          const data = await res.json();
+          const list = Array.isArray(data) ? data : data.tournaments || [];
+          setTournaments(list);
+        }
+      } catch (err) {
+        console.error("Failed to fetch tournaments:", err);
+      }
+    }
+    fetchTournaments();
+  }, []);
+
+  // Fetch leaderboard data based on selected tournament
+  const fetchLeaderboard = useCallback(async () => {
+    setLoading(true);
+    try {
+      let url;
+      if (tournamentFilter === "all") {
+        url = "/50points/api/leaderboard?limit=100";
+      } else {
+        url = `/50points/api/tournaments/${tournamentFilter}/leaderboard`;
+      }
+
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      let mapped = [];
+
+      if (tournamentFilter === "all") {
+        // Global leaderboard
+        const legends = data.legends || [];
+        mapped = legends.map((entry) => ({
+          rank: entry.rank,
+          userId: entry.userId,
+          username: entry.username || "Unknown",
+          initials: (entry.username || "??").slice(0, 2).toUpperCase(),
+          color: entry.avatarColor || "#7c3aed",
+          points: entry.totalPoints || 0,
+          winRate: entry.winRate || 0,
+          streak: entry.bestStreak || 0,
+          totalRaces: entry.totalRaces || 0,
+          tournamentsPlayed: entry.tournamentsPlayed || 0,
+          titles: entry.titles || 0,
+          trend: "up",
+          change: 0,
+        }));
+        setTotalPlayers(data.total || mapped.length);
+        setTournamentName("");
+      } else {
+        // Tournament-specific leaderboard
+        const entries = data.leaderboard || [];
+        mapped = entries.map((entry) => ({
+          rank: entry.rank,
+          userId: entry.userId,
+          username: entry.username || "Unknown",
+          initials: (entry.username || "??").slice(0, 2).toUpperCase(),
+          color: entry.avatarColor || "#7c3aed",
+          points: entry.totalPoints || 0,
+          winRate: 0,
+          streak: entry.bestStreak || 0,
+          racesPlayed: entry.racesPlayed || 0,
+          winStreak: entry.winStreak || 0,
+          trend: "up",
+          change: 0,
+        }));
+        setTotalPlayers(mapped.length);
+        setTournamentName(data.tournamentName || "");
+      }
+
+      setPlayers(mapped);
+    } catch (err) {
+      console.error("Failed to fetch leaderboard:", err);
+      setPlayers([]);
+      setTotalPlayers(0);
+    } finally {
+      setLoading(false);
+    }
+  }, [tournamentFilter]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    fetchLeaderboard();
+  }, [fetchLeaderboard]);
+
+  const top3 = players.slice(0, 3);
+  const totalPages = Math.max(1, Math.ceil(players.length / ROWS_PER_PAGE));
+  const paginatedPlayers = players.slice(
     (currentPage - 1) * ROWS_PER_PAGE,
     currentPage * ROWS_PER_PAGE
   );
+
+  // Build tournament dropdown label
+  const getSelectedTournamentLabel = () => {
+    if (tournamentFilter === "all") return t("leaderboard.allTournaments");
+    const found = tournaments.find((t) => t.slug === tournamentFilter);
+    return found ? found.name : tournamentName || tournamentFilter;
+  };
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-white">
@@ -165,7 +281,7 @@ export default function LeaderboardPage() {
               onClick={() => setShowDropdown(!showDropdown)}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-zinc-300 hover:border-purple/30 transition-colors"
             >
-              {tournamentFilterLabels[tournamentFilter]}
+              {getSelectedTournamentLabel()}
               <ChevronDown className={`w-4 h-4 transition-transform ${showDropdown ? "rotate-180" : ""}`} />
             </button>
             <AnimatePresence>
@@ -175,19 +291,29 @@ export default function LeaderboardPage() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute right-0 top-full mt-2 w-56 rounded-xl bg-[#1a1a2e] border border-white/10 shadow-xl shadow-black/40 overflow-hidden z-50"
+                  className="absolute right-0 top-full mt-2 w-56 rounded-xl bg-[#1a1a2e] border border-white/10 shadow-xl shadow-black/40 overflow-hidden z-50 max-h-72 overflow-y-auto"
                 >
-                  {tournamentFilterKeys.map((key) => (
+                  <button
+                    onClick={() => { setTournamentFilter("all"); setShowDropdown(false); }}
+                    className={`w-full text-left px-4 py-3 text-sm transition-colors ${
+                      tournamentFilter === "all"
+                        ? "bg-purple/20 text-purple-light"
+                        : "text-zinc-300 hover:bg-white/5"
+                    }`}
+                  >
+                    {t("leaderboard.allTournaments")}
+                  </button>
+                  {tournaments.map((tournament) => (
                     <button
-                      key={key}
-                      onClick={() => { setTournamentFilter(key); setShowDropdown(false); }}
+                      key={tournament.slug}
+                      onClick={() => { setTournamentFilter(tournament.slug); setShowDropdown(false); }}
                       className={`w-full text-left px-4 py-3 text-sm transition-colors ${
-                        tournamentFilter === key
+                        tournamentFilter === tournament.slug
                           ? "bg-purple/20 text-purple-light"
                           : "text-zinc-300 hover:bg-white/5"
                       }`}
                     >
-                      {tournamentFilterLabels[key]}
+                      {tournament.name}
                     </button>
                   ))}
                 </motion.div>
@@ -198,32 +324,65 @@ export default function LeaderboardPage() {
 
         {/* TOP 3 Podium */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="order-2 sm:order-1 sm:mt-8"
-          >
-            <PodiumCard player={top3[1]} position={2} t={t} />
-          </motion.div>
+          {loading ? (
+            <>
+              <div className="order-2 sm:order-1 sm:mt-8">
+                <SkeletonPodiumCard isFirst={false} />
+              </div>
+              <div className="order-1 sm:order-2">
+                <SkeletonPodiumCard isFirst={true} />
+              </div>
+              <div className="order-3 sm:mt-8">
+                <SkeletonPodiumCard isFirst={false} />
+              </div>
+            </>
+          ) : top3.length >= 3 ? (
+            <>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="order-2 sm:order-1 sm:mt-8"
+              >
+                <PodiumCard player={top3[1]} position={2} t={t} />
+              </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="order-1 sm:order-2"
-          >
-            <PodiumCard player={top3[0]} position={1} t={t} />
-          </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.15 }}
+                className="order-1 sm:order-2"
+              >
+                <PodiumCard player={top3[0]} position={1} t={t} />
+              </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
-            className="order-3 sm:mt-8"
-          >
-            <PodiumCard player={top3[2]} position={3} t={t} />
-          </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.45 }}
+                className="order-3 sm:mt-8"
+              >
+                <PodiumCard player={top3[2]} position={3} t={t} />
+              </motion.div>
+            </>
+          ) : top3.length > 0 ? (
+            // Fewer than 3 players: show what we have centered
+            top3.map((player, i) => (
+              <motion.div
+                key={player.userId || player.rank}
+                initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.15 * (i + 1) }}
+                className={i === 0 ? "sm:col-start-2" : ""}
+              >
+                <PodiumCard player={player} position={player.rank} t={t} />
+              </motion.div>
+            ))
+          ) : (
+            <div className="col-span-3 text-center py-12 text-zinc-500">
+              No leaderboard data available yet.
+            </div>
+          )}
         </div>
 
         {/* Rankings Table */}
@@ -242,73 +401,93 @@ export default function LeaderboardPage() {
             <div className="col-span-1 text-right">{t("leaderboard.trend")}</div>
           </div>
 
-          {paginatedPlayers.map((player, index) => (
-            <motion.div
-              key={player.rank}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.05 * index }}
-              className={`grid grid-cols-2 sm:grid-cols-12 gap-2 sm:gap-4 px-4 sm:px-6 py-4 items-center border-b border-white/[0.03] transition-all duration-300 hover:bg-purple/[0.04] hover:shadow-[inset_0_0_30px_rgba(124,58,237,0.05)] cursor-pointer group ${
-                index % 2 === 0 ? "bg-white/[0.01]" : "bg-transparent"
-              }`}
-            >
-              <div className="col-span-1 flex items-center gap-2 sm:gap-0">
-                <RankBadge rank={player.rank} />
-              </div>
-
-              <div className="col-span-1 sm:col-span-4 flex items-center gap-3">
-                <div
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ring-2 ring-white/10 group-hover:ring-purple/30 transition-all"
-                  style={{ backgroundColor: player.color + "25", color: player.color }}
-                >
-                  {player.initials}
+          {loading ? (
+            Array.from({ length: ROWS_PER_PAGE }).map((_, i) => (
+              <SkeletonRow key={i} index={i} />
+            ))
+          ) : paginatedPlayers.length === 0 ? (
+            <div className="px-6 py-12 text-center text-zinc-500">
+              No players to display.
+            </div>
+          ) : (
+            paginatedPlayers.map((player, index) => (
+              <motion.div
+                key={player.userId || player.rank}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.05 * index }}
+                className={`grid grid-cols-2 sm:grid-cols-12 gap-2 sm:gap-4 px-4 sm:px-6 py-4 items-center border-b border-white/[0.03] transition-all duration-300 hover:bg-purple/[0.04] hover:shadow-[inset_0_0_30px_rgba(124,58,237,0.05)] cursor-pointer group ${
+                  index % 2 === 0 ? "bg-white/[0.01]" : "bg-transparent"
+                }`}
+              >
+                <div className="col-span-1 flex items-center gap-2 sm:gap-0">
+                  <RankBadge rank={player.rank} />
                 </div>
-                <span className="font-medium text-sm text-zinc-200 group-hover:text-white transition-colors truncate">
-                  {player.username}
-                </span>
-              </div>
 
-              <div className="col-span-1 sm:col-span-2 text-right">
-                <span className="font-bold text-sm sm:text-base text-gradient-purple">
-                  {player.points.toLocaleString()}
-                </span>
-                <span className="text-xs text-zinc-600 ml-1 hidden sm:inline">{t("common.pts")}</span>
-              </div>
-
-              <div className="col-span-1 sm:col-span-2 text-right">
-                <span className="text-sm text-zinc-300">{player.winRate}%</span>
-              </div>
-
-              <div className="hidden sm:flex col-span-2 justify-end items-center gap-1">
-                {player.streak > 0 ? (
-                  <>
-                    <img src="/50points/images/icons/icon-fire.png" alt="" className="w-5 h-5 object-contain" />
-                    <span className="text-sm font-medium text-orange-400">{player.streak}</span>
-                  </>
-                ) : (
-                  <span className="text-sm text-zinc-600">-</span>
-                )}
-              </div>
-
-              <div className="hidden sm:flex col-span-1 justify-end items-center gap-1">
-                {player.trend === "up" ? (
-                  <div className="flex items-center gap-0.5 text-emerald-400">
-                    <TrendingUp className="w-4 h-4" />
-                    {player.change > 0 && <span className="text-xs">+{player.change}</span>}
+                <div className="col-span-1 sm:col-span-4 flex items-center gap-3">
+                  <div
+                    className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ring-2 ring-white/10 group-hover:ring-purple/30 transition-all"
+                    style={{ backgroundColor: player.color + "25", color: player.color }}
+                  >
+                    {player.initials}
                   </div>
-                ) : (
-                  <div className="flex items-center gap-0.5 text-red-400">
-                    <TrendingDown className="w-4 h-4" />
-                    {player.change > 0 && <span className="text-xs">-{player.change}</span>}
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          ))}
+                  <span className="font-medium text-sm text-zinc-200 group-hover:text-white transition-colors truncate">
+                    {player.username}
+                  </span>
+                </div>
+
+                <div className="col-span-1 sm:col-span-2 text-right">
+                  <span className="font-bold text-sm sm:text-base text-gradient-purple">
+                    {player.points.toLocaleString()}
+                  </span>
+                  <span className="text-xs text-zinc-600 ml-1 hidden sm:inline">{t("common.pts")}</span>
+                </div>
+
+                <div className="col-span-1 sm:col-span-2 text-right">
+                  <span className="text-sm text-zinc-300">{player.winRate}%</span>
+                </div>
+
+                <div className="hidden sm:flex col-span-2 justify-end items-center gap-1">
+                  {player.streak > 0 ? (
+                    <>
+                      <img src="/50points/images/icons/icon-fire.png" alt="" className="w-5 h-5 object-contain" />
+                      <span className="text-sm font-medium text-orange-400">{player.streak}</span>
+                    </>
+                  ) : (
+                    <span className="text-sm text-zinc-600">-</span>
+                  )}
+                </div>
+
+                <div className="hidden sm:flex col-span-1 justify-end items-center gap-1">
+                  {player.trend === "up" ? (
+                    <div className="flex items-center gap-0.5 text-emerald-400">
+                      <TrendingUp className="w-4 h-4" />
+                      {player.change > 0 && <span className="text-xs">+{player.change}</span>}
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-0.5 text-red-400">
+                      <TrendingDown className="w-4 h-4" />
+                      {player.change > 0 && <span className="text-xs">-{player.change}</span>}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            ))
+          )}
 
           <div className="flex items-center justify-between px-6 py-4 bg-white/[0.02] border-t border-white/5">
             <p className="text-xs text-zinc-500">
-              {t("leaderboard.showing")} {(currentPage - 1) * ROWS_PER_PAGE + 1}-{Math.min(currentPage * ROWS_PER_PAGE, leaderboardPlayers.length)} {t("leaderboard.of")} {leaderboardPlayers.length} {t("leaderboard.players")}
+              {loading ? (
+                <span className="inline-block w-32 h-3 rounded bg-white/5 animate-pulse" />
+              ) : players.length > 0 ? (
+                <>
+                  {t("leaderboard.showing")} {(currentPage - 1) * ROWS_PER_PAGE + 1}-{Math.min(currentPage * ROWS_PER_PAGE, players.length)} {t("leaderboard.of")} {totalPlayers} {t("leaderboard.players")}
+                </>
+              ) : (
+                <>
+                  {t("leaderboard.showing")} 0 {t("leaderboard.of")} 0 {t("leaderboard.players")}
+                </>
+              )}
             </p>
             <div className="flex items-center gap-2">
               <button
