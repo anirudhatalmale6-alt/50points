@@ -90,34 +90,15 @@ export default function Home() {
           }} />
 
         <div className="relative z-10 flex flex-col items-center text-center px-4 w-full max-w-lg mx-auto">
-          {/* Crown + TOURNAMENT */}
+          {/* RACE50 Logo */}
           <AnimateInView delay={0.1}>
-            <div className="flex flex-col items-center mb-6">
-              <CrownLogo className="w-16 h-10 sm:w-20 sm:h-12 mb-2" />
-              <span className="text-[11px] sm:text-xs font-bold tracking-[0.3em] text-zinc-400 uppercase">
-                {t("hero.tournament")}
-              </span>
+            <div className="flex flex-col items-center mb-8 sm:mb-10">
+              <img
+                src="/50points/images/race50-logo.png"
+                alt="RACE50 - The Champions Tournament"
+                className="w-[320px] sm:w-[420px] lg:w-[520px] h-auto drop-shadow-[0_0_30px_rgba(124,58,237,0.3)]"
+              />
             </div>
-          </AnimateInView>
-
-          {/* MY 50 POINTS */}
-          <AnimateInView delay={0.2}>
-            <div className="mb-2">
-              <p className="text-sm sm:text-base text-zinc-500 font-medium tracking-wide mb-1">MY</p>
-              <h1 className="text-[100px] sm:text-[130px] lg:text-[160px] font-black leading-[0.8] tracking-tighter">
-                <span className="text-gradient-purple-cyan">50</span>
-              </h1>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight -mt-1">
-                POINTS
-              </h2>
-            </div>
-          </AnimateInView>
-
-          {/* Tagline */}
-          <AnimateInView delay={0.3}>
-            <p className="text-sm sm:text-base text-zinc-500 italic mb-8 sm:mb-10">
-              {t("hero.tagline")}
-            </p>
           </AnimateInView>
 
           {/* REGISTER / ENTER buttons */}

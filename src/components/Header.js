@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, Trophy, Home, BarChart3, User, Zap, LogOut } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -35,14 +36,15 @@ export default function Header() {
       <header className="fixed top-0 left-0 right-0 z-50 glass-strong">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 sm:h-18">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="relative w-9 h-9 flex items-center justify-center rounded-lg bg-gradient-to-br from-purple to-purple-light group-hover:glow-purple transition-shadow duration-300">
-                <Zap className="w-5 h-5 text-white" strokeWidth={2.5} />
-              </div>
-              <span className="text-xl font-bold tracking-tight">
-                <span className="text-gradient-purple-cyan">50</span>
-                <span className="text-white">POINTS</span>
-              </span>
+            <Link href="/" className="flex items-center group">
+              <Image
+                src="/50points/images/race50-logo.png"
+                alt="RACE50 - The Champions Tournament"
+                width={180}
+                height={37}
+                className="h-9 w-auto object-contain"
+                priority
+              />
             </Link>
 
             <nav className="hidden md:flex items-center gap-1">

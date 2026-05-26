@@ -13,14 +13,12 @@ export default function Footer() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
           {/* Brand */}
           <div className="col-span-2 sm:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-gradient-to-br from-purple to-purple-light">
-                <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
-              </div>
-              <span className="text-lg font-bold">
-                <span className="text-gradient-purple-cyan">50</span>
-                <span className="text-white">POINTS</span>
-              </span>
+            <Link href="/" className="flex items-center mb-4">
+              <img
+                src="/50points/images/race50-logo.png"
+                alt="RACE50"
+                className="h-8 w-auto"
+              />
             </Link>
             <p className="text-sm text-zinc-500 leading-relaxed">
               {t("footer.tagline")}
@@ -81,7 +79,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-zinc-600">
-            &copy; {new Date().getFullYear()} 50POINTS. {t("footer.copyright")}
+            &copy; {new Date().getFullYear()} RACE50. {t("footer.copyright")}
           </p>
           <div className="flex items-center gap-4">
             <span className="text-xs text-zinc-600">{t("footer.ageRestriction")}</span>

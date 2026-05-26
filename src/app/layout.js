@@ -11,10 +11,10 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "50POINTS - La Competencia Definitiva de Carreras de Caballos",
+  title: "RACE50 - The Champions Tournament",
   description:
-    "Elige tus caballos. Gana puntos. Domina la clasificacion. Plataforma gratuita de torneos de carreras de caballos con carreras en vivo y rankings competitivos.",
-  keywords: ["carreras de caballos", "torneo", "competencia", "clasificacion", "gratis", "horse racing", "tournament"],
+    "Pick your horses. Earn points. Dominate the leaderboard. Free horse racing tournament platform with live races and competitive rankings.",
+  keywords: ["horse racing", "tournament", "race50", "competition", "leaderboard", "free", "champions"],
 };
 
 export default function RootLayout({ children }) {

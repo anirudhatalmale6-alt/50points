@@ -63,9 +63,11 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login' }) {
         </button>
 
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-purple to-purple-light mb-3">
-            <Zap className="w-6 h-6 text-white" />
-          </div>
+          <img
+            src="/50points/images/race50-logo.png"
+            alt="RACE50"
+            className="h-10 w-auto mx-auto mb-3"
+          />
           <h2 className="text-2xl font-bold text-white">
             {tab === 'login' ? t('auth.login') : t('auth.register')}
           </h2>
