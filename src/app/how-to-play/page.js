@@ -182,7 +182,7 @@ export default function HowToPlayPage() {
           transition={{ duration: 0.6, delay: 0.9 }}
           className="text-center rounded-2xl p-10 bg-gradient-to-br from-purple/15 to-cyan/5 border border-purple/20"
         >
-          <Trophy className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
+          <img src="/50points/images/icons/icon-controller.png" alt="" className="w-14 h-14 object-contain mx-auto mb-4" />
           <h2 className="text-2xl sm:text-3xl font-bold mb-3">{t("howToPlay.ctaTitle")}</h2>
           <p className="text-zinc-400 mb-6 max-w-md mx-auto">
             {t("howToPlay.ctaDesc")}

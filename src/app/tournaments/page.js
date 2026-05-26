@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Users, MapPin, Calendar, ChevronRight } from "lucide-react";
+import { Calendar, ChevronRight } from "lucide-react";
 import AnimateInView from "@/components/AnimateInView";
 import { tournaments as raceDataTournaments } from "@/lib/raceData";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -75,7 +75,7 @@ export default function TournamentsPage() {
                       {tournament.name}
                     </h2>
                     <div className="flex items-center gap-1.5 mt-1 text-xs text-zinc-500">
-                      <MapPin className="w-3 h-3" />
+                      <img src="/50points/images/icons/icon-location.png" alt="" className="w-3.5 h-3.5 object-contain" />
                       <span>{tournament.track}, {tournament.location}</span>
                     </div>
                   </div>
@@ -104,7 +104,7 @@ export default function TournamentsPage() {
 
                   <div className="flex items-center gap-4 text-xs text-zinc-500 mb-5">
                     <div className="flex items-center gap-1.5">
-                      <Users className="w-3.5 h-3.5 text-purple-light" />
+                      <img src="/50points/images/icons/icon-players.png" alt="" className="w-4 h-4 object-contain" />
                       <span>{tournament.playersJoined.toLocaleString()} {t("tournamentsPage.players")}</span>
                     </div>
                     <div className="flex items-center gap-1.5">

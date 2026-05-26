@@ -177,10 +177,8 @@ export default function HallOfFamePage() {
               <motion.div key={record.id} variants={fadeUp}
                 className={`rounded-xl p-5 bg-gradient-to-br ${status.bg} border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 group relative overflow-hidden`}>
                 {/* Background horse silhouette */}
-                <div className="absolute -bottom-4 -right-4 opacity-[0.03] pointer-events-none">
-                  <svg viewBox="0 0 200 180" fill="currentColor" className="w-28 h-28 text-white">
-                    <path d="M180 45c-3-8-12-15-20-12-4 1-6 5-9 7-5 3-11 2-17 2-3-8-4-17-10-23-4-4-10-6-15-9-6-3-11-7-18-8-5 0-9 2-13 5-3 2-6 5-10 5-5 0-9-4-14-5-6-1-11 2-15 6-5 5-8 12-10 19-3 9-4 19-3 28 1 6 3 12 3 18 0 7-3 14-3 21 0 5 1 10 3 14l2 8c0 4-2 7-3 11-2 5-2 10 0 15 1 3 4 6 8 6 3 0 5-2 6-4 2-4 2-9 1-13l3-12c3-5 6-10 8-16 1 9 5 18 10 25 3 4 5 9 6 14 1 6 1 12 3 17 1 4 4 7 8 7 3 0 6-2 7-5 1-4 0-9-1-13l-4-14c0-4 1-9 3-13 3-6 8-11 13-15 6-5 13-9 20-12 6-3 13-5 19-9 5-4 9-9 12-15 4-9 5-19 3-28-1-5-3-10-4-15-2-4-3-9-3-14 3-3 7-5 9-9 3-5 3-11 1-16z" />
-                  </svg>
+                <div className="absolute -bottom-4 -right-4 opacity-[0.04] pointer-events-none">
+                  <img src="/50points/images/icons/icon-horse.png" alt="" className="w-28 h-28 object-contain" />
                 </div>
 
                 <div className="relative z-10">

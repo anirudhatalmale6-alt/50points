@@ -282,7 +282,7 @@ export default function LeaderboardPage() {
               <div className="hidden sm:flex col-span-2 justify-end items-center gap-1">
                 {player.streak > 0 ? (
                   <>
-                    <Flame className="w-4 h-4 text-orange-400" />
+                    <img src="/50points/images/icons/icon-fire.png" alt="" className="w-5 h-5 object-contain" />
                     <span className="text-sm font-medium text-orange-400">{player.streak}</span>
                   </>
                 ) : (

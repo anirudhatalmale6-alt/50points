@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Target, Trophy, TrendingUp, Users, Radio, Zap, Clock, ChevronRight, Flame, Award, ArrowRight, Crown, UserPlus, LogIn } from "lucide-react";
+import { Target, Trophy, TrendingUp, Users, Radio, Zap, Clock, ChevronRight, ArrowRight, Crown, UserPlus, LogIn } from "lucide-react";
 import AnimateInView from "@/components/AnimateInView";
 import { tournaments, topPlayers, howItWorks } from "@/lib/mockData";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -139,7 +139,7 @@ export default function Home() {
             <div className="flex items-center justify-center gap-6 sm:gap-10">
               <div className="flex flex-col items-center">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center mb-1.5">
-                  <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-purple-light" />
+                  <img src="/50points/images/icons/icon-flag.png" alt="" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
                 </div>
                 <span className="text-lg sm:text-xl font-black text-white">7</span>
                 <span className="text-[10px] sm:text-xs text-zinc-600 font-medium uppercase tracking-wider">
@@ -148,7 +148,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col items-center">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center mb-1.5">
-                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-cyan" />
+                  <img src="/50points/images/icons/icon-fire.png" alt="" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
                 </div>
                 <span className="text-lg sm:text-xl font-black text-white">50</span>
                 <span className="text-[10px] sm:text-xs text-zinc-600 font-medium uppercase tracking-wider">
@@ -157,7 +157,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col items-center">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center mb-1.5">
-                  <Award className="w-5 h-5 sm:w-6 sm:h-6 text-gold" />
+                  <img src="/50points/images/icons/icon-horse.png" alt="" className="w-7 h-7 sm:w-8 sm:h-8 object-contain" />
                 </div>
                 <span className="text-[10px] sm:text-xs text-zinc-600 font-medium uppercase tracking-wider">
                   {t("hero.yourRank")}
@@ -239,7 +239,7 @@ export default function Home() {
 
                     <div className="flex items-center gap-4 text-xs text-zinc-500 mb-5">
                       <div className="flex items-center gap-1.5">
-                        <Users className="w-3.5 h-3.5 text-purple-light" />
+                        <img src="/50points/images/icons/icon-players.png" alt="" className="w-4 h-4 object-contain" />
                         <span>{tournament.players.toLocaleString()} {t("tournamentsSection.players")}</span>
                       </div>
                     </div>
@@ -387,7 +387,7 @@ export default function Home() {
                     <div className="w-20 text-right hidden sm:flex items-center justify-end gap-1">
                       {player.streakType === "win" ? (
                         <>
-                          <Flame className="w-3.5 h-3.5 text-orange-400" />
+                          <img src="/50points/images/icons/icon-fire.png" alt="" className="w-4 h-4 object-contain" />
                           <span className="text-sm font-medium text-orange-400">{player.streak}W</span>
                         </>
                       ) : (
@@ -431,7 +431,7 @@ export default function Home() {
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[200px] bg-purple/10 rounded-full blur-[80px] pointer-events-none" />
 
               <div className="relative">
-                <Award className="w-10 h-10 sm:w-12 sm:h-12 text-purple-light mx-auto mb-5 sm:mb-6" />
+                <img src="/50points/images/icons/icon-controller.png" alt="" className="w-12 h-12 sm:w-14 sm:h-14 object-contain mx-auto mb-5 sm:mb-6" />
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
                   {t("cta.title")}
                 </h2>

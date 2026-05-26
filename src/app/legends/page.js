@@ -147,7 +147,7 @@ export default function LegendsPage() {
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-bold text-white truncate">{player.name}</p>
-                      {player.rank <= 3 && <Flame className="w-3.5 h-3.5 text-orange-400 shrink-0" />}
+                      {player.rank <= 3 && <img src="/50points/images/icons/icon-fire.png" alt="" className="w-4 h-4 object-contain shrink-0" />}
                     </div>
                     <div className="flex items-center gap-1.5">
                       <StratIcon className="w-3 h-3" style={{ color: stratColor }} />
