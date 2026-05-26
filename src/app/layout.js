@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Providers from "@/components/Providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -10,21 +11,23 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "50POINTS - The Ultimate Horse Racing Competition",
+  title: "50POINTS - La Competencia Definitiva de Carreras de Caballos",
   description:
-    "Pick your horses. Earn points. Dominate the leaderboard. Free-to-play horse racing tournament platform with live races and competitive rankings.",
-  keywords: ["horse racing", "tournament", "competition", "leaderboard", "free to play"],
+    "Elige tus caballos. Gana puntos. Domina la clasificacion. Plataforma gratuita de torneos de carreras de caballos con carreras en vivo y rankings competitivos.",
+  keywords: ["carreras de caballos", "torneo", "competencia", "clasificacion", "gratis", "horse racing", "tournament"],
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="es" className="dark">
       <body
         className={`${inter.variable} font-sans antialiased bg-brand-dark text-zinc-100 min-h-screen`}
       >
-        <Header />
-        <main className="pt-16 pb-16 md:pb-0">{children}</main>
-        <Footer />
+        <Providers>
+          <Header />
+          <main className="pt-16 pb-16 md:pb-0">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

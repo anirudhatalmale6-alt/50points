@@ -3,15 +3,22 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Menu, X, Trophy, Home, BarChart3, User, Zap } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   const navLinks = [
-    { href: "/tournaments", label: "Torneos" },
-    { href: "/leaderboard", label: "Clasificacion" },
-    { href: "/how-to-play", label: "Como Jugar" },
+    { href: "/tournaments", label: t("nav.tournaments") },
+    { href: "/leaderboard", label: t("nav.ranking") },
+    { href: "/hall-of-fame", label: t("nav.hallOfFame") },
+    { href: "/how-to-play", label: t("nav.howToPlay") },
   ];
+
+  const toggleLanguage = () => {
+    setLanguage(language === "es" ? "en" : "es");
+  };
 
   return (
     <>
@@ -42,24 +49,79 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Desktop Auth Buttons */}
+            {/* Desktop Auth Buttons + Language Toggle */}
             <div className="hidden md:flex items-center gap-3">
+              {/* Language Toggle */}
+              <button
+                onClick={toggleLanguage}
+                className="relative flex items-center h-7 w-[4.5rem] rounded-full bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-200 text-[11px] font-bold overflow-hidden"
+                aria-label="Toggle language"
+              >
+                <span
+                  className={`absolute inset-y-0.5 w-[calc(50%-2px)] rounded-full bg-gradient-to-r from-purple to-purple-light transition-all duration-200 ${
+                    language === "en" ? "left-[calc(50%+1px)]" : "left-0.5"
+                  }`}
+                />
+                <span
+                  className={`relative z-10 flex-1 text-center transition-colors duration-200 ${
+                    language === "es" ? "text-white" : "text-zinc-400"
+                  }`}
+                >
+                  ES
+                </span>
+                <span
+                  className={`relative z-10 flex-1 text-center transition-colors duration-200 ${
+                    language === "en" ? "text-white" : "text-zinc-400"
+                  }`}
+                >
+                  EN
+                </span>
+              </button>
+
               <Link href="/login" className="px-4 py-2 text-sm font-medium text-zinc-300 hover:text-white transition-colors">
-                Iniciar Sesion
+                {t("nav.login")}
               </Link>
               <Link href="/register" className="px-5 py-2 text-sm font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-lg btn-glow">
-                Registrarse
+                {t("nav.register")}
               </Link>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-zinc-400 hover:text-white transition-colors"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+            {/* Mobile: Language Toggle + Menu Button */}
+            <div className="md:hidden flex items-center gap-2">
+              <button
+                onClick={toggleLanguage}
+                className="relative flex items-center h-6 w-14 rounded-full bg-white/10 border border-white/10 text-[10px] font-bold overflow-hidden"
+                aria-label="Toggle language"
+              >
+                <span
+                  className={`absolute inset-y-0.5 w-[calc(50%-2px)] rounded-full bg-gradient-to-r from-purple to-purple-light transition-all duration-200 ${
+                    language === "en" ? "left-[calc(50%+1px)]" : "left-0.5"
+                  }`}
+                />
+                <span
+                  className={`relative z-10 flex-1 text-center ${
+                    language === "es" ? "text-white" : "text-zinc-400"
+                  }`}
+                >
+                  ES
+                </span>
+                <span
+                  className={`relative z-10 flex-1 text-center ${
+                    language === "en" ? "text-white" : "text-zinc-400"
+                  }`}
+                >
+                  EN
+                </span>
+              </button>
+
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 text-zinc-400 hover:text-white transition-colors"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -79,10 +141,10 @@ export default function Header() {
               ))}
               <div className="pt-3 mt-3 border-t border-white/5 flex gap-3">
                 <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="flex-1 px-4 py-2.5 text-sm font-medium text-zinc-300 border border-white/10 rounded-lg hover:bg-white/5 transition-all text-center">
-                  Iniciar Sesion
+                  {t("nav.login")}
                 </Link>
                 <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="flex-1 px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-purple to-purple-light rounded-lg text-center">
-                  Registrarse
+                  {t("nav.register")}
                 </Link>
               </div>
             </div>
@@ -94,10 +156,10 @@ export default function Header() {
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 glass-strong border-t border-white/5">
         <div className="flex items-center justify-around h-16 px-2">
           {[
-            { icon: Home, label: "Inicio", href: "/" },
-            { icon: Trophy, label: "Carreras", href: "/tournaments" },
-            { icon: BarChart3, label: "Ranking", href: "/leaderboard" },
-            { icon: User, label: "Perfil", href: "/profile" },
+            { icon: Home, label: t("nav.home"), href: "/" },
+            { icon: Trophy, label: t("nav.tournaments"), href: "/tournaments" },
+            { icon: BarChart3, label: t("nav.ranking"), href: "/leaderboard" },
+            { icon: User, label: t("nav.profile"), href: "/profile" },
           ].map((item) => (
             <Link
               key={item.href}

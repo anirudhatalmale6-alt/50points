@@ -16,123 +16,12 @@ import {
   CheckCircle,
 } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
-const steps = [
-  {
-    number: 1,
-    title: "Unete a un Torneo",
-    icon: Users,
-    color: "#7c3aed",
-    description:
-      "Explora torneos en vivo y proximos de los mejores hipodromos del mundo. Cada torneo es gratuito y abierto a todos los jugadores. Simplemente selecciona un torneo para comenzar.",
-    details: [
-      "Torneos diarios en los principales hipodromos",
-      "Completamente gratis para participar",
-      "Compite contra miles de jugadores",
-      "Multiples carreras por torneo",
-    ],
-  },
-  {
-    number: 2,
-    title: "Elige tu Estrategia",
-    icon: Target,
-    color: "#a855f7",
-    description:
-      "Tienes 50 puntos por carrera para asignar a tus selecciones de caballos. Elige entre tres estrategias que se adapten a tu nivel de riesgo.",
-    strategies: [
-      {
-        name: "Full Point",
-        points: "50 pts en 1 caballo",
-        risk: "Alto Riesgo",
-        riskColor: "#ef4444",
-        multiplier: "1x Cuota",
-        description: "Apuesta todo a un solo caballo para la maxima recompensa.",
-        icon: Flame,
-      },
-      {
-        name: "Dual Point",
-        points: "25 + 25 dividido",
-        risk: "Riesgo Medio",
-        riskColor: "#f59e0b",
-        multiplier: "0.8x Cuota",
-        description: "Divide entre dos caballos para un riesgo equilibrado.",
-        icon: Crosshair,
-      },
-      {
-        name: "Smart Pick",
-        points: "30 / 15 / 5 dividido",
-        risk: "Bajo Riesgo",
-        riskColor: "#10b981",
-        multiplier: "0.6x Cuota",
-        description: "Distribuye entre tres caballos para maximizar tus chances.",
-        icon: Shield,
-      },
-    ],
-  },
-  {
-    number: 3,
-    title: "Elige tus Caballos",
-    icon: Crosshair,
-    color: "#06b6d4",
-    description:
-      "Estudia la tarjeta de carrera antes de cada competencia. Veras el nombre de cada caballo, jockey, entrenador, forma reciente y cuotas en vivo. Usa esta informacion para hacer selecciones informadas antes de que comience la carrera.",
-    details: [
-      "Ve estadisticas del caballo, info del jockey y forma",
-      "Consulta cuotas en vivo actualizadas en tiempo real",
-      "Revisa datos de rendimiento pasado",
-      "Confirma tus selecciones antes del inicio",
-    ],
-  },
-  {
-    number: 4,
-    title: "Gana Puntos",
-    icon: Zap,
-    color: "#f59e0b",
-    description:
-      "Cuando tu caballo gana, tus puntos asignados se multiplican por la cuota del caballo. Cuanto mayor sea la cuota, mayor sera la recompensa.",
-    formula: {
-      label: "Puntos Ganados = Puntos Asignados x Cuota",
-      example: "Ejemplo: 50 pts x 4.20 cuota = 210 pts ganados!",
-    },
-  },
-  {
-    number: 5,
-    title: "Sube en el Ranking",
-    icon: TrendingUp,
-    color: "#10b981",
-    description:
-      "Acumula puntos en carreras y torneos para subir en la clasificacion. Compite en rankings diarios, semanales y mensuales para demostrar tu conocimiento en carreras de caballos.",
-    details: [
-      "Clasificaciones diarias se reinician cada dia",
-      "Rankings semanales para jugadores constantes",
-      "Campeonatos mensuales para los mejores",
-      "Salon de la fama historico",
-    ],
-  },
-];
-
-const faqs = [
-  {
-    question: "Es gratis?",
-    answer:
-      "Si, 50POINTS es completamente gratis para jugar. No hay tarifas de entrada, cargos ocultos ni compras dentro de la app. Solo registrate y comienza a competir.",
-  },
-  {
-    question: "Como se determinan las cuotas?",
-    answer:
-      "Usamos las cuotas oficiales del hipodromo reportadas por cada pista. Las cuotas se actualizan en tiempo real antes de cada carrera y se bloquean al momento del inicio.",
-  },
-  {
-    question: "Puedo cambiar mis selecciones?",
-    answer:
-      "Si, puedes modificar tus selecciones de caballos y estrategia en cualquier momento antes de que comience la carrera. Una vez que la carrera inicia, todas las selecciones quedan bloqueadas.",
-  },
-  {
-    question: "Que puedo ganar?",
-    answer:
-      "Actualmente, compites por posiciones en la clasificacion, logros y derechos de presumir. Estamos trabajando en premios y recompensas para futuras temporadas -- mantente atento!",
-  },
-];
+const stepIcons = [Users, Target, Crosshair, Zap, TrendingUp];
+const stepColors = ["#7c3aed", "#a855f7", "#06b6d4", "#f59e0b", "#10b981"];
+const strategyIcons = [Flame, Crosshair, Shield];
+const strategyRiskColors = ["#ef4444", "#f59e0b", "#10b981"];
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -145,15 +34,67 @@ const fadeUp = {
 };
 
 export default function HowToPlayPage() {
+  const { t } = useLanguage();
+
+  const steps = [
+    {
+      number: 1,
+      title: t("howToPlay.step1Title"),
+      icon: stepIcons[0],
+      color: stepColors[0],
+      description: t("howToPlay.step1Desc"),
+      details: t("howToPlay.step1Details"),
+    },
+    {
+      number: 2,
+      title: t("howToPlay.step2Title"),
+      icon: stepIcons[1],
+      color: stepColors[1],
+      description: t("howToPlay.step2Desc"),
+      strategies: t("howToPlay.step2Strats").map((s, i) => ({
+        ...s,
+        riskColor: strategyRiskColors[i],
+        icon: strategyIcons[i],
+      })),
+    },
+    {
+      number: 3,
+      title: t("howToPlay.step3Title"),
+      icon: stepIcons[2],
+      color: stepColors[2],
+      description: t("howToPlay.step3Desc"),
+      details: t("howToPlay.step3Details"),
+    },
+    {
+      number: 4,
+      title: t("howToPlay.step4Title"),
+      icon: stepIcons[3],
+      color: stepColors[3],
+      description: t("howToPlay.step4Desc"),
+      formula: {
+        label: t("howToPlay.formulaLabel"),
+        example: t("howToPlay.formulaExample"),
+      },
+    },
+    {
+      number: 5,
+      title: t("howToPlay.step5Title"),
+      icon: stepIcons[4],
+      color: stepColors[4],
+      description: t("howToPlay.step5Desc"),
+      details: t("howToPlay.step5Details"),
+    },
+  ];
+
+  const faqs = t("howToPlay.faqs");
+
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-white">
-      {/* Background */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-20 left-1/3 w-96 h-96 bg-purple/10 rounded-full blur-[128px]" />
         <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-cyan/8 rounded-full blur-[100px]" />
       </div>
 
-      {/* Hero Background */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0">
           <img src="/50points/images/sidebar-promo.jpg" alt="" className="w-full h-full object-cover opacity-20" />
@@ -161,16 +102,14 @@ export default function HowToPlayPage() {
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8">
-          {/* Back link */}
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-purple-light transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
-            Volver al Inicio
+            {t("howToPlay.backToHome")}
           </Link>
 
-          {/* Page Title */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -179,19 +118,17 @@ export default function HowToPlayPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple/10 border border-purple/20 text-purple-light text-sm font-medium mb-6">
               <HelpCircle className="w-4 h-4" />
-              Primeros Pasos
+              {t("howToPlay.badge")}
             </div>
-            <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-4">COMO JUGAR</h1>
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-4">{t("howToPlay.title")}</h1>
             <p className="text-zinc-500 max-w-xl mx-auto">
-              Domina el juego en cinco simples pasos. Elige caballos, gana puntos, sube en la clasificacion.
+              {t("howToPlay.pageDesc")}
             </p>
           </motion.div>
         </div>
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pb-8 sm:pb-12">
-
-        {/* Steps */}
         <motion.div
           variants={stagger}
           initial="hidden"
@@ -200,7 +137,7 @@ export default function HowToPlayPage() {
         >
           {steps.map((step) => (
             <motion.div key={step.number} variants={fadeUp}>
-              <StepCard step={step} />
+              <StepCard step={step} t={t} />
             </motion.div>
           ))}
         </motion.div>
@@ -213,8 +150,8 @@ export default function HowToPlayPage() {
           className="mb-16"
         >
           <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold mb-2">Preguntas Frecuentes</h2>
-            <p className="text-sm text-zinc-500">Todo lo que necesitas saber</p>
+            <h2 className="text-2xl font-bold mb-2">{t("howToPlay.faqTitle")}</h2>
+            <p className="text-sm text-zinc-500">{t("howToPlay.faqSubtitle")}</p>
           </div>
 
           <div className="space-y-4">
@@ -246,15 +183,15 @@ export default function HowToPlayPage() {
           className="text-center rounded-2xl p-10 bg-gradient-to-br from-purple/15 to-cyan/5 border border-purple/20"
         >
           <Trophy className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Listo para competir?</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3">{t("howToPlay.ctaTitle")}</h2>
           <p className="text-zinc-400 mb-6 max-w-md mx-auto">
-            Unete a miles de jugadores y demuestra tu conocimiento en carreras de caballos. Gratis para jugar, siempre.
+            {t("howToPlay.ctaDesc")}
           </p>
           <Link
             href="/register"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-purple to-purple-light text-white font-semibold text-sm btn-glow transition-all hover:shadow-[0_0_30px_rgba(124,58,237,0.5)]"
           >
-            Crear Cuenta Gratis
+            {t("howToPlay.ctaButton")}
             <ChevronRight className="w-4 h-4" />
           </Link>
         </motion.div>
@@ -263,18 +200,16 @@ export default function HowToPlayPage() {
   );
 }
 
-function StepCard({ step }) {
+function StepCard({ step, t }) {
   const Icon = step.icon;
 
   return (
     <div className="glass-card rounded-2xl p-6 sm:p-8 relative overflow-hidden">
-      {/* Step Number Background */}
       <div className="absolute -top-4 -right-4 text-[120px] font-black text-white/[0.02] select-none leading-none pointer-events-none">
         {step.number}
       </div>
 
       <div className="relative z-10">
-        {/* Header */}
         <div className="flex items-center gap-4 mb-4">
           <div
             className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -284,18 +219,16 @@ function StepCard({ step }) {
           </div>
           <div>
             <p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold mb-0.5">
-              Paso {step.number}
+              {t("howToPlay.step")} {step.number}
             </p>
             <h3 className="text-xl font-bold text-white">{step.title}</h3>
           </div>
         </div>
 
-        {/* Description */}
         <p className="text-sm text-zinc-400 leading-relaxed mb-5">
           {step.description}
         </p>
 
-        {/* Details bullets */}
         {step.details && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {step.details.map((detail, i) => (
@@ -307,7 +240,6 @@ function StepCard({ step }) {
           </div>
         )}
 
-        {/* Strategies (Step 2) */}
         {step.strategies && (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {step.strategies.map((strategy) => {
@@ -335,7 +267,6 @@ function StepCard({ step }) {
           </div>
         )}
 
-        {/* Formula (Step 4) */}
         {step.formula && (
           <div className="rounded-xl bg-gradient-to-r from-yellow-500/5 to-yellow-600/[0.02] border border-yellow-500/15 p-5 text-center">
             <p className="text-sm font-semibold text-yellow-400 mb-2">

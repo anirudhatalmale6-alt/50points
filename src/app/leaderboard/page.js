@@ -15,6 +15,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const leaderboardPlayers = [
   { rank: 1, username: "ThunderHoof", initials: "TH", color: "#f59e0b", points: 14820, winRate: 68, streak: 7, trend: "up", change: 0 },
@@ -44,9 +45,6 @@ const leaderboardPlayers = [
   { rank: 25, username: "TripleThreat", initials: "3T", color: "#a78bfa", points: 2820, winRate: 31, streak: 1, trend: "up", change: 0 },
 ];
 
-const timeFilters = ["Diario", "Semanal", "Mensual", "Historico"];
-const tournamentFilters = ["Todos los Torneos", "Gulfstream Park", "Churchill Downs", "Santa Anita Park"];
-
 const ROWS_PER_PAGE = 10;
 
 function getRankColor(rank) {
@@ -64,8 +62,25 @@ function RankBadge({ rank }) {
 }
 
 export default function LeaderboardPage() {
-  const [activeFilter, setActiveFilter] = useState("Historico");
-  const [tournamentFilter, setTournamentFilter] = useState("Todos los Torneos");
+  const { t } = useLanguage();
+
+  const timeFilters = [
+    { key: "daily", label: t("leaderboard.daily") },
+    { key: "weekly", label: t("leaderboard.weekly") },
+    { key: "monthly", label: t("leaderboard.monthly") },
+    { key: "allTime", label: t("leaderboard.allTime") },
+  ];
+
+  const tournamentFilterKeys = ["all", "gulfstream", "churchill", "santaAnita"];
+  const tournamentFilterLabels = {
+    all: t("leaderboard.allTournaments"),
+    gulfstream: "Gulfstream Park",
+    churchill: "Churchill Downs",
+    santaAnita: "Santa Anita Park",
+  };
+
+  const [activeFilter, setActiveFilter] = useState("allTime");
+  const [tournamentFilter, setTournamentFilter] = useState("all");
   const [showDropdown, setShowDropdown] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -78,13 +93,11 @@ export default function LeaderboardPage() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-white">
-      {/* Background effects */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple/10 rounded-full blur-[128px]" />
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-cyan/10 rounded-full blur-[100px]" />
       </div>
 
-      {/* Hero Background */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0">
           <img src="/50points/images/ranking-hero.jpg" alt="" className="w-full h-full object-cover opacity-20" />
@@ -92,16 +105,14 @@ export default function LeaderboardPage() {
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8">
-          {/* Back link */}
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-purple-light transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
-            Volver al Inicio
+            {t("leaderboard.backToHome")}
           </Link>
 
-          {/* Page Title */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -112,53 +123,49 @@ export default function LeaderboardPage() {
               <Trophy className="w-7 h-7 text-yellow-400" />
             </div>
             <div>
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">CLASIFICACION</h1>
-              <p className="text-sm text-zinc-500 mt-1">Mira quien lidera</p>
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">{t("leaderboard.title")}</h1>
+              <p className="text-sm text-zinc-500 mt-1">{t("leaderboard.subtitle")}</p>
             </div>
           </motion.div>
         </div>
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pb-8 sm:pb-12">
-
-        {/* Filters Row */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15 }}
           className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10"
         >
-          {/* Time Filters */}
           <div className="flex gap-1 p-1 rounded-xl bg-white/5 border border-white/5">
             {timeFilters.map((filter) => (
               <button
-                key={filter}
-                onClick={() => { setActiveFilter(filter); setCurrentPage(1); }}
+                key={filter.key}
+                onClick={() => { setActiveFilter(filter.key); setCurrentPage(1); }}
                 className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
-                  activeFilter === filter
+                  activeFilter === filter.key
                     ? "text-white"
                     : "text-zinc-400 hover:text-zinc-200"
                 }`}
               >
-                {activeFilter === filter && (
+                {activeFilter === filter.key && (
                   <motion.div
                     layoutId="activeTimeFilter"
                     className="absolute inset-0 bg-gradient-to-r from-purple to-purple-light rounded-lg"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
                   />
                 )}
-                <span className="relative z-10">{filter}</span>
+                <span className="relative z-10">{filter.label}</span>
               </button>
             ))}
           </div>
 
-          {/* Tournament Dropdown */}
           <div className="relative">
             <button
               onClick={() => setShowDropdown(!showDropdown)}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-zinc-300 hover:border-purple/30 transition-colors"
             >
-              {tournamentFilter}
+              {tournamentFilterLabels[tournamentFilter]}
               <ChevronDown className={`w-4 h-4 transition-transform ${showDropdown ? "rotate-180" : ""}`} />
             </button>
             <AnimatePresence>
@@ -170,17 +177,17 @@ export default function LeaderboardPage() {
                   transition={{ duration: 0.2 }}
                   className="absolute right-0 top-full mt-2 w-56 rounded-xl bg-[#1a1a2e] border border-white/10 shadow-xl shadow-black/40 overflow-hidden z-50"
                 >
-                  {tournamentFilters.map((t) => (
+                  {tournamentFilterKeys.map((key) => (
                     <button
-                      key={t}
-                      onClick={() => { setTournamentFilter(t); setShowDropdown(false); }}
+                      key={key}
+                      onClick={() => { setTournamentFilter(key); setShowDropdown(false); }}
                       className={`w-full text-left px-4 py-3 text-sm transition-colors ${
-                        tournamentFilter === t
+                        tournamentFilter === key
                           ? "bg-purple/20 text-purple-light"
                           : "text-zinc-300 hover:bg-white/5"
                       }`}
                     >
-                      {t}
+                      {tournamentFilterLabels[key]}
                     </button>
                   ))}
                 </motion.div>
@@ -191,34 +198,31 @@ export default function LeaderboardPage() {
 
         {/* TOP 3 Podium */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
-          {/* Position 2 - Left */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="order-2 sm:order-1 sm:mt-8"
           >
-            <PodiumCard player={top3[1]} position={2} />
+            <PodiumCard player={top3[1]} position={2} t={t} />
           </motion.div>
 
-          {/* Position 1 - Center (larger) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
             className="order-1 sm:order-2"
           >
-            <PodiumCard player={top3[0]} position={1} />
+            <PodiumCard player={top3[0]} position={1} t={t} />
           </motion.div>
 
-          {/* Position 3 - Right */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.45 }}
             className="order-3 sm:mt-8"
           >
-            <PodiumCard player={top3[2]} position={3} />
+            <PodiumCard player={top3[2]} position={3} t={t} />
           </motion.div>
         </div>
 
@@ -229,17 +233,15 @@ export default function LeaderboardPage() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="rounded-2xl overflow-hidden border border-white/5 bg-white/[0.02] backdrop-blur-xl"
         >
-          {/* Table Header */}
           <div className="hidden sm:grid grid-cols-12 gap-4 px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider border-b border-white/5 bg-white/[0.02]">
-            <div className="col-span-1">Rango</div>
-            <div className="col-span-4">Jugador</div>
-            <div className="col-span-2 text-right">Puntos</div>
-            <div className="col-span-2 text-right">% Victoria</div>
-            <div className="col-span-2 text-right">Racha</div>
-            <div className="col-span-1 text-right">Tendencia</div>
+            <div className="col-span-1">{t("leaderboard.rank")}</div>
+            <div className="col-span-4">{t("leaderboard.player")}</div>
+            <div className="col-span-2 text-right">{t("leaderboard.points")}</div>
+            <div className="col-span-2 text-right">{t("leaderboard.winRate")}</div>
+            <div className="col-span-2 text-right">{t("leaderboard.streak")}</div>
+            <div className="col-span-1 text-right">{t("leaderboard.trend")}</div>
           </div>
 
-          {/* Table Rows */}
           {paginatedPlayers.map((player, index) => (
             <motion.div
               key={player.rank}
@@ -250,12 +252,10 @@ export default function LeaderboardPage() {
                 index % 2 === 0 ? "bg-white/[0.01]" : "bg-transparent"
               }`}
             >
-              {/* Rank */}
               <div className="col-span-1 flex items-center gap-2 sm:gap-0">
                 <RankBadge rank={player.rank} />
               </div>
 
-              {/* Player */}
               <div className="col-span-1 sm:col-span-4 flex items-center gap-3">
                 <div
                   className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ring-2 ring-white/10 group-hover:ring-purple/30 transition-all"
@@ -268,20 +268,17 @@ export default function LeaderboardPage() {
                 </span>
               </div>
 
-              {/* Points */}
               <div className="col-span-1 sm:col-span-2 text-right">
                 <span className="font-bold text-sm sm:text-base text-gradient-purple">
                   {player.points.toLocaleString()}
                 </span>
-                <span className="text-xs text-zinc-600 ml-1 hidden sm:inline">pts</span>
+                <span className="text-xs text-zinc-600 ml-1 hidden sm:inline">{t("common.pts")}</span>
               </div>
 
-              {/* Win Rate */}
               <div className="col-span-1 sm:col-span-2 text-right">
                 <span className="text-sm text-zinc-300">{player.winRate}%</span>
               </div>
 
-              {/* Streak */}
               <div className="hidden sm:flex col-span-2 justify-end items-center gap-1">
                 {player.streak > 0 ? (
                   <>
@@ -293,7 +290,6 @@ export default function LeaderboardPage() {
                 )}
               </div>
 
-              {/* Trend */}
               <div className="hidden sm:flex col-span-1 justify-end items-center gap-1">
                 {player.trend === "up" ? (
                   <div className="flex items-center gap-0.5 text-emerald-400">
@@ -310,10 +306,9 @@ export default function LeaderboardPage() {
             </motion.div>
           ))}
 
-          {/* Pagination */}
           <div className="flex items-center justify-between px-6 py-4 bg-white/[0.02] border-t border-white/5">
             <p className="text-xs text-zinc-500">
-              Mostrando {(currentPage - 1) * ROWS_PER_PAGE + 1}-{Math.min(currentPage * ROWS_PER_PAGE, leaderboardPlayers.length)} de {leaderboardPlayers.length} jugadores
+              {t("leaderboard.showing")} {(currentPage - 1) * ROWS_PER_PAGE + 1}-{Math.min(currentPage * ROWS_PER_PAGE, leaderboardPlayers.length)} {t("leaderboard.of")} {leaderboardPlayers.length} {t("leaderboard.players")}
             </p>
             <div className="flex items-center gap-2">
               <button
@@ -351,7 +346,7 @@ export default function LeaderboardPage() {
   );
 }
 
-function PodiumCard({ player, position }) {
+function PodiumCard({ player, position, t }) {
   const colors = getRankColor(position);
   const isFirst = position === 1;
 
@@ -361,7 +356,6 @@ function PodiumCard({ player, position }) {
         isFirst ? "sm:py-10" : ""
       }`}
     >
-      {/* Crown for #1 */}
       {isFirst && (
         <motion.div
           animate={{ y: [0, -6, 0] }}
@@ -372,12 +366,10 @@ function PodiumCard({ player, position }) {
         </motion.div>
       )}
 
-      {/* Position Number */}
       <div className={`text-5xl font-black mb-3 ${colors.text} opacity-20`}>
         {position}
       </div>
 
-      {/* Avatar */}
       <div className="flex justify-center mb-3">
         <div
           className={`w-16 h-16 rounded-full flex items-center justify-center text-lg font-bold ring-4 ${
@@ -389,26 +381,23 @@ function PodiumCard({ player, position }) {
         </div>
       </div>
 
-      {/* Username */}
       <h3 className="font-bold text-lg text-white mb-1">{player.username}</h3>
 
-      {/* Points */}
       <p className="text-2xl font-black text-gradient-purple mb-2">
         {player.points.toLocaleString()}
       </p>
-      <p className="text-xs text-zinc-500 mb-3">Puntos Totales</p>
+      <p className="text-xs text-zinc-500 mb-3">{t("leaderboard.totalPoints")}</p>
 
-      {/* Trend */}
       <div className="flex items-center justify-center gap-1">
         {player.trend === "up" ? (
           <div className="flex items-center gap-1 text-emerald-400 text-xs font-medium px-2 py-1 rounded-full bg-emerald-400/10">
             <TrendingUp className="w-3 h-3" />
-            Subiendo
+            {t("leaderboard.rising")}
           </div>
         ) : (
           <div className="flex items-center gap-1 text-red-400 text-xs font-medium px-2 py-1 rounded-full bg-red-400/10">
             <TrendingDown className="w-3 h-3" />
-            Bajando
+            {t("leaderboard.falling")}
           </div>
         )}
       </div>

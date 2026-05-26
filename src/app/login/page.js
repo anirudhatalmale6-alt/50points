@@ -4,31 +4,30 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff, ArrowLeft, Trophy } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function LoginPage() {
+  const { t } = useLanguage();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-white flex items-center justify-center px-4 py-12">
-      {/* Background */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple/8 rounded-full blur-[128px]" />
         <div className="absolute bottom-1/3 right-1/3 w-64 h-64 bg-cyan/5 rounded-full blur-[100px]" />
       </div>
 
       <div className="relative z-10 w-full max-w-md">
-        {/* Back link */}
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-purple-light transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
-          Volver al Inicio
+          {t("login.backToHome")}
         </Link>
 
-        {/* Login Card */}
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -36,7 +35,6 @@ export default function LoginPage() {
           className="rounded-2xl p-[1px] bg-gradient-to-b from-purple/30 via-purple/10 to-transparent"
         >
           <div className="rounded-2xl bg-[#12121a]/90 backdrop-blur-xl p-8 sm:p-10">
-            {/* Logo */}
             <div className="text-center mb-8">
               <motion.div
                 initial={{ scale: 0 }}
@@ -46,37 +44,34 @@ export default function LoginPage() {
               >
                 <Trophy className="w-8 h-8 text-white" />
               </motion.div>
-              <h1 className="text-2xl font-bold mb-1">Bienvenido de vuelta</h1>
-              <p className="text-sm text-zinc-500">Inicia sesion en tu cuenta 50POINTS</p>
+              <h1 className="text-2xl font-bold mb-1">{t("login.welcomeBack")}</h1>
+              <p className="text-sm text-zinc-500">{t("login.subtitle")}</p>
             </div>
 
-            {/* Form */}
             <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
-              {/* Email */}
               <div>
-                <label className="block text-sm font-medium text-zinc-400 mb-2">Correo electronico</label>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">{t("login.email")}</label>
                 <div className="relative">
                   <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600" />
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="tu@ejemplo.com"
+                    placeholder={t("login.emailPlaceholder")}
                     className="w-full pl-11 pr-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-purple/40 focus:ring-1 focus:ring-purple/20 transition-all"
                   />
                 </div>
               </div>
 
-              {/* Password */}
               <div>
-                <label className="block text-sm font-medium text-zinc-400 mb-2">Contrasena</label>
+                <label className="block text-sm font-medium text-zinc-400 mb-2">{t("login.password")}</label>
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600" />
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Ingresa tu contrasena"
+                    placeholder={t("login.passwordPlaceholder")}
                     className="w-full pl-11 pr-11 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-purple/40 focus:ring-1 focus:ring-purple/20 transition-all"
                   />
                   <button
@@ -89,30 +84,26 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {/* Forgot Password */}
               <div className="flex justify-end">
                 <Link href="#" className="text-xs text-purple-light hover:text-purple transition-colors">
-                  Olvidaste tu contrasena?
+                  {t("login.forgotPassword")}
                 </Link>
               </div>
 
-              {/* Login Button */}
               <button
                 type="submit"
                 className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple to-purple-light text-white font-semibold text-sm btn-glow transition-all hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] active:scale-[0.98]"
               >
-                Iniciar Sesion
+                {t("login.loginButton")}
               </button>
             </form>
 
-            {/* Divider */}
             <div className="flex items-center gap-4 my-6">
               <div className="flex-1 h-px bg-white/[0.06]" />
-              <span className="text-xs text-zinc-600 uppercase">o</span>
+              <span className="text-xs text-zinc-600 uppercase">{t("login.or")}</span>
               <div className="flex-1 h-px bg-white/[0.06]" />
             </div>
 
-            {/* Social Login */}
             <button
               type="button"
               className="w-full flex items-center justify-center gap-3 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-zinc-300 hover:bg-white/[0.06] hover:border-white/[0.15] transition-all"
@@ -123,14 +114,13 @@ export default function LoginPage() {
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
-              Continuar con Google
+              {t("login.googleLogin")}
             </button>
 
-            {/* Register link */}
             <p className="text-center text-sm text-zinc-500 mt-6">
-              No tienes cuenta?{" "}
+              {t("login.noAccount")}{" "}
               <Link href="/register" className="text-purple-light hover:text-purple font-medium transition-colors">
-                Registrarse
+                {t("login.register")}
               </Link>
             </p>
           </div>
