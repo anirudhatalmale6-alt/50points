@@ -27,6 +27,7 @@ export async function GET(request) {
         email: user.email,
         avatarColor: user.avatarColor,
         isGuest: user.isGuest,
+        gameMode: user.gameMode,
         stats: user.stats ? {
           totalPoints: user.stats.totalPoints,
           tournamentsPlayed: user.stats.tournamentsPlayed,

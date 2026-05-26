@@ -135,13 +135,15 @@ export async function POST() {
 
     const colors = ['#7c3aed', '#e11d48', '#2563eb', '#16a34a', '#ea580c', '#0891b2', '#d946ef'];
     const users = [];
-    for (const name of fakeUsers) {
+    for (let i = 0; i < fakeUsers.length; i++) {
+      const isGuest = i % 5 === 0;
       const user = await prisma.user.create({
         data: {
-          username: name,
+          username: fakeUsers[i],
           avatarColor: colors[Math.floor(Math.random() * colors.length)],
-          isGuest: false,
-          passwordHash: '$2a$10$placeholder_hash_for_seed_data',
+          isGuest,
+          gameMode: isGuest ? 1 : 2,
+          passwordHash: isGuest ? null : '$2a$10$placeholder_hash_for_seed_data',
         },
       });
       await prisma.userStats.create({ data: { userId: user.id } });
@@ -215,21 +217,18 @@ export async function POST() {
             const shuffledHorses = shuffle(horses);
             const picks = shuffledHorses.slice(0, picksCount).map(h => h.id);
 
-            const results = [];
-            for (let pos = 1; pos <= Math.min(finishing.length, 3); pos++) {
-              results.push({ position: pos, horseId: finishing[pos - 1].id });
-            }
-
+            // WIN-WIN scoring: check if any pick matches the winner (1st place only)
+            const winnerId = finishing[0].id;
+            const allocations = { full_point: [50], dual_point: [25, 25], smart_pick: [30, 15, 5] };
+            const alloc = allocations[strategy] || [];
             let points = 0;
-            if (strategy === 'full_point') {
-              if (picks[0] === results[0]?.horseId) points = 50;
-            } else if (strategy === 'dual_point') {
-              if (picks[0] === results[0]?.horseId) points += 25;
-              if (picks[1] === results[1]?.horseId) points += 15;
-            } else {
-              if (picks[0] === results[0]?.horseId) points += 30;
-              if (picks[1] === results[1]?.horseId) points += 20;
-              if (picks[2] === results[2]?.horseId) points += 10;
+            for (let pi = 0; pi < picks.length; pi++) {
+              if (picks[pi] === winnerId) {
+                const winnerHorse = horses.find(h => h.id === winnerId);
+                const odds = winnerHorse ? winnerHorse.odds : 1;
+                points = Math.round(alloc[pi] * odds);
+                break;
+              }
             }
 
             try {
@@ -238,6 +237,7 @@ export async function POST() {
                   userId: user.id,
                   raceId: race.id,
                   tournamentId: tournament.id,
+                  ticketNumber: 1,
                   strategy,
                   picks: JSON.stringify(picks),
                   pointsEarned: points,
@@ -247,7 +247,7 @@ export async function POST() {
 
               await prisma.leaderboardEntry.upsert({
                 where: {
-                  userId_tournamentId: { userId: user.id, tournamentId: tournament.id },
+                  userId_tournamentId_ticketNumber: { userId: user.id, tournamentId: tournament.id, ticketNumber: 1 },
                 },
                 update: {
                   totalPoints: { increment: points },
@@ -259,6 +259,7 @@ export async function POST() {
                 create: {
                   userId: user.id,
                   tournamentId: tournament.id,
+                  ticketNumber: 1,
                   totalPoints: points,
                   racesPlayed: 1,
                   fullPoints: strategy === 'full_point' ? points : 0,

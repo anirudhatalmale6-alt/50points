@@ -10,10 +10,15 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { raceId, strategy, picks } = await request.json();
+    const { raceId, strategy, picks, ticketNumber: rawTicketNumber } = await request.json();
 
     if (!raceId || !strategy || !picks) {
       return NextResponse.json({ error: 'raceId, strategy, and picks are required' }, { status: 400 });
+    }
+
+    const ticketNumber = rawTicketNumber !== undefined ? parseInt(rawTicketNumber) : 1;
+    if (![1, 2, 3].includes(ticketNumber)) {
+      return NextResponse.json({ error: 'ticketNumber must be 1, 2, or 3' }, { status: 400 });
     }
 
     if (!Object.values(STRATEGIES).includes(strategy)) {
@@ -51,11 +56,11 @@ export async function POST(request) {
     }
 
     const existing = await prisma.ticket.findUnique({
-      where: { userId_raceId: { userId: payload.userId, raceId } },
+      where: { userId_raceId_ticketNumber: { userId: payload.userId, raceId, ticketNumber } },
     });
 
     if (existing) {
-      return NextResponse.json({ error: 'You already submitted a pick for this race' }, { status: 409 });
+      return NextResponse.json({ error: `You already submitted ticket #${ticketNumber} for this race` }, { status: 409 });
     }
 
     const ticket = await prisma.ticket.create({
@@ -63,6 +68,7 @@ export async function POST(request) {
         userId: payload.userId,
         raceId,
         tournamentId: race.tournamentId,
+        ticketNumber,
         strategy,
         picks: JSON.stringify(picks),
       },
@@ -72,6 +78,7 @@ export async function POST(request) {
       ticket: {
         id: ticket.id,
         raceId: ticket.raceId,
+        ticketNumber: ticket.ticketNumber,
         strategy: ticket.strategy,
         picks: JSON.parse(ticket.picks),
         pointsEarned: 0,
@@ -117,6 +124,7 @@ export async function GET(request) {
         raceNumber: t.race.raceNumber,
         raceName: t.race.name,
         raceStatus: t.race.status,
+        ticketNumber: t.ticketNumber,
         strategy: t.strategy,
         picks: JSON.parse(t.picks),
         pointsEarned: t.pointsEarned,

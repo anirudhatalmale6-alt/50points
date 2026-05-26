@@ -44,6 +44,7 @@ export async function POST(request) {
         email: email || null,
         passwordHash,
         avatarColor,
+        gameMode: 2,
       },
     });
 
@@ -61,6 +62,7 @@ export async function POST(request) {
         email: user.email,
         avatarColor: user.avatarColor,
         isGuest: false,
+        gameMode: user.gameMode,
       },
     });
   } catch (error) {

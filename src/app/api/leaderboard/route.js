@@ -6,12 +6,23 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get('limit') || '100');
     const page = parseInt(searchParams.get('page') || '1');
+    const modesParam = searchParams.get('modes');
+
+    // Build user filter for gameMode if provided
+    const userFilter = modesParam
+      ? { gameMode: { in: modesParam.split(',').map(m => parseInt(m)).filter(m => !isNaN(m)) } }
+      : undefined;
+
+    const statsWhere = {
+      totalPoints: { gt: 0 },
+      ...(userFilter ? { user: userFilter } : {}),
+    };
 
     const stats = await prisma.userStats.findMany({
-      where: { totalPoints: { gt: 0 } },
+      where: statsWhere,
       include: {
         user: {
-          select: { id: true, username: true, avatarColor: true, isGuest: true },
+          select: { id: true, username: true, avatarColor: true, isGuest: true, gameMode: true },
         },
       },
       orderBy: [
@@ -24,7 +35,7 @@ export async function GET(request) {
     });
 
     const total = await prisma.userStats.count({
-      where: { totalPoints: { gt: 0 } },
+      where: statsWhere,
     });
 
     const legends = stats.map((s, index) => ({
@@ -33,6 +44,7 @@ export async function GET(request) {
       username: s.user.username,
       avatarColor: s.user.avatarColor,
       isGuest: s.user.isGuest,
+      gameMode: s.user.gameMode,
       totalPoints: s.totalPoints,
       tournamentsPlayed: s.tournamentsPlayed,
       totalRaces: s.totalRaces,

@@ -15,6 +15,7 @@ model User {
   isGuest      Boolean  @default(false)
   guestToken   String?  @unique
   avatarColor  String   @default("#7c3aed")
+  gameMode     Int      @default(2)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -96,6 +97,7 @@ model Ticket {
   userId       Int
   raceId       Int
   tournamentId Int
+  ticketNumber Int      @default(1)
   strategy     String
   picks        String
   pointsEarned Int      @default(0)
@@ -106,13 +108,14 @@ model Ticket {
   race       Race       @relation(fields: [raceId], references: [id])
   tournament Tournament @relation(fields: [tournamentId], references: [id])
 
-  @@unique([userId, raceId])
+  @@unique([userId, raceId, ticketNumber])
 }
 
 model LeaderboardEntry {
   id           Int      @id @default(autoincrement())
   userId       Int
   tournamentId Int
+  ticketNumber Int      @default(1)
   totalPoints  Int      @default(0)
   racesPlayed  Int      @default(0)
   fullPoints   Int      @default(0)
@@ -126,7 +129,7 @@ model LeaderboardEntry {
   user       User       @relation(fields: [userId], references: [id])
   tournament Tournament @relation(fields: [tournamentId], references: [id])
 
-  @@unique([userId, tournamentId])
+  @@unique([userId, tournamentId, ticketNumber])
 }
 
 model UserStats {

@@ -24,6 +24,7 @@ export async function POST() {
         isGuest: true,
         guestToken,
         avatarColor,
+        gameMode: 1,
       },
     });
 
@@ -41,6 +42,7 @@ export async function POST() {
         username: user.username,
         avatarColor: user.avatarColor,
         isGuest: true,
+        gameMode: user.gameMode,
       },
     });
   } catch (error) {

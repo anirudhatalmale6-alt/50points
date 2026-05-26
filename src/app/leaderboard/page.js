@@ -19,6 +19,22 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const ROWS_PER_PAGE = 10;
 
+const MODE_CONFIG = {
+  1: { label: "INVITADO", bg: "bg-zinc-600/30", text: "text-zinc-300", border: "border-zinc-500/40", available: true },
+  2: { label: "REGISTRADO", bg: "bg-purple-600/30", text: "text-purple-300", border: "border-purple-500/40", available: true },
+  3: { label: "PRO", bg: "bg-yellow-600/20", text: "text-yellow-400", border: "border-yellow-500/30", available: false },
+  4: { label: "ELITE", bg: "bg-red-600/20", text: "text-red-400", border: "border-red-500/30", available: false },
+};
+
+function ModeBadge({ gameMode }) {
+  const cfg = MODE_CONFIG[gameMode] || MODE_CONFIG[2];
+  return (
+    <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold tracking-wide border ${cfg.bg} ${cfg.text} ${cfg.border}`}>
+      {cfg.label}
+    </span>
+  );
+}
+
 function getRankColor(rank) {
   if (rank === 1) return { bg: "from-yellow-500/20 to-yellow-600/5", border: "border-yellow-500/30", glow: "shadow-[0_0_30px_rgba(245,158,11,0.3)]", text: "text-yellow-400" };
   if (rank === 2) return { bg: "from-slate-400/20 to-slate-500/5", border: "border-slate-400/30", glow: "shadow-[0_0_30px_rgba(148,163,184,0.3)]", text: "text-slate-300" };
@@ -96,6 +112,8 @@ export default function LeaderboardPage() {
   const [tournamentFilter, setTournamentFilter] = useState("all");
   const [showDropdown, setShowDropdown] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  // Mode filter checkboxes: modes 1 and 2 active by default
+  const [selectedModes, setSelectedModes] = useState([1, 2]);
 
   const [players, setPlayers] = useState([]);
   const [totalPlayers, setTotalPlayers] = useState(0);
@@ -120,15 +138,16 @@ export default function LeaderboardPage() {
     fetchTournaments();
   }, []);
 
-  // Fetch leaderboard data based on selected tournament
+  // Fetch leaderboard data based on selected tournament and modes
   const fetchLeaderboard = useCallback(async () => {
     setLoading(true);
     try {
+      const modesQuery = selectedModes.length > 0 ? `modes=${selectedModes.join(",")}` : "";
       let url;
       if (tournamentFilter === "all") {
-        url = "/50points/api/leaderboard?limit=100";
+        url = `/50points/api/leaderboard?limit=100${modesQuery ? `&${modesQuery}` : ""}`;
       } else {
-        url = `/50points/api/tournaments/${tournamentFilter}/leaderboard`;
+        url = `/50points/api/tournaments/${tournamentFilter}/leaderboard${modesQuery ? `?${modesQuery}` : ""}`;
       }
 
       const res = await fetch(url);
@@ -146,6 +165,7 @@ export default function LeaderboardPage() {
           username: entry.username || "Unknown",
           initials: (entry.username || "??").slice(0, 2).toUpperCase(),
           color: entry.avatarColor || "#7c3aed",
+          gameMode: entry.gameMode || 2,
           points: entry.totalPoints || 0,
           winRate: entry.winRate || 0,
           streak: entry.bestStreak || 0,
@@ -166,6 +186,7 @@ export default function LeaderboardPage() {
           username: entry.username || "Unknown",
           initials: (entry.username || "??").slice(0, 2).toUpperCase(),
           color: entry.avatarColor || "#7c3aed",
+          gameMode: entry.gameMode || 2,
           points: entry.totalPoints || 0,
           winRate: 0,
           streak: entry.bestStreak || 0,
@@ -186,7 +207,7 @@ export default function LeaderboardPage() {
     } finally {
       setLoading(false);
     }
-  }, [tournamentFilter]);
+  }, [tournamentFilter, selectedModes]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -322,6 +343,66 @@ export default function LeaderboardPage() {
           </div>
         </motion.div>
 
+        {/* Mode Filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.25 }}
+          className="flex flex-wrap items-center gap-3 mb-8"
+        >
+          <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Modo:</span>
+          {[1, 2, 3, 4].map((mode) => {
+            const cfg = MODE_CONFIG[mode];
+            const isChecked = selectedModes.includes(mode);
+            const isAvailable = cfg.available;
+            return (
+              <label
+                key={mode}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all cursor-pointer select-none ${
+                  !isAvailable
+                    ? "opacity-40 cursor-not-allowed border-white/5 bg-white/[0.02]"
+                    : isChecked
+                    ? `${cfg.bg} ${cfg.border}`
+                    : "border-white/10 bg-white/[0.02] hover:border-white/20"
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  disabled={!isAvailable}
+                  onChange={() => {
+                    if (!isAvailable) return;
+                    setSelectedModes((prev) =>
+                      prev.includes(mode)
+                        ? prev.filter((m) => m !== mode)
+                        : [...prev, mode]
+                    );
+                    setCurrentPage(1);
+                  }}
+                  className="sr-only"
+                />
+                <span
+                  className={`w-3.5 h-3.5 rounded-sm border flex items-center justify-center flex-shrink-0 ${
+                    isChecked ? `${cfg.border} ${cfg.bg}` : "border-white/20"
+                  }`}
+                >
+                  {isChecked && (
+                    <svg className={`w-2.5 h-2.5 ${cfg.text}`} fill="none" viewBox="0 0 10 10">
+                      <path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
+                </span>
+                <span className={`text-xs font-bold tracking-wide ${isAvailable ? cfg.text : "text-zinc-600"}`}>
+                  {cfg.label}
+                </span>
+                {!isAvailable && (
+                  <span className="text-[10px] text-zinc-600 font-medium">Coming Soon</span>
+                )}
+              </label>
+            );
+          })}
+        </motion.div>
+
         {/* TOP 3 Podium */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
           {loading ? (
@@ -431,9 +512,12 @@ export default function LeaderboardPage() {
                   >
                     {player.initials}
                   </div>
-                  <span className="font-medium text-sm text-zinc-200 group-hover:text-white transition-colors truncate">
-                    {player.username}
-                  </span>
+                  <div className="flex flex-col min-w-0">
+                    <span className="font-medium text-sm text-zinc-200 group-hover:text-white transition-colors truncate">
+                      {player.username}
+                    </span>
+                    <ModeBadge gameMode={player.gameMode} />
+                  </div>
                 </div>
 
                 <div className="col-span-1 sm:col-span-2 text-right">
@@ -561,6 +645,9 @@ function PodiumCard({ player, position, t }) {
       </div>
 
       <h3 className="font-bold text-lg text-white mb-1">{player.username}</h3>
+      <div className="flex justify-center mb-2">
+        <ModeBadge gameMode={player.gameMode} />
+      </div>
 
       <p className="text-2xl font-black text-gradient-purple mb-2">
         {player.points.toLocaleString()}

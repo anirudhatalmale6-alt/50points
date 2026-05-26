@@ -49,9 +49,10 @@ export async function POST(request, { params }) {
 
       const entry = await prisma.leaderboardEntry.upsert({
         where: {
-          userId_tournamentId: {
+          userId_tournamentId_ticketNumber: {
             userId: ticket.userId,
             tournamentId: race.tournamentId,
+            ticketNumber: ticket.ticketNumber,
           },
         },
         update: {
@@ -65,6 +66,7 @@ export async function POST(request, { params }) {
         create: {
           userId: ticket.userId,
           tournamentId: race.tournamentId,
+          ticketNumber: ticket.ticketNumber,
           totalPoints: points,
           racesPlayed: 1,
           fullPoints: ticket.strategy === 'full_point' ? points : 0,
@@ -98,6 +100,7 @@ export async function POST(request, { params }) {
       scoredTickets.push({
         ticketId: ticket.id,
         userId: ticket.userId,
+        ticketNumber: ticket.ticketNumber,
         strategy: ticket.strategy,
         points,
       });
