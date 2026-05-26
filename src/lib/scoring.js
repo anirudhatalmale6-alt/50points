@@ -1,10 +1,12 @@
 /**
  * 50Points Scoring Engine
  *
- * Strategies:
- *   Full Point (50pts) - Pick the exact winner (1st place)
- *   Dual Point (25+15=40pts max) - Pick 1st and 2nd place
- *   Smart Pick (30+20+10=60pts max) - Pick top 3 in order
+ * ALL strategies are WIN-WIN: every pick is a bet on which horse WINS (1st place).
+ * Total allocation per race is always 50 points.
+ *
+ *   Full Point  - 1 horse, 50 pts if it wins
+ *   Dual Point  - 2 horses, 25+25 pts (whichever wins earns its allocation)
+ *   Smart Pick  - 3 horses, 30+15+5 pts (whichever wins earns its allocation)
  */
 
 export const STRATEGIES = {
@@ -19,48 +21,33 @@ export const STRATEGY_LABELS = {
   [STRATEGIES.SMART_PICK]: 'Smart Pick',
 };
 
+const ALLOCATIONS = {
+  [STRATEGIES.FULL_POINT]: [50],
+  [STRATEGIES.DUAL_POINT]: [25, 25],
+  [STRATEGIES.SMART_PICK]: [30, 15, 5],
+};
+
 export function scoreTicket(strategy, picks, results) {
   const picksArr = typeof picks === 'string' ? JSON.parse(picks) : picks;
 
-  const resultMap = {};
-  for (const r of results) {
-    resultMap[r.position] = r.horseId;
-  }
+  const winner = results.find((r) => r.position === 1);
+  if (!winner) return 0;
 
-  let points = 0;
+  const allocation = ALLOCATIONS[strategy] || [];
 
-  switch (strategy) {
-    case STRATEGIES.FULL_POINT: {
-      if (picksArr[0] === resultMap[1]) {
-        points = 50;
-      }
-      break;
-    }
-
-    case STRATEGIES.DUAL_POINT: {
-      if (picksArr[0] === resultMap[1]) points += 25;
-      if (picksArr[1] === resultMap[2]) points += 15;
-      break;
-    }
-
-    case STRATEGIES.SMART_PICK: {
-      if (picksArr[0] === resultMap[1]) points += 30;
-      if (picksArr[1] === resultMap[2]) points += 20;
-      if (picksArr[2] === resultMap[3]) points += 10;
-      break;
+  for (let i = 0; i < picksArr.length; i++) {
+    if (picksArr[i] === winner.horseId) {
+      return allocation[i] || 0;
     }
   }
 
-  return points;
+  return 0;
 }
 
 export function getMaxPoints(strategy) {
-  switch (strategy) {
-    case STRATEGIES.FULL_POINT: return 50;
-    case STRATEGIES.DUAL_POINT: return 40;
-    case STRATEGIES.SMART_PICK: return 60;
-    default: return 0;
-  }
+  const allocation = ALLOCATIONS[strategy];
+  if (!allocation) return 0;
+  return Math.max(...allocation);
 }
 
 export function getRequiredPicks(strategy) {

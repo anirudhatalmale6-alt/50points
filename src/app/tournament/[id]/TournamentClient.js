@@ -508,15 +508,15 @@ export default function TournamentClient() {
               <div className="space-y-2.5 text-xs text-white/50">
                 <div className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-purple/20 text-purple-light flex items-center justify-center text-[10px] font-bold flex-shrink-0">1</span>
-                  <p>En cada carrera, distribuye <span className="text-gold font-semibold">50 puntos</span> entre tus selecciones</p>
+                  <p>Distribuye <span className="text-gold font-semibold">50 puntos</span> apostando al <span className="text-green-400 font-semibold">GANADOR</span> de cada carrera</p>
                 </div>
                 <div className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-purple/20 text-purple-light flex items-center justify-center text-[10px] font-bold flex-shrink-0">2</span>
-                  <p>Elige una estrategia: Full, Dual o Smart Pick</p>
+                  <p>Full Point: 50 pts en 1 caballo. Dual: 25+25 en 2. Smart: 30+15+5 en 3</p>
                 </div>
                 <div className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-purple/20 text-purple-light flex items-center justify-center text-[10px] font-bold flex-shrink-0">3</span>
-                  <p>Puntos x Cuota = tu puntuacion si tu seleccion gana</p>
+                  <p>Todas las apuestas son al ganador. Si tu caballo gana, sumas sus puntos</p>
                 </div>
                 <div className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-purple/20 text-purple-light flex items-center justify-center text-[10px] font-bold flex-shrink-0">4</span>
