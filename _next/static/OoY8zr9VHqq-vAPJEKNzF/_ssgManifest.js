@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002Ftournament\u002F[id]","\u002Ftournament\u002F[id]\u002Frace\u002F[raceId]","\u002Ftournament\u002F[id]\u002Franking"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
