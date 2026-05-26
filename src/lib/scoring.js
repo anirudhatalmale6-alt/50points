@@ -2,11 +2,12 @@
  * 50Points Scoring Engine
  *
  * ALL strategies are WIN-WIN: every pick is a bet on which horse WINS (1st place).
+ * Points earned = allocated_points × official_odds (dividend) of the winning horse.
  * Total allocation per race is always 50 points.
  *
- *   Full Point  - 1 horse, 50 pts if it wins
- *   Dual Point  - 2 horses, 25+25 pts (whichever wins earns its allocation)
- *   Smart Pick  - 3 horses, 30+15+5 pts (whichever wins earns its allocation)
+ *   Full Point  - 1 horse, 50 pts. If it wins: 50 × odds
+ *   Dual Point  - 2 horses, 25+25 pts. Whichever wins: 25 × odds
+ *   Smart Pick  - 3 horses, 30+15+5 pts. Whichever wins: allocation × odds
  */
 
 export const STRATEGIES = {
@@ -27,7 +28,7 @@ const ALLOCATIONS = {
   [STRATEGIES.SMART_PICK]: [30, 15, 5],
 };
 
-export function scoreTicket(strategy, picks, results) {
+export function scoreTicket(strategy, picks, results, horses) {
   const picksArr = typeof picks === 'string' ? JSON.parse(picks) : picks;
 
   const winner = results.find((r) => r.position === 1);
@@ -37,7 +38,10 @@ export function scoreTicket(strategy, picks, results) {
 
   for (let i = 0; i < picksArr.length; i++) {
     if (picksArr[i] === winner.horseId) {
-      return allocation[i] || 0;
+      const basePoints = allocation[i] || 0;
+      const horse = horses ? horses.find((h) => h.id === winner.horseId) : null;
+      const odds = horse ? horse.odds : 1;
+      return Math.round(basePoints * odds);
     }
   }
 

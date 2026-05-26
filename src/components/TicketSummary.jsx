@@ -72,13 +72,13 @@ export default function TicketSummary({
                       </div>
                       <div className="min-w-0">
                         <p className="text-xs font-semibold text-white truncate">{horse.name}</p>
-                        <p className="text-[10px] text-white/40">{horse.odds.toFixed(2)} cuota</p>
+                        <p className="text-[10px] text-white/40">{allocation[idx]}pts x {horse.odds.toFixed(2)}</p>
                       </div>
                     </div>
                     <span className={`text-xs font-bold px-2 py-0.5 rounded
                       ${idx === 0 ? 'bg-purple text-white' : idx === 1 ? 'bg-cyan text-white' : 'bg-gold text-black'}
                     `}>
-                      {allocation[idx]}pts
+                      {Math.round(allocation[idx] * horse.odds)}pts
                     </span>
                   </motion.div>
                 ))}

@@ -184,22 +184,24 @@ export default function TicketConfirmation({
                       </div>
                       <div>
                         <p className="text-sm font-medium text-white">{horse.name}</p>
-                        <p className="text-[10px] text-white/40">{horse.jockey} - {horse.odds.toFixed(2)}</p>
+                        <p className="text-[10px] text-white/40">{horse.jockey} - {allocation[idx]}pts x {horse.odds.toFixed(2)}</p>
                       </div>
                     </div>
                     <span className={`text-xs font-bold px-2 py-0.5 rounded
                       ${idx === 0 ? 'bg-purple text-white' : idx === 1 ? 'bg-cyan text-white' : 'bg-gold text-black'}
                     `}>
-                      {allocation[idx]} pts
+                      {Math.round(allocation[idx] * horse.odds)} pts
                     </span>
                   </div>
                 ))}
               </div>
 
-              {/* Total */}
+              {/* Total potential */}
               <div className="flex items-center justify-between px-4 py-3 border-t border-white/5 bg-white/[0.02]">
-                <span className="text-xs text-white/40">Total puntos asignados</span>
-                <span className="text-sm font-bold text-green-400">50 / 50</span>
+                <span className="text-xs text-white/40">Ganancia potencial</span>
+                <span className="text-sm font-bold text-green-400">
+                  {selectedHorseData.reduce((sum, horse, idx) => sum + Math.round((allocation[idx] || 0) * horse.odds), 0)} pts
+                </span>
               </div>
             </motion.div>
 

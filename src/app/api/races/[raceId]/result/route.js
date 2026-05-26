@@ -40,7 +40,7 @@ export async function POST(request, { params }) {
     const scoredTickets = [];
 
     for (const ticket of tickets) {
-      const points = scoreTicket(ticket.strategy, ticket.picks, results);
+      const points = scoreTicket(ticket.strategy, ticket.picks, results, race.horses);
 
       await prisma.ticket.update({
         where: { id: ticket.id },
