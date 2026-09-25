@@ -1,10 +1,12 @@
 {
-  "name": "project",
-  "version": "1.0.0",
+  "name": "50points",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "node canary.js && tsc",
-    "prepare": "node canary.js"
+    "dev": "next dev",
+    "build": "next build && touch out/.nojekyll",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@prisma/client": "^5.10.0",
